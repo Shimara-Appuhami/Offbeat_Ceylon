@@ -116,20 +116,16 @@ $(document).ready(function() {
             contentType: 'application/json',
             data: JSON.stringify(formData),
             success: function(response) {
-                if (response.code === 200) {
+
                     alert('User registered successfully!');
                     window.location.href = '../js/../index.html';
-                } else {
-                    alert('User registered successfully!');
-                }
+
                 $('#username').val('');
                 $('#email').val('');
                 $('#password').val('');
                 $('#confirmPassword').val('');
             },
             error: function(xhr, status, error) {
-                alert('User registered successfully!');
-                window.location.href = '../js/../index.html';
 
                 $('#username').val('');
                 $('#email').val('');
