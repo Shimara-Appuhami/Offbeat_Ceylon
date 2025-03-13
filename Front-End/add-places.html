@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Places</title>
+    <link rel="stylesheet" href="css/add-places.css">
+    <link rel="stylesheet" href="https://unpkg.com/ionicons@5.5.2/dist/css/ionicons.min.css"> <!-- Ionicons CDN -->
+</head>
+<body>
+
+<form>
+
+    <div class="segment">
+        <h1>Add New Place</h1>
+    </div>
+    <label>
+        <input type="text" placeholder="Place Name" required />
+    </label>
+    <label>
+        <input type="text" placeholder="About Place" />
+    </label>
+
+    <label>
+        <select required>
+            <option value="" disabled selected>Select District</option>
+            <option value="Colombo">Colombo</option>
+            <option value="Gampaha">Gampaha</option>
+            <option value="Kalutara">Kalutara</option>
+            <option value="Kandy">Kandy</option>
+            <option value="Matale">Matale</option>
+            <option value="Nuwara Eliya">Nuwara Eliya</option>
+            <option value="Galle">Galle</option>
+            <option value="Matara">Matara</option>
+            <option value="Hambantota">Hambantota</option>
+            <option value="Jaffna">Jaffna</option>
+            <option value="Kilinochchi">Kilinochchi</option>
+            <option value="Mannar">Mannar</option>
+            <option value="Vavuniya">Vavuniya</option>
+            <option value="Mullaitivu">Mullaitivu</option>
+            <option value="Batticaloa">Batticaloa</option>
+            <option value="Ampara">Ampara</option>
+            <option value="Trincomalee">Trincomalee</option>
+            <option value="Kurunegala">Kurunegala</option>
+            <option value="Puttalam">Puttalam</option>
+            <option value="Anuradhapura">Anuradhapura</option>
+            <option value="Polonnaruwa">Polonnaruwa</option>
+            <option value="Badulla">Badulla</option>
+            <option value="Monaragala">Monaragala</option>
+            <option value="Ratnapura">Ratnapura</option>
+            <option value="Kegalle">Kegalle</option>
+        </select>
+    </label>
+
+    <label>
+        <input type="file" accept="image/*" multiple required />
+    </label>
+
+<!--    <div class="input-group">-->
+<!--        <label>-->
+<!--            <input type="email" placeholder="Contact Email" required />-->
+<!--        </label>-->
+<!--        <button class="unit" type="button"><i class="icon ion-md-search"></i></button>-->
+<!--    </div>-->
+
+    <div class="segment">
+        <h2>Is this place dangerous?</h2>
+
+        <div class="input-group">
+            <label>
+                <input type="radio" id="dangerous" name="danger" value="dangerous" required />
+                <span class="radio-label">Dangerous</span>
+            </label>
+        </div>
+
+        <div class="input-group">
+            <label>
+                <input type="radio" id="not-dangerous" name="danger" value="not-dangerous" required />
+                <span class="radio-label">Not Dangerous</span>
+            </label>
+        </div>
+    </div>
+
+    <!-- map -->
+    <div class="segment">
+        <h3>Select Location on Map</h3>
+        <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126742.02610653828!2d79.77373069999999!3d6.927078599999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae2590a2ad5421f%3A0x3dcd89e5cd9aef3b!2sColombo!5e0!3m2!1sen!2slk!4v1709999999999!5m2!1sen!2slk"
+                width="100%"
+                height="300"
+                style="border:0; border-radius: 16px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+    </div>
+
+    <button class="red" type="submit"><i class="icon ion-md-save"></i> Save Place</button>
+
+</form>
+
+</body>
+</html>

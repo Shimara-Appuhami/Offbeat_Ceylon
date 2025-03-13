@@ -1,0 +1,712 @@
+/* Search Box Container */
+.searchBox {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    display: flex;
+    align-items: center;
+    background: white;
+    height: 45px;
+    border-radius: 30px;
+    padding: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s ease;
+    overflow: hidden;
+    z-index: 1000;
+}
+
+/* Search Input */
+.searchInput {
+    border: none;
+    background: transparent;
+    outline: none;
+    padding: 0 10px;
+    width: 0;
+    font-size: 16px;
+    color: #333;
+    transition: width 0.4s ease;
+    font-family: 'Oswald', sans-serif;
+}
+
+/* Search Button */
+.searchButton {
+    width: 35px;
+    height: 35px;
+    border: none;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    padding: 0;
+    margin-left: 5px;
+}
+
+/* Icon Styling */
+#img-search {
+    width: 20px;
+    height: 20px;
+}
+
+/* Hover Effect to Expand */
+.searchBox:hover .searchInput {
+    width: 220px;
+}
+
+/* Responsive Behavior */
+@media screen and (max-width: 768px) {
+    .searchBox {
+        right: 20px;
+        top: 15px;
+    }
+    .searchBox:hover .searchInput {
+        width: 150px;
+    }
+}
+
+/* Optional: Background Gradient for Page */
+body {
+    background-image: linear-gradient(to right, white, whitesmoke);
+    font-family: 'Oswald', sans-serif;
+}
+/* Navigation bar */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Oswald', sans-serif;
+}
+
+.wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 70px;
+    width: 100%;
+    background: #000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+    z-index: 1;
+}
+
+.menu-btn {
+    z-index: 2;
+    height: 50px;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    font-size: 20px;
+    color: #fff;
+    cursor: pointer;
+    background: #000;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Hide checkbox */
+input[type="checkbox"] {
+    display: none;
+}
+
+/* Menu list */
+.wrapper ul {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+}
+
+/* Menu items */
+.wrapper ul li a {
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 10px 20px;
+    color: #fff;
+    border-radius: 50px;
+    background: #000;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+/* Hover effect */
+.wrapper ul li a:after {
+    position: absolute;
+    content: "";
+    background: linear-gradient(#14ffe9, #ffeb3b, #ff00e0);
+    width: 110%;
+    height: 120%;
+    left: -5%;
+    top: -10%;
+    border-radius: 50px;
+    transform: scaleY(0);
+    z-index: -1;
+    animation: rotate 1.5s linear infinite;
+    transition: transform 0.3s ease;
+}
+
+.wrapper ul li a:hover:after {
+    transform: scaleY(1);
+}
+
+.wrapper ul li a:hover {
+    color: #fff;
+}
+
+/* Optional content styling */
+.content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    text-align: center;
+    width: 100%;
+    color: #202020;
+}
+
+.content .title {
+    font-size: 40px;
+    font-weight: 700;
+}
+
+.content p {
+    font-size: 35px;
+    font-weight: 600;
+}
+
+/* Gradient rotation animation */
+@keyframes rotate {
+    0% {
+        filter: hue-rotate(0deg);
+    }
+    100% {
+        filter: hue-rotate(360deg);
+    }
+}
+/*!* Dropdown container *!*/
+/*.dropdown {*/
+/*    position: relative;*/
+/*}*/
+
+/*!* Main dropdown link *!*/
+/*.dropdown > a {*/
+/*    position: relative;*/
+/*    display: inline-block;*/
+/*}*/
+
+/*!* Submenu (dropdown-content) *!*/
+/*.dropdown-content {*/
+/*    display: none;*/
+/*    position: absolute;*/
+/*    top: 100%; !* position below parent *!*/
+/*    left: 0;*/
+/*    background: #000;*/
+/*    border-radius: 10px;*/
+/*    min-width: 180px;*/
+/*    box-shadow: 0 4px 8px rgba(0,0,0,0.3);*/
+/*    z-index: 100;*/
+/*}*/
+
+/*!* Submenu items *!*/
+/*.dropdown-content li {*/
+/*    width: 100%;*/
+/*}*/
+
+/*.dropdown-content li a {*/
+/*    display: block;*/
+/*    padding: 12px 20px;*/
+/*    color: #fff;*/
+/*    text-decoration: none;*/
+/*    font-size: 16px;*/
+/*    font-weight: 500;*/
+/*    position: relative;*/
+/*    transition: all 0.3s ease;*/
+/*}*/
+
+/*!* Hover effect for submenu items *!*/
+/*.dropdown-content li a:after {*/
+/*    position: absolute;*/
+/*    content: "";*/
+/*    background: linear-gradient(#14ffe9, #ffeb3b, #ff00e0);*/
+/*    width: 110%;*/
+/*    height: 120%;*/
+/*    left: -5%;*/
+/*    top: -10%;*/
+/*    border-radius: 10px;*/
+/*    transform: scaleY(0);*/
+/*    z-index: -1;*/
+/*    animation: rotate 1.5s linear infinite;*/
+/*    transition: transform 0.3s ease;*/
+/*}*/
+
+/*.dropdown-content li a:hover:after {*/
+/*    transform: scaleY(1);*/
+/*}*/
+
+/*.dropdown-content li a:hover {*/
+/*    color: #fff;*/
+/*}*/
+
+/*!* Show submenu on hover *!*/
+/*.dropdown:hover .dropdown-content {*/
+/*    display: block;*/
+/*}*/
+
+/*!* Keep main menu inline *!*/
+/*.wrapper ul {*/
+/*    list-style: none;*/
+/*    display: flex;*/
+/*    gap: 25px;*/
+/*}*/
+
+/*!* Animation *!*/
+/*@keyframes rotate {*/
+/*    0% {*/
+/*        filter: hue-rotate(0deg);*/
+/*    }*/
+/*    100% {*/
+/*        filter: hue-rotate(360deg);*/
+/*    }*/
+/*}*/
+
+
+/*category cards*/
+:root{
+    --background-dark: #2d3548;
+    --text-light: rgba(255,255,255,0.6);
+    --text-lighter: rgba(255,255,255,0.9);
+    --spacing-s: 8px;
+    --spacing-m: 16px;
+    --spacing-l: 24px;
+    --spacing-xl: 32px;
+    --spacing-xxl: 64px;
+    --width-container: 1200px;
+}
+
+/**{*/
+/*    border: 0;*/
+/*    margin: 0;*/
+/*    padding: 0;*/
+/*    box-sizing: border-box;*/
+/*}*/
+
+
+
+
+.hero-section{
+    align-items: flex-start;
+    /*background-image: linear-gradient(15deg, #0f4667 0%, #2a6973 150%);*/
+    background-image: linear-gradient(15deg,  white 0%, white 150%);
+
+    display: flex;
+    min-height: 100%;
+    justify-content: center;
+    padding: var(--spacing-xxl) var(--spacing-l);
+}
+
+.card-grid{
+    margin-top: 100px;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-column-gap: var(--spacing-l);
+    grid-row-gap: var(--spacing-l);
+    max-width: var(--width-container);
+    width: 50%;
+}
+
+@media(min-width: 540px){
+    .card-grid{
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(min-width: 960px){
+    .card-grid{
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.card{
+    list-style: none;
+    position: relative;
+}
+
+.card:before{
+    content: '';
+    display: block;
+    padding-bottom: 150%;
+    width: 100%;
+}
+
+.card__background{
+    background-size: cover;
+    background-position: center;
+    border-radius: var(--spacing-l);
+    bottom: 0;
+    filter: brightness(0.75) saturate(1.2) contrast(0.85);
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform-origin: center;
+    trsnsform: scale(1) translateZ(0);
+    transition:
+            filter 200ms linear,
+            transform 200ms linear;
+}
+
+.card:hover .card__background{
+    transform: scale(1.05) translateZ(0);
+}
+
+.card-grid:hover > .card:not(:hover) .card__background{
+    filter: brightness(0.5) saturate(0) contrast(1.2) blur(20px);
+}
+
+.card__content{
+    left: 0;
+    padding: var(--spacing-l);
+    position: absolute;
+    top: 0;
+}
+
+.card__category{
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin-bottom: var(--spacing-s);
+    text-transform: uppercase;
+}
+
+.card__heading{
+    color: var(--text-lighter);
+    font-size: 1.9rem;
+    text-shadow: 2px 2px 20px rgba(0,0,0,0.2);
+    line-height: 1.4;
+    word-spacing: 100vw;
+}
+/*dropdown*/
+select {
+    margin-top: 50px;
+    width: 300px;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid black;
+    background-color: white;
+    appearance: none;
+}
+
+label {
+    font-weight: 600;
+    margin-right: 10px;
+}
+
+/*review board*/
+/* Review Board Container */
+.review-board {
+    width: 80%;
+    margin: 50px auto;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Heading */
+.review-board h2 {
+    margin-bottom: 30px;
+    color: #333;
+    font-size: 28px;
+}
+
+/* Individual Review Card */
+.review-card {
+    display: flex;
+    align-items: center;
+    background: #f9f9f9;
+    padding: 15px 20px;
+    margin: 15px 0;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+}
+
+/* Hover Effect */
+.review-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Profile Picture */
+.profile-pic {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 20px;
+    border: 3px solid #ddd;
+}
+
+/* Review Content */
+.review-content h3 {
+    margin: 0;
+    font-size: 20px;
+    color: #333;
+    text-align: left;
+}
+
+/* Review Paragraph */
+.review-content p {
+    margin: 8px 0 0;
+    color: #555;
+    font-size: 16px;
+    line-height: 1.5;
+    text-align: left;
+}
+
+/* Stars */
+.stars {
+    color: gold;
+    font-size: 18px;
+    margin: 5px 0;
+    letter-spacing: 2px;
+    text-align: left;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+    .review-card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .profile-pic {
+        margin: 0 0 15px 0;
+    }
+
+    .review-content p, .stars, .review-content h3 {
+        text-align: center;
+    }
+}
+
+/*add new button*/
+@import url("https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,500&display=swap");
+
+:root {
+    --shiny-cta-bg: black;
+    --shiny-cta-bg-subtle: #1a1818;
+    --shiny-cta-fg: #ffffff;
+    --shiny-cta-highlight: blue;
+    --shiny-cta-highlight-subtle: #8484ff;
+}
+
+@property --gradient-angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+
+@property --gradient-angle-offset {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+
+@property --gradient-percent {
+    syntax: "<percentage>";
+    initial-value: 5%;
+    inherits: false;
+}
+
+@property --gradient-shine {
+    syntax: "<color>";
+    initial-value: white;
+    inherits: false;
+}
+
+.shiny-cta {
+    --animation: gradient-angle linear infinite;
+    --duration: 3s;
+    --shadow-size: 2px;
+    isolation: isolate;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    outline-offset: 4px;
+    padding: 1.25rem 2.5rem;
+    font-family: inherit;
+    font-size: 1.125rem;
+    line-height: 1.2;
+    border: 1px solid transparent;
+    border-radius: 360px;
+    color: var(--shiny-cta-fg);
+    background: linear-gradient(var(--shiny-cta-bg), var(--shiny-cta-bg))
+    padding-box,
+    conic-gradient(
+            from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
+            transparent,
+            var(--shiny-cta-highlight) var(--gradient-percent),
+            var(--gradient-shine) calc(var(--gradient-percent) * 2),
+            var(--shiny-cta-highlight) calc(var(--gradient-percent) * 3),
+            transparent calc(var(--gradient-percent) * 4)
+    )
+    border-box;
+    box-shadow: inset 0 0 0 1px var(--shiny-cta-bg-subtle);
+
+    &::before,
+    &::after,
+    span::before {
+        content: "";
+        pointer-events: none;
+        position: absolute;
+        inset-inline-start: 50%;
+        inset-block-start: 50%;
+        translate: -50% -50%;
+        z-index: -1;
+    }
+
+    &:active {
+        translate: 0 1px;
+    }
+}
+
+/* Dots pattern */
+.shiny-cta::before {
+    --size: calc(100% - var(--shadow-size) * 3);
+    --position: 2px;
+    --space: calc(var(--position) * 2);
+    width: var(--size);
+    height: var(--size);
+    background: radial-gradient(
+            circle at var(--position) var(--position),
+            white calc(var(--position) / 4),
+            transparent 0
+    )
+    padding-box;
+    background-size: var(--space) var(--space);
+    background-repeat: space;
+    mask-image: conic-gradient(
+            from calc(var(--gradient-angle) + 45deg),
+            black,
+            transparent 10% 90%,
+            black
+    );
+    border-radius: inherit;
+    opacity: 0.4;
+    z-index: -1;
+}
+
+/* Inner shimmer */
+.shiny-cta::after {
+    --animation: shimmer linear infinite;
+    width: 100%;
+    aspect-ratio: 1;
+    background: linear-gradient(
+            -50deg,
+            transparent,
+            var(--shiny-cta-highlight),
+            transparent
+    );
+    mask-image: radial-gradient(circle at bottom, transparent 40%, black);
+    opacity: 0.6;
+}
+
+.shiny-cta span {
+    z-index: 1;
+
+    &::before {
+        --size: calc(100% + 1rem);
+        width: var(--size);
+        height: var(--size);
+        box-shadow: inset 0 -1ex 2rem 4px var(--shiny-cta-highlight);
+        opacity: 0;
+    }
+}
+
+/* Animate */
+.shiny-cta {
+    --transition: 800ms cubic-bezier(0.25, 1, 0.5, 1);
+    transition: var(--transition);
+    transition-property: --gradient-angle-offset, --gradient-percent,
+    --gradient-shine;
+    position: absolute;
+    top: 11%;
+    left: 45%;
+    bottom: 0;
+    right: 0;
+    width: 200px;
+    height: 50px;
+
+    &,
+    &::before,
+    &::after {
+        animation: var(--animation) var(--duration),
+        var(--animation) calc(var(--duration) / 0.4) reverse paused;
+        animation-composition: add;
+    }
+
+    span::before {
+        transition: opacity var(--transition);
+        animation: calc(var(--duration) * 1.5) breathe linear infinite;
+    }
+}
+
+.shiny-cta:is(:hover, :focus-visible) {
+    --gradient-percent: 20%;
+    --gradient-angle-offset: 95deg;
+    --gradient-shine: var(--shiny-cta-highlight-subtle);
+
+    &,
+    &::before,
+    &::after {
+        animation-play-state: running;
+    }
+
+    span::before {
+        opacity: 1;
+    }
+}
+
+@keyframes gradient-angle {
+    to {
+        --gradient-angle: 360deg;
+    }
+}
+
+@keyframes shimmer {
+    to {
+        rotate: 360deg;
+    }
+}
+
+@keyframes breathe {
+    from,
+    to {
+        scale: 1;
+    }
+    50% {
+        scale: 1.2;
+    }
+}
+
+/*html,*/
+/*body {*/
+/*    height: 100%;*/
+/*}*/
+
+/*body {*/
+/*    display: grid;*/
+/*    place-items: center;*/
+/*    color: white;*/
+/*    background: #02040c;*/
+/*    font-family: "Inter", sans-serif;*/
+/*    font-optical-sizing: auto;*/
+/*    font-weight: 500;*/
+/*    font-style: normal;*/
+/*    -webkit-font-smoothing: antialiased;*/
+/*}*/
