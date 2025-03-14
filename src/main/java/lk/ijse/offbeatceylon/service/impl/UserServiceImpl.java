@@ -7,84 +7,64 @@ import lk.ijse.offbeatceylon.service.UserService;
 import lk.ijse.offbeatceylon.util.VarList;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
 
 @Service
 @Transactional
 public class UserServiceImpl implements UserDetailsService, UserService {
 
-    private final UserRepository userRepository;
-    private final ModelMapper modelMapper;
-    private final PasswordEncoder passwordEncoder;
-
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.modelMapper = modelMapper;
-        this.passwordEncoder = passwordEncoder;
-    }
+    private ModelMapper modelMapper;
 
-    /**
-     * Load user details for Spring Security authentication
-     */
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email);
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found with email: " + email);
-        }
-
-        return new org.springframework.security.core.userdetails.User(
-                user.getEmail(),
-                user.getPassword(),
-                new ArrayList<>()
-        );
+        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), getAuthority(user));
     }
 
+    public UserDTO loadUserDetailsByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(username);
+        return modelMapper.map(user,UserDTO.class);
+    }
 
-    /**
-     * Load user details as DTO (custom use, not for Spring Security)
-     */
+    private Set<SimpleGrantedAuthority> getAuthority(User user) {
+        Set<SimpleGrantedAuthority> authorities = new HashSet<>();
+        authorities.add(new SimpleGrantedAuthority(user.getRole()));
+        return authorities;
+    }
+
     @Override
-    public UserDTO loadUserDetailsByUsername(String email) {
-        User user = userRepository.findByEmail(email);
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found with email: " + email);
+    public UserDTO searchUser(String username) {
+        if (userRepository.existsByEmail(username)) {
+            User user=userRepository.findByEmail(username);
+            return modelMapper.map(user,UserDTO.class);
+        } else {
+            return null;
         }
-        return modelMapper.map(user, UserDTO.class);
     }
 
-    /**
-     * Search for a user by email and return UserDTO if exists
-     */
-    @Override
-    public UserDTO searchUser(String email) {
-        return userRepository.findByEmail(email) != null
-                ? modelMapper.map(userRepository.findByEmail(email), UserDTO.class)
-                : null;
-    }
-
-    /**
-     * Register a new user with encrypted password
-     */
     @Override
     public int saveUser(UserDTO userDTO) {
         if (userRepository.existsByEmail(userDTO.getEmail())) {
             return VarList.Not_Acceptable;
         } else {
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-            User user = modelMapper.map(userDTO, User.class);
-            userRepository.save(user);
+            userDTO.setRole("USER");
+            userRepository.save(modelMapper.map(userDTO, User.class));
             return VarList.Created;
         }
     }
