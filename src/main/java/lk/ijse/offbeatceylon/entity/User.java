@@ -1,7 +1,9 @@
 package lk.ijse.offbeatceylon.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.UUID;
@@ -12,7 +14,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -21,6 +22,7 @@ public class User implements Serializable {
     private String email;
     private String password;
     private String name;
+    private String role;
 
     public UUID getUid() {
         return uid;
@@ -52,5 +54,13 @@ public class User implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

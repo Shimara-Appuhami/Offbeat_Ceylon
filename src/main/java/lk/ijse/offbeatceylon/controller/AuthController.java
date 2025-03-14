@@ -16,51 +16,52 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/auth")
-@CrossOrigin(origins = "*")
+@RequestMapping("api/v1/auth")
+@CrossOrigin("*")
+
 public class AuthController {
 
     private final JwtUtil jwtUtil;
     private final AuthenticationManager authenticationManager;
     private final UserServiceImpl userService;
+    private final ResponseDTO responseDTO;
 
-    @Autowired
-    public AuthController(JwtUtil jwtUtil, AuthenticationManager authenticationManager, UserServiceImpl userService) {
+    //constructor injection
+    public AuthController(JwtUtil jwtUtil, AuthenticationManager authenticationManager, UserServiceImpl userService, ResponseDTO responseDTO) {
         this.jwtUtil = jwtUtil;
         this.authenticationManager = authenticationManager;
         this.userService = userService;
+        this.responseDTO = responseDTO;
     }
 
-    /**
-     * Authenticate user and return JWT token if successful
-     */
     @PostMapping("/authenticate")
     public ResponseEntity<ResponseDTO> authenticate(@RequestBody UserDTO userDTO) {
         try {
             authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(userDTO.getEmail(), userDTO.getPassword())
-            );
-
-            UserDetails userDetails = userService.loadUserByUsername(userDTO.getEmail());
-
-            String token = jwtUtil.generateToken(userDetails);
-
-            if (token == null || token.trim().isEmpty()) {
-                return new ResponseEntity<>(new ResponseDTO(
-                        VarList.Internal_Server_Error, "Failed to generate token. Please try again.", null), HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-
-            AuthDTO authDTO = new AuthDTO(userDTO.getEmail(), token);
-            return new ResponseEntity<>(new ResponseDTO(
-                    VarList.OK, "Authentication successful", authDTO), HttpStatus.OK);
-
-        } catch (BadCredentialsException e) {
-            return new ResponseEntity<>(new ResponseDTO(
-                    VarList.Unauthorized, "Invalid email or password", null), HttpStatus.UNAUTHORIZED);
+                    new UsernamePasswordAuthenticationToken(userDTO.getEmail(), userDTO.getPassword()));
         } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(new ResponseDTO(
-                    VarList.Internal_Server_Error, "An error occurred: " + e.getMessage(), null), HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(new ResponseDTO(VarList.Unauthorized, "Invalid Credentials", e.getMessage()));
         }
+
+        UserDTO loadedUser = userService.loadUserDetailsByUsername(userDTO.getEmail());
+        if (loadedUser == null) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body(new ResponseDTO(VarList.Conflict, "Authorization Failure! Please Try Again", null));
+        }
+
+        String token = jwtUtil.generateToken(loadedUser);
+        if (token == null || token.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body(new ResponseDTO(VarList.Conflict, "Authorization Failure! Please Try Again", null));
+        }
+
+        AuthDTO authDTO = new AuthDTO();
+        authDTO.setEmail(loadedUser.getEmail());
+        authDTO.setToken(token);
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(new ResponseDTO(VarList.Created, "Success", authDTO));
     }
+
 }

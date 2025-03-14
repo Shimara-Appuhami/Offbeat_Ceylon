@@ -7,17 +7,28 @@ import java.util.Collection;
 import java.util.List;
 
 
-public class UserDTO implements UserDetails {
-    private String name;
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+public class UserDTO {
     private String email;
     private String password;
+    private String name;
+    private String role;
 
-    public UserDTO(){
-
+    public String getEmail() {
+        return email;
     }
-    public UserDTO(String name, String email, String password) {
-        this.name = name;
+
+    public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
         this.password = password;
     }
 
@@ -29,30 +40,11 @@ public class UserDTO implements UserDetails {
         this.name = name;
     }
 
-    public String getEmail() {
-        return email;
+    public String getRole() {
+        return role;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return "";
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public void setRole(String role) {
+        this.role = role;
     }
 }

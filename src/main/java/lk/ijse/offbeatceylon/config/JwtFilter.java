@@ -1,5 +1,8 @@
 package lk.ijse.offbeatceylon.config;
 
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -8,7 +11,6 @@ import lk.ijse.offbeatceylon.service.impl.UserServiceImpl;
 import lk.ijse.offbeatceylon.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,47 +20,54 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+
 @Component
 public class JwtFilter extends OncePerRequestFilter {
-
     @Autowired
     private JwtUtil jwtUtil;
-
     @Autowired
-    @Lazy
     private UserServiceImpl userService;
-
     @Value("${jwt.secret}")
     private String secretKey;
 
-
-
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-            throws ServletException, IOException {
-
-        String authorizationHeader = request.getHeader("Authorization");
+    protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
+        String authorization = httpServletRequest.getHeader("Authorization");
         String token = null;
         String email = null;
 
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            token = authorizationHeader.substring(7);
+
+        if (null != authorization && authorization.startsWith("Bearer ")) {
+
+            token = authorization.substring(7);
             email = jwtUtil.getUsernameFromToken(token);
-            request.setAttribute("email", email);
+            Claims claims=jwtUtil.getUserRoleCodeFromToken(token);
+            httpServletRequest.setAttribute("email", email);
+            httpServletRequest.setAttribute("role", claims.get("role"));
         }
 
-        if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = userService.loadUserByUsername(email);
+        if (null != email && SecurityContextHolder.getContext().getAuthentication() == null) {
+            UserDetails userDetails
+                    = userService.loadUserByUsername(email);
 
             if (jwtUtil.validateToken(token, userDetails)) {
-                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities()
-                );
-                authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-            }
-        }
+                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
+                        = new UsernamePasswordAuthenticationToken(userDetails,
+                        null, userDetails.getAuthorities());
 
-        filterChain.doFilter(request, response);
+                usernamePasswordAuthenticationToken.setDetails(
+                        new WebAuthenticationDetailsSource().buildDetails(httpServletRequest)
+                );
+
+                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+            }
+
+        }
+        filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
+
+    private Claims getClaimsFromJwtToken(String token) {
+        return Jwts.parser().setSigningKey(secretKey.getBytes()).parseClaimsJws(token).getBody();
+    }
+
 }
