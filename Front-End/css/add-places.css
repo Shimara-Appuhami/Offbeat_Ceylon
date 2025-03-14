@@ -147,3 +147,4 @@ input[type="radio"]:focus {
     outline: none;
     box-shadow: 0 0 3px 3px #AE1100;
 }
+#map { height: 300px; width: 100%; border-radius: 12px;}
