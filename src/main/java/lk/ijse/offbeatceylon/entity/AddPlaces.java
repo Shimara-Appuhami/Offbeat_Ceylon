@@ -1,0 +1,80 @@
+package lk.ijse.offbeatceylon.entity;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+import java.util.UUID;
+
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "addPlace")
+public class AddPlaces {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int placeId;
+    @Column(unique = true)
+    private String placeName;
+    private String aboutPlace;
+    private String district;
+    private String images;
+    private String status;
+    private String location;
+
+    public int getPlaceId() {
+        return placeId;
+    }
+
+    public void setPlaceId(int placeId) {
+        this.placeId = placeId;
+    }
+
+    public String getPlaceName() {
+        return placeName;
+    }
+
+    public void setPlaceName(String placeName) {
+        this.placeName = placeName;
+    }
+
+    public String getAboutPlace() {
+        return aboutPlace;
+    }
+
+    public void setAboutPlace(String aboutPlace) {
+        this.aboutPlace = aboutPlace;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    public String getImages() {
+        return images;
+    }
+
+    public void setImages(String images) {
+        this.images = images;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+}
