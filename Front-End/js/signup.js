@@ -97,6 +97,7 @@ $(document).ready(function() {
         var email = $('#email').val();
         var password = $('#password').val();
         var confirmPassword = $('#confirmPassword').val();
+        var role= $('#role').val();
 
         if (password !== confirmPassword) {
             alert('Passwords do not match!');
@@ -106,7 +107,8 @@ $(document).ready(function() {
         var formData = {
             name: username,
             email: email,
-            password: password
+            password: password,
+            role:role
         };
 
         $.ajax({
@@ -116,21 +118,31 @@ $(document).ready(function() {
             contentType: 'application/json',
             data: JSON.stringify(formData),
             success: function(response) {
-
+                if (response.message === "success") {
+                    localStorage.setItem("authToken", response.data.token);
                     alert('User registered successfully!');
-                    window.location.href = '../js/../index.html';
+                    $('#username').val('');
+                    $('#email').val('');
+                    $('#password').val('');
+                    $('#confirmPassword').val('');
+                    $('#role').val('');
+                    window.location.href="../js/../index.html"
 
-                $('#username').val('');
-                $('#email').val('');
-                $('#password').val('');
-                $('#confirmPassword').val('');
+                }else {
+                    alert(response.message);
+
+                }
+
             },
             error: function(xhr, status, error) {
+                console.log("Error:", error);
+                alert("Error: " + xhr.responseText);
 
                 $('#username').val('');
                 $('#email').val('');
                 $('#password').val('');
                 $('#confirmPassword').val('');
+                $('#role').val('');
 
             }
         });
@@ -161,17 +173,17 @@ $(document).ready(function () {
             contentType: 'application/json',
             data: JSON.stringify(userData),
             success: function (response) {
-                // console.log("Server Response:", response);
-                //
-                // if (response.code === "200") {
-                //     alert("Login successful!");
-                //     localStorage.setItem("authToken", response.data.token);
-                // }else if (response.code === ""){
-                //     alert("No token received.");
-                // }
-                alert("login Success!");
+                console.log("Server Response:", response);
 
-                window.location.href = '../js/../index.html';
+                if (response.message === "success") {
+                    alert("Login successful!");
+
+                    localStorage.setItem("authToken", response.data.token);
+                    window.location.href="../js/../index.html"
+
+                }else {
+                    alert(response.message);
+                }
 
             },
             error: function (xhr, status, error) {
