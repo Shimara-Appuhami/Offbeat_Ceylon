@@ -15,6 +15,15 @@ public class AddPlaceDTO {
     private String status;
     private Double latitude;
     private Double longitude;
+    private String category;
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
 
     public Double getLatitude() {
         return latitude;
