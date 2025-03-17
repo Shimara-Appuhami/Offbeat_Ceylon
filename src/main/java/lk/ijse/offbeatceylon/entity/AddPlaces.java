@@ -20,7 +20,8 @@ public class AddPlaces {
     private String district;
     private String images;
     private String status;
-    private String location;
+    private Double latitude;
+    private Double longitude;
 
     public int getPlaceId() {
         return placeId;
@@ -70,11 +71,19 @@ public class AddPlaces {
         this.status = status;
     }
 
-    public String getLocation() {
-        return location;
+    public Double getLatitude() {
+        return latitude;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
     }
 }
