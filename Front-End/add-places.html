@@ -76,6 +76,11 @@
 
     <!-- Map Section -->
     <h3>Click on the map to select a location</h3>
+
+<!--location search bar-->
+    <input type="text" id="locationSearch" placeholder="Search for a location" />
+
+    <div id="mapContainer"></div>
     <p id="coordinates" style="color: green; font-weight: bold;"></p>
     <div id="map" style="height: 400px; width: 100%;"></div>
 
@@ -86,43 +91,94 @@
 <script src="js/jquery-3.7.1.min.js"></script>
 
 <script>
-    let selectedLat = null;
-    let selectedLng = null;
 
-    function initMap() {
-        const initialPosition = { lat: 7.8731, lng: 80.7718 };
-        const map = new google.maps.Map(document.getElementById("map"), {
-            zoom: 7,
-            center: initialPosition,
-        });
-
+        let selectedLat = null;
+        let selectedLng = null;
+        let map;
         let marker = null;
 
+        function initMap() {
+        const initialPosition = {lat: 7.8731, lng: 80.7718}; // Sri Lanka center
+
+        map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 7,
+        center: initialPosition,
+    });
+
         map.addListener("click", (event) => {
-            selectedLat = event.latLng.lat();
-            selectedLng = event.latLng.lng();
+        selectedLat = event.latLng.lat();
+        selectedLng = event.latLng.lng();
 
-            document.getElementById("coordinates").innerText =
-                "Latitude: " + selectedLat + ", Longitude: " + selectedLng;
+        document.getElementById("coordinates").innerText =
+        "Latitude: " + selectedLat + ", Longitude: " + selectedLng;
 
-            if (marker) marker.setMap(null); // Remove previous marker
-            marker = new google.maps.Marker({
-                position: event.latLng,
-                map: map,
-            });
-        });
+        if (marker) {
+        marker.setPosition(event.latLng);
+    } else {
+        marker = new google.maps.Marker({
+        position: event.latLng,
+        map: map,
+    });
+    }
+    });
+
+        const savedPlaces = JSON.parse(localStorage.getItem("savedPlaces")) || [];
+        if (savedPlaces.length > 0) {
+        const savedPlace = savedPlaces[0];
+        const savedPosition = {lat: savedPlace.latitude, lng: savedPlace.longitude};
+        map.setCenter(savedPosition);
+        map.setZoom(15);
+        marker = new google.maps.Marker({
+        position: savedPosition,
+        map: map,
+    });
+        selectedLat = savedPlace.latitude;
+        selectedLng = savedPlace.longitude;
+        document.getElementById("coordinates").innerText =
+        "Latitude: " + selectedLat + ", Longitude: " + selectedLng;
+    }
     }
 
-    window.onload = initMap;
+        window.onload = initMap;
 
+        $("#locationSearch").on("input", function () {
+        const searchInput = $(this).val();
+        if (!searchInput) return;
 
-    $("#addPlaceForm").on("submit", function (e) {
+        const geocoder = new google.maps.Geocoder();
+        geocoder.geocode({address: searchInput}, function (results, status) {
+        if (status === "OK" && results[0]) {
+        const location = results[0].geometry.location;
+        selectedLat = location.lat();
+        selectedLng = location.lng();
+
+        map.setCenter(location);
+        map.setZoom(15);
+
+        if (marker) {
+        marker.setPosition(location);
+    } else {
+        marker = new google.maps.Marker({
+        position: location,
+        map: map,
+    });
+    }
+
+        document.getElementById("coordinates").innerText =
+        "Latitude: " + selectedLat + ", Longitude: " + selectedLng;
+    } else {
+        console.warn("Geocode was not successful for the following reason: " + status);
+    }
+    });
+    });
+
+        $("#addPlaceForm").on("submit", function (e) {
         e.preventDefault();
 
         if (!selectedLat || !selectedLng) {
-            alert("Please select a location on the map!");
-            return;
-        }
+        alert("Please select a location on the map!");
+        return;
+    }
 
         const placeName = $("#placeName").val();
         const aboutPlace = $("#aboutPlace").val();
@@ -139,28 +195,35 @@
         formData.append('longitude', selectedLng);
 
         for (let i = 0; i < images.length; i++) {
-            formData.append('images', images[i]);
-        }
+        formData.append('images', images[i]);
+    }
 
         $.ajax({
-            url: 'http://localhost:8081/api/v1/addPlace/save',
-            type: 'POST',
-            data: formData,
-            contentType: false,
-            processData: false,
-            success: function (response) {
-                alert('Place added successfully!');
-                $("#addPlaceForm")[0].reset();
-                $("#coordinates").text("");
-                window.location.href="index.html";
-            },
-            error: function (xhr, status, error) {
-                console.error('Error:', error);
-                alert('Failed to add place!');
-            }
-        });
+        url: 'http://localhost:8081/api/v1/addPlace/save',
+        type: 'POST',
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function (response) {
+        alert('Place added successfully!');
+        $("#addPlaceForm")[0].reset();
+        $("#coordinates").text("");
+        localStorage.removeItem("savedPlaces");
+        window.location.href = "index.html";
+    },
+        error: function (xhr, status, error) {
+        console.error('Error:', error);
+        alert('Failed to add place!');
+    }
+    });
+    });
+
+        window.addEventListener("beforeunload", function () {
+        if (selectedLat && selectedLng) {
+        const currentPlace = {latitude: selectedLat, longitude: selectedLng};
+        localStorage.setItem("savedPlaces", JSON.stringify([currentPlace]));
+    }
     });
 </script>
-
 </body>
 </html>
