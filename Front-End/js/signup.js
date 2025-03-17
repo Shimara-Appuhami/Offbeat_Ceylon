@@ -88,7 +88,10 @@ function setCookieVariable() {
     return "fsdf";
 }
 // window.openPopupSignup();
+
+
 ////////////////////////
+
 $(document).ready(function() {
     $('#btn-signup').click(function(event) {
         event.preventDefault();
