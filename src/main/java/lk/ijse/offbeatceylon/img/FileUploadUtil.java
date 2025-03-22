@@ -15,7 +15,6 @@ public class FileUploadUtil {
 
         Path uploadPath = Paths.get("src/main/resources/static/" + uploadDir);
 
-        // Create directories if they don't exist
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath);
         }
