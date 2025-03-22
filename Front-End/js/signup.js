@@ -121,8 +121,7 @@ $(document).ready(function() {
             contentType: 'application/json',
             data: JSON.stringify(formData),
             success: function(response) {
-                if (response.message === "success") {
-                    localStorage.setItem("authToken", response.data.token);
+                console.log(response);
                     alert('User registered successfully!');
                     $('#username').val('');
                     $('#email').val('');
@@ -131,10 +130,6 @@ $(document).ready(function() {
                     $('#role').val('');
                     window.location.href="../js/../index.html"
 
-                }else {
-                    alert(response.message);
-
-                }
 
             },
             error: function(xhr, status, error) {
@@ -177,16 +172,19 @@ $(document).ready(function () {
             data: JSON.stringify(userData),
             success: function (response) {
                 console.log("Server Response:", response);
-
-                if (response.message === "success") {
-                    alert("Login successful!");
-
-                    localStorage.setItem("authToken", response.data.token);
-                    window.location.href="../js/../index.html"
-
-                }else {
-                    alert(response.message);
+                localStorage.setItem('token', response.data.token);
+                if (response.code === 201) {
+                    if (response.role='USER'){
+                        alert('Welcome User!');
+                        window.location.href="../js/../index.html"
+                    }else if (response.role='ADMIN'){
+                        alert('Welcome Admin!');
+                        window.location.href="../js/../index.html"
+                    }else {
+                        alert('Invalid Credentials!');
+                    }
                 }
+
 
             },
             error: function (xhr, status, error) {
