@@ -112,7 +112,7 @@
 
     <button type="submit" class="submit-btn">Add Place</button>
     <button type="button" class="submit-btn" id="btn-update-place">update</button>
-    <button type="button" class="submit-btn" onclick="deletePlace()">delete</button>
+    <button type="button" class="submit-btn" id="btn-delete-place" >delete</button>
 
 </form>
 
@@ -368,7 +368,13 @@
     });
 
     //delete
-    function deletePlace(placeId) {
+    $("#btn-delete-place").on("click", function () {
+        if (!placeId || isNaN(placeId)) {
+            alert("Please search for a valid place before deleting!");
+            console.warn("Delete attempt failed: Invalid placeId.");
+            return;
+        }
+
         if (confirm("Are you sure you want to delete this place?")) {
             $.ajax({
                 url: `http://localhost:8081/api/v1/addPlace/delete/${placeId}`,
@@ -378,15 +384,27 @@
                 },
                 success: function (response) {
                     alert("Place deleted successfully!");
-                    window.location.reload();
+                    console.log("Delete Response:", response);
+
+                    placeId = null;
+                    $("#placeName").val("");
+                    $("#category").val("");
+                    $("#aboutPlace").val("");
+                    $("#district").val("");
+                    $("input[name='status']").prop("checked", false);
+                    $("#coordinates").text("");
+                    $("#images").hide();
+                    if (marker) {
+                        marker.setMap(null);
+                    }
                 },
                 error: function (xhr, status, error) {
-                    alert("Failed to delete place.");
-                    console.error("Error:", error);
+                    console.error("Error deleting place:", error);
+                    alert("Error deleting place details!");
                 }
             });
         }
-    }
+    });
 
 
 
