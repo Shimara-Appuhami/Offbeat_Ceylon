@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/v1/auth")
-@CrossOrigin("*")
+@CrossOrigin("http://localhost:63342")
 
 public class AuthController {
 
@@ -26,7 +26,6 @@ public class AuthController {
     private final UserServiceImpl userService;
     private final ResponseDTO responseDTO;
 
-    //constructor injection
     public AuthController(JwtUtil jwtUtil, AuthenticationManager authenticationManager, UserServiceImpl userService, ResponseDTO responseDTO) {
         this.jwtUtil = jwtUtil;
         this.authenticationManager = authenticationManager;

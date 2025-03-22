@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("api/v1/admin")
-@CrossOrigin("*")
+@CrossOrigin("http://localhost:63342")
 
 public class AdminController {
     @GetMapping("/test1")
