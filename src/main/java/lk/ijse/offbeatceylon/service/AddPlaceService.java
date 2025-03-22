@@ -12,10 +12,9 @@ public interface AddPlaceService {
 //    List<AddPlaces> getAllPlaces();
 
     AddPlaces getPlaceByName(String placeName);
-    public AddPlaces getPlaceById(Long placeId);
+    public AddPlaces getPlaceById(int placeId);
 
-    boolean deletePlace(Long placeId);
-
+    public boolean deletePlaceById(int placeId);
 //    ResponseEntity<String> updatePlace(int placeId, String placeName, String category, String aboutPlace, String district, String status, double latitude, double longitude, MultipartFile image);
 
     AddPlaces updatePlace(int placeId, String placeName, String category, String aboutPlace, String district, String status, double latitude, double longitude, MultipartFile image);

@@ -128,9 +128,11 @@ public class AddPlaceController {
 
     //delete
     @DeleteMapping("/delete/{placeId}")
-    public ResponseEntity<String> deletePlace(@PathVariable Long placeId) {
-        if (addPlaceService.deletePlace(placeId)) {
-            return ResponseEntity.ok("Place deleted successfully.");
+    public ResponseEntity<String> deletePlace(@PathVariable("placeId") int placeId) {
+        boolean isDeleted = addPlaceService.deletePlaceById(placeId);
+
+        if (isDeleted) {
+            return ResponseEntity.status(HttpStatus.OK).body("Place deleted successfully.");
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Place not found.");
         }

@@ -30,7 +30,7 @@ public class AddPlaces {
         this.category = category;
     }
 
-    public long getPlaceId() {
+    public int getPlaceId() {
         return placeId;
     }
 

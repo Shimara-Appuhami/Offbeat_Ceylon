@@ -44,7 +44,7 @@ public class AddPlaceServiceImpl implements AddPlaceService {
         return addPlaceRepo.findByPlaceName(placeName);
     }
 
-    public AddPlaces getPlaceById(Long placeId) {
+    public AddPlaces getPlaceById(int placeId) {
         return addPlaceRepo.findById(placeId).orElse(null);
     }
 
@@ -59,13 +59,14 @@ public class AddPlaceServiceImpl implements AddPlaceService {
         return null;
     }
 
-    @Override
-    public boolean deletePlace(Long placeId) {
+    //delete existing
+    public boolean deletePlaceById(int placeId) {
         if (addPlaceRepo.existsById(placeId)) {
             addPlaceRepo.deleteById(placeId);
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
 
     @Override
