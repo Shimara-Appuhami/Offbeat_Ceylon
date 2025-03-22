@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
-import java.util.UUID;
-
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,8 +20,17 @@ public class AddPlaces {
     private String status;
     private Double latitude;
     private Double longitude;
+    private String category;
 
-    public int getPlaceId() {
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public long getPlaceId() {
         return placeId;
     }
 

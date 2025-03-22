@@ -18,6 +18,32 @@
     <label>
         <input type="text" placeholder="Place Name" required id="placeName" name="placeName" />
     </label>
+    <label>
+        <select id="category" name="category">
+            <option value="" disabled selected>Select Category </option>
+            <option value="hidden">Hidden & Unexplored Places</option>
+            <option value="kingdom">Kingdom</option>
+            <option value="waterfall">Waterfall</option>
+            <option value="mountain">Mountain</option>
+            <option value="temple">Temple</option>
+            <option value="church">Church</option>
+            <option value="lake">Lake</option>
+            <option value="cave">Cave</option>
+            <option value="island">Island</option>
+            <option value="adventure">Adventure</option>
+            <option value="lighthouse">Lighthouse</option>
+            <option value="teaEstate">Tea Estate</option>
+            <option value="beach">Beach</option>
+            <option value="forest">Forest</option>
+            <option value="museum">Museum</option>
+            <option value="park">Park</option>
+            <option value="zoo">Zoo</option>
+            <option value="hospital">Hospital</option>
+            <option value="park">Park</option>
+            <option value="beach">Beach</option>
+
+        </select>
+    </label>
 
     <label>
         <input type="text" placeholder="About Place" id="aboutPlace" name="aboutPlace" />
@@ -74,7 +100,7 @@
         </div>
     </div>
 
-    <!-- Map Section -->
+    <!-- map Section -->
     <h3>Click on the map to select a location</h3>
 
 <!--location search bar-->
@@ -85,20 +111,24 @@
     <div id="map" style="height: 400px; width: 100%;"></div>
 
     <button type="submit" class="submit-btn">Add Place</button>
+    <button type="button" class="submit-btn" id="btn-update-place">update</button>
+    <button type="button" class="submit-btn" onclick="deletePlace()">delete</button>
 
 </form>
 
 <script src="js/jquery-3.7.1.min.js"></script>
 
 <script>
+    const token=localStorage.getItem('token');
 
-        let selectedLat = null;
+
+    let selectedLat = null;
         let selectedLng = null;
         let map;
         let marker = null;
 
         function initMap() {
-        const initialPosition = {lat: 7.8731, lng: 80.7718}; // Sri Lanka center
+        const initialPosition = {lat: 7.8731, lng: 80.7718};
 
         map = new google.maps.Map(document.getElementById("map"), {
         zoom: 7,
@@ -185,6 +215,7 @@
         const district = $("#district").val();
         const status = $('input[name="status"]:checked').val();
         const images = $("#images")[0].files;
+        const category=$("#category").val();
 
         const formData = new FormData();
         formData.append('placeName', placeName);
@@ -193,23 +224,30 @@
         formData.append('status', status);
         formData.append('latitude', selectedLat);
         formData.append('longitude', selectedLng);
+        formData.append('category', category);
 
         for (let i = 0; i < images.length; i++) {
         formData.append('images', images[i]);
     }
-
         $.ajax({
         url: 'http://localhost:8081/api/v1/addPlace/save',
         type: 'POST',
         data: formData,
         contentType: false,
         processData: false,
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem('token')
+            },
         success: function (response) {
+
+            console.log("Response received:", response);
+            console.log("token"+token);
+
         alert('Place added successfully!');
         $("#addPlaceForm")[0].reset();
         $("#coordinates").text("");
-        localStorage.removeItem("savedPlaces");
-        window.location.href = "index.html";
+        // localStorage.removeItem("savedPlaces");
+        // window.location.href = "index.html";
     },
         error: function (xhr, status, error) {
         console.error('Error:', error);
@@ -224,6 +262,134 @@
         localStorage.setItem("savedPlaces", JSON.stringify([currentPlace]));
     }
     });
+
+    let placeId = null;
+
+   //search
+    $("#placeName").on("keypress", function (event) {
+        if (event.which === 13) {
+            event.preventDefault();
+            const placeName = $(this).val().trim();
+
+            if (placeName) {
+                $.ajax({
+                    url: `http://localhost:8081/api/v1/addPlace/getAllByName/${placeName}`,
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + localStorage.getItem('token')
+                    },
+                    success: function (response) {
+                        console.log("Response received:", response);
+
+                        if (response && response.placeId) {
+                            placeId = response.placeId;
+
+                            $("#category").val(response.category);
+                            $("#aboutPlace").val(response.aboutPlace);
+                            $("#district").val(response.district);
+                            $("input[name='status'][value='" + response.status + "']").prop("checked", true);
+
+                            if (response.latitude && response.longitude) {
+                                selectedLat = response.latitude;
+                                selectedLng = response.longitude;
+
+                                map.setCenter({ lat: selectedLat, lng: selectedLng });
+                                map.setZoom(15);
+
+                                if (marker) {
+                                    marker.setPosition({ lat: selectedLat, lng: selectedLng });
+                                } else {
+                                    marker = new google.maps.Marker({
+                                        position: { lat: selectedLat, lng: selectedLng },
+                                        map: map,
+                                    });
+                                }
+
+                                $("#coordinates").text(`Latitude: ${selectedLat}, Longitude: ${selectedLng}`);
+                            }
+
+                            if (response.imageUrl) {
+                                $("#images").attr("src", response.imageUrl).show();
+                            } else {
+                                $("#images").hide();
+                            }
+                        } else {
+                            alert("Place not found or placeId is missing!");
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error fetching place:", error);
+                        alert("Error fetching place details!");
+                    }
+                });
+            }
+        }
+    });
+
+    $("#btn-update-place").on("click", function () {
+        if (placeId === null) {
+            alert("Please search for a place first!");
+            console.warn("Update attempt failed: placeId is null.");
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("placeName", $("#placeName").val().trim());
+        formData.append("category", $("#category").val());
+        formData.append("aboutPlace", $("#aboutPlace").val().trim());
+        formData.append("district", $("#district").val());
+        formData.append("status", $("input[name='status']:checked").val());
+        formData.append("latitude", selectedLat);
+        formData.append("longitude", selectedLng);
+
+        const imageInput = $("#imageUpload")[0];
+        if (imageInput && imageInput.files.length > 0) {
+            formData.append("image", imageInput.files[0]);
+        }
+
+        $.ajax({
+            url: `http://localhost:8081/api/v1/addPlace/update/${placeId}`,
+            type: "PUT",
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem('token')
+            },
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                alert("Place updated successfully!");
+                console.log("Update Response:", response);
+            },
+            error: function (xhr, status, error) {
+                console.error("Error updating place:", error);
+                alert("Error updating place details!");
+            }
+        });
+    });
+
+    //delete
+    function deletePlace(placeId) {
+        if (confirm("Are you sure you want to delete this place?")) {
+            $.ajax({
+                url: `http://localhost:8081/api/v1/addPlace/delete/${placeId}`,
+                type: "DELETE",
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem('token')
+                },
+                success: function (response) {
+                    alert("Place deleted successfully!");
+                    window.location.reload();
+                },
+                error: function (xhr, status, error) {
+                    alert("Failed to delete place.");
+                    console.error("Error:", error);
+                }
+            });
+        }
+    }
+
+
+
 </script>
 </body>
 </html>
