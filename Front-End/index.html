@@ -2,17 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Landing page</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
-
+    <title>Landing Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-<!--navigation bar-->
 
+<!-- Navigation Bar -->
 <input type="checkbox" id="active">
 <label for="active" class="menu-btn"><i class="fas fa-bars"></i></label>
 <div class="wrapper">
@@ -27,6 +26,7 @@
     </ul>
 </div>
 
+<!-- District Selection -->
 <label for="district">Select District:</label>
 <select name="district" id="district">
     <option value="">-- Select District --</option>
@@ -57,109 +57,112 @@
     <option value="Vavuniya">Vavuniya</option>
 </select>
 
-
-<!--search bar-->
+<!-- Search Bar -->
 <div class="searchBox">
-
     <input class="searchInput" type="text" name="" placeholder="Search">
-    <button class="searchButton" >
+    <button class="searchButton">
         <i class="material-icons">
-            <img id="img-search" src="assets/icon/icons8-search-50.png">
+            <img id="img-search" src="assets/icon/icons8-search-50.png" alt="Search">
         </i>
     </button>
 </div>
-<div>
-<!--        <img id="front-img" src="assets/images/Gemini_Generated_Image_3eocht3eocht3eoc.jpg">-->
 
-    <!--    <img id="front-img" src="assets/images/DALL·E%202025-03-09%2014.57.48%20-%20A%20picturesque%20landscape%20of%20Sri%20Lanka,%20featuring%20majestic%20mountains,%20cascading%20waterfalls,%20ancient%20temples,%20elephants,%20and%20traditional%20cultural%20element.webp">-->
+<!-- Add New Places & Category Buttons -->
+<div class="button-group">
+    <button class="shiny-cta" id="btn-add-place">
+        <a href="add-places.html">+ Add Places</a>
+    </button>
+    <button class="shiny-cta">
+        <a href="add-category-form.html">+ Add Category</a>
+    </button>
 </div>
 
-<!--add new places button-->
-<button class="shiny-cta" id="btn-add-place" type="submit">
-    <a href="add-places.html"><span>+ Add Places</span></a>
-</button>
-
-<!--category cards-->
-<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
-
+<!-- Category Cards -->
 <section class="hero-section">
-    <div class="card-grid">
-        <a class="card" href="#">
-            <div class="card__background" style="background-image: url( https://lh3.googleusercontent.com/pw/ACtC-3fzTbvNX4Wpus9w5NQ-8_p605yMOB8ceNn3fc_aU7uti-pLIbOEsWMZ6I766B0g14hnU3qLG0Gc6qaA1geDUJfXxaLubsyG1pwuts2Cvmf5T27dq5CnQwFjJWdJFGW3yLylAnirIU0iTAtOqtTREzS6=w496-h622-no?authuser=2)"></div>
-            <div class="card__content">
-                <p class="card__category">MOUNTAINS</p>
-<!--                <h3 class="card__heading">Example Card Heading</h3>-->
-            </div>
-        </a>
-
-        <a class="card" href="#">
-            <div class="card__background" style="background-image: url(https://live.staticflickr.com/4295/35669571800_b2fd56e3b9_z.jpg)"></div>
-            <div class="card__content">
-                <p class="card__category">WATERFALLS</p>
-<!--                <h3 class="card__heading">Example Card Heading</h3>-->
-            </div>
-        </a>
-        <a class="card" href="#">
-            <div class="card__background" style="background-image: url(https://www.andbeyond.com/wp-content/uploads/sites/5/Royal-Palace-of-King-Parakramabahu-in-the-world-heritage-city-Polonnaruwa-Sri-Lanka.jpg)"></div>
-            <div class="card__content">
-                <p class="card__category">KINGDOMS</p>
-<!--                <h3 class="card__heading">Example Card Heading</h3>-->
-            </div>
-            </li>
-        </a>
-            <a class="card" href="#">
-                <div class="card__background" style="background-image: url(https://360view.lk/wp-content/uploads/2020/04/XpCYPzVTwRn-1.jpg)"></div>
-                <div class="card__content">
-                    <p class="card__category">TEMPLES</p>
-
-<!--                    <h3 class="card__heading">Example Card Heading</h3>-->
-                </div>
-            </a>
-            <div>
-            </div>
+    <div class="card-grid" id="category-cards">
+        <!-- Cards will be dynamically added here -->
     </div>
 </section>
-<!--review board-->
+
+<!-- Review Board -->
 <div class="review-board">
     <h2>Customer Reviews</h2>
 
     <div class="review-card">
-        <img src="assets/profile1.jpg" alt="Person 1" class="profile-pic">
         <div class="review-content">
             <h3>John Doe</h3>
-            <div class="stars">
-                ★★★★☆
-            </div>
+            <div class="stars">★★★★☆</div>
             <p>"Amazing service! Highly recommended for anyone looking for quality."</p>
         </div>
     </div>
 
     <div class="review-card">
-        <img src="assets/profile2.jpg" alt="Person 2" class="profile-pic">
         <div class="review-content">
             <h3>Jane Smith</h3>
-            <div class="stars">
-                ★★★★★
-            </div>
+            <div class="stars">★★★★★</div>
             <p>"Very professional and quick response. Will come back again for sure!"</p>
         </div>
     </div>
 
     <div class="review-card">
-        <img src="assets/profile3.jpg" alt="Person 3" class="profile-pic">
         <div class="review-content">
             <h3>Emily Johnson</h3>
-            <div class="stars">
-                ★★★☆☆
-            </div>
+            <div class="stars">★★★☆☆</div>
             <p>"Loved the experience. They are really supportive and friendly."</p>
         </div>
     </div>
 </div>
 
+<!-- Scripts -->
 <script src="js/jquery-3.7.1.min.js"></script>
 <script src="js/add-places.js"></script>
+<script src="js/add-category.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        function fetchCategories() {
+            $.ajax({
+                url: 'http://localhost:8081/api/v1/category/getAll',
+                type: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    console.log("Categories fetched:", response);
+                    const cardContainer = $('#category-cards');
+                    cardContainer.empty();
+
+                    if (!response || response.length === 0) {
+                        cardContainer.append('<p>No categories available.</p>');
+                        return;
+                    }
+
+                    response.forEach(category => {
+                        const safeCategoryName = $('<div>').text(category.categoryName).html();
+                        const imageFilename = category.categoryImage ? category.categoryImage.split("\\").pop() : "default.jpg";
+                        const imageUrl = `http://localhost:8081/api/v1/uploads/${imageFilename}`;
+
+                        cardContainer.append(`
+                            <a class="card" href="#">
+                                <img src="${imageUrl}" class="card__background" alt="${safeCategoryName}">
+                                <div class="card__content">
+                                    <p class="card__category">${safeCategoryName}</p>
+                                </div>
+                            </a>
+                        `);
+                    });
+                },
+                error: function (xhr) {
+                    console.error("Error fetching categories:", xhr.responseText);
+                    $('#category-cards').empty().append('<p>Failed to load categories. Please try again later.</p>');
+                }
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                console.error("AJAX error:", textStatus, errorThrown);
+            });
+        }
+
+        fetchCategories();
+    });
+</script>
 
 </body>
 </html>
