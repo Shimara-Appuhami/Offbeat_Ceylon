@@ -13,19 +13,20 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 
-
 @Service
 @Transactional
 public class AddPlaceServiceImpl implements AddPlaceService {
 
     @Autowired
     private AddPlaceRepo addPlaceRepo;
+
     @Autowired
     private ModelMapper modelMapper;
 
     @Override
     public AddPlaces savePlace(AddPlaces place) {
-        return addPlaceRepo.save(place);
+        AddPlaces savedPlace = addPlaceRepo.save(place);
+        return modelMapper.map(savedPlace, AddPlaces.class);
     }
 
     @Override
@@ -33,22 +34,16 @@ public class AddPlaceServiceImpl implements AddPlaceService {
         return addPlaceRepo.existsByPlaceName(placeName);
     }
 
-
-//    @Override
-//    public List<AddPlaces> getAllPlaces() {
-//        return addPlaceRepo.findAll();
-//    }
-
     @Override
     public AddPlaces getPlaceByName(String placeName) {
         return addPlaceRepo.findByPlaceName(placeName);
     }
 
+    @Override
     public AddPlaces getPlaceById(int placeId) {
         return addPlaceRepo.findById(placeId).orElse(null);
     }
 
-    //update
     @Override
     public AddPlaces updatePlace(AddPlaces place) {
         AddPlaces existingPlace = addPlaceRepo.findById(place.getPlaceId()).orElse(null);
@@ -59,21 +54,19 @@ public class AddPlaceServiceImpl implements AddPlaceService {
         return null;
     }
 
-    //delete existing
+    @Override
     public boolean deletePlaceById(int placeId) {
         if (addPlaceRepo.existsById(placeId)) {
             addPlaceRepo.deleteById(placeId);
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     @Override
     public AddPlaces updatePlace(int placeId, String placeName, String category, String aboutPlace, String district,
                                  String status, double latitude, double longitude, MultipartFile image) {
         AddPlaces existingPlace = addPlaceRepo.findByPlaceId(placeId);
-
         if (existingPlace == null) {
             return null;
         }
@@ -97,6 +90,7 @@ public class AddPlaceServiceImpl implements AddPlaceService {
         }
         return addPlaceRepo.save(existingPlace);
     }
+
     private String saveImage(String fileName, MultipartFile image) throws IOException {
         String directoryPath = "C:\\Users\\shima\\AppData\\Local\\Temp\\tomcat.8081.6928745218397181951\\work\\Tomcat\\localhost\\ROOT\\resources\\static\\imageFolder";
 
@@ -110,7 +104,4 @@ public class AddPlaceServiceImpl implements AddPlaceService {
 
         return "/resources/static/imageFolder/" + fileName;
     }
-
 }
-
-
