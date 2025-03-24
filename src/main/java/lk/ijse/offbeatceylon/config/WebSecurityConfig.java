@@ -51,12 +51,29 @@ public class WebSecurityConfig {
                                 "/api/v1/admin/test1",
                                 "/api/v1/admin/test2",
                                 "/api/v1/addPlace/save",
-                                "/api/v1/img/upload",
+                                "/api/v1/img/upload/**",
                                 "/api/v1/addPlace/**",
                                 "/api/v1/addPlace/getAllByName/${placeName}*",
                                 "/api/v1/addPlace/update/${placeId}",
                                 "/api/v1/addPlace/delete/${placeId}",
+                                "/api/v1/category/**",
+                                "api/v1/category/getAll",
+                                "/api/v1/category/save",
+                                "/api/v1/category/getById/${categoryId}",
+                                "/api/v1/category/update/${categoryId}",
+                                "/api/v1/category/delete/${categoryId}",
+                                "/api/v1/category/resources/static/imageFolder/{filename}",
+                                "/api/v1/category/resources/static/imageFolder",
+                                "/api/v1/upload/img",
+                                "/api/v1/uploads/",
+                                "/api/v1/uploads/**",
+
+
+
+
+
                                 "/swagger-ui.html").permitAll()
+                        .requestMatchers("/uploads/", "/api/v1/uploads/", "/uploads/images/").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
