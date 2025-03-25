@@ -333,6 +333,8 @@ input[type="checkbox"] {
 .card{
     list-style: none;
     position: relative;
+    width: 200px;
+    height: 250px;
 }
 
 .card:before{
@@ -343,6 +345,8 @@ input[type="checkbox"] {
 }
 
 .card__background{
+    width: 200px;
+    height: 250px;
     background-size: cover;
     background-position: center;
     border-radius: var(--spacing-l);
