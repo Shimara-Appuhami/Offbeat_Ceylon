@@ -1,6 +1,8 @@
 package lk.ijse.offbeatceylon.controller;
 
+import lk.ijse.offbeatceylon.dto.ResponseDTO;
 import lk.ijse.offbeatceylon.entity.AddPlaces;
+import lk.ijse.offbeatceylon.entity.Category;
 import lk.ijse.offbeatceylon.repo.AddPlaceRepo;
 import lk.ijse.offbeatceylon.service.AddPlaceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +24,16 @@ import java.util.List;
 @CrossOrigin("http://localhost:63342")
 public class AddPlaceController {
 
-    @Autowired
-    private AddPlaceRepo addPlacesRepo;
+    private final ResponseDTO responseDTO;
+    private final AddPlaceService addPlaceService;
 
-    @Autowired
-    private AddPlaceService addPlaceService;
+    public AddPlaceController(ResponseDTO responseDTO, AddPlaceService addPlaceService) {
+        this.responseDTO = responseDTO;
+        this.addPlaceService = addPlaceService;
+    }
 
     @PostMapping("/save")
-    public ResponseEntity<String> savePlace(
+    public ResponseEntity<ResponseDTO> savePlace(
             @RequestParam("placeName") String placeName,
             @RequestParam("aboutPlace") String aboutPlace,
             @RequestParam("district") String district,
@@ -37,24 +41,24 @@ public class AddPlaceController {
             @RequestParam("latitude") double latitude,
             @RequestParam("longitude") double longitude,
             @RequestParam("category")String category,
-            @RequestParam(value = "images", required = false) List<MultipartFile> images) throws IOException {
+            @RequestParam(value = "images", required = false) MultipartFile placeImages) throws IOException {
 
-        if (placeName.isEmpty() || aboutPlace.isEmpty() || district.isEmpty() || status.isEmpty()||category.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("All fields are required.");
-        }
+//        if (placeName.isEmpty() || aboutPlace.isEmpty() || district.isEmpty() || status.isEmpty()||category.isEmpty()) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("All fields are required.");
+//        }
+//
+//        if (addPlaceService.existsByPlaceName(placeName)) {
+//            return ResponseEntity.status(HttpStatus.CONFLICT).body("Place with this name already exists.");
+//        }
 
-        if (addPlaceService.existsByPlaceName(placeName)) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Place with this name already exists.");
-        }
-
-        List<String> imagePaths = new ArrayList<>();
-        if (images != null) {
-            for (MultipartFile image : images) {
-                String fileName = StringUtils.cleanPath(image.getOriginalFilename());
-                String imagePath = saveImage(fileName, image);
-                imagePaths.add(imagePath);
-            }
-        }
+//        List<String> imagePaths = new ArrayList<>();
+//        if (images != null) {
+//            for (MultipartFile image : images) {
+//                String fileName = StringUtils.cleanPath(image.getOriginalFilename());
+//                String imagePath = saveImage(fileName, image);
+//                imagePaths.add(imagePath);
+//            }
+//        }
 
         AddPlaces place = new AddPlaces();
         place.setPlaceName(placeName);
@@ -64,30 +68,37 @@ public class AddPlaceController {
         place.setLatitude(latitude);
         place.setLongitude(longitude);
         place.setCategory(category);
-        if (!imagePaths.isEmpty()) {
-            place.setImages(String.join(",", imagePaths));
+        boolean isAdded=addPlaceService.savePlace(place,placeImages);
+        if (isAdded) {
+            responseDTO.setMessage("Place listed for place successfully!");
+            responseDTO.setData(HttpStatus.CREATED);
+            return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
+        } else {
+            responseDTO.setMessage("Failed to list place for save.");
+            responseDTO.setData(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(responseDTO, HttpStatus.BAD_REQUEST);
         }
-
-        addPlaceService.savePlace(place);
-
-        return ResponseEntity.ok("place saved successfully.");
     }
 
-    private String saveImage(String fileName, MultipartFile image) throws IOException {
-        String directoryPath = "C:\\Users\\shima\\AppData\\Local\\Temp\\tomcat.8081.6928745218397181951\\work\\Tomcat\\localhost\\ROOT\\resources\\static\\imageFolder";
-
-        File directory = new File(directoryPath);
-        if (!directory.exists()) {
-            directory.mkdirs();
+    //get All
+    @GetMapping("/getAll")
+    public ResponseEntity<List<AddPlaces>> getAllPlaces() {
+        List<AddPlaces> places = addPlaceService.getAllPlaces();
+        if (!places.isEmpty()) {
+            return ResponseEntity.ok(places);
+        } else {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
         }
-
-        File file = new File(directory, fileName);
-
-        image.transferTo(file);
-
-        String relativePath = "/resources/static/imageFolder/" + fileName;
-        return relativePath;
-
+    }
+    //get All by category
+    @GetMapping("/getAllByCategory/{category}")
+    public ResponseEntity<List<AddPlaces>> getPlacesByCategory(@PathVariable String category) {
+        List<AddPlaces> places = addPlaceService.getPlacesByCategory(category);
+        if (!places.isEmpty()) {
+            return ResponseEntity.ok(places);
+        } else {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+        }
     }
     //get All by name
     @GetMapping("/getAllByName/{placeName}")
@@ -97,6 +108,16 @@ public class AddPlaceController {
             return ResponseEntity.ok(place);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+    //get All by district
+    @GetMapping("/getAllByDistrict/{district}")
+    public ResponseEntity<List<AddPlaces>> getPlacesByDistrict(@PathVariable String district) {
+        List<AddPlaces> places = addPlaceService.getPlacesByDistrict(district);
+        if (!places.isEmpty()) {
+            return ResponseEntity.ok(places);
+        } else {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
         }
     }
     @PutMapping("/update/{placeId}")

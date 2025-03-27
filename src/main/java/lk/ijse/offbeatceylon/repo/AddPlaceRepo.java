@@ -3,6 +3,7 @@ package lk.ijse.offbeatceylon.repo;
 import lk.ijse.offbeatceylon.entity.AddPlaces;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface AddPlaceRepo extends JpaRepository<AddPlaces,Integer> {
@@ -10,4 +11,7 @@ public interface AddPlaceRepo extends JpaRepository<AddPlaces,Integer> {
     AddPlaces findByPlaceName(String placeName);
     AddPlaces findByPlaceId(int placeId);
 
+    List<AddPlaces> findAllByCategory(String category);
+
+    List<AddPlaces> findAllByDistrict(String district);
 }
