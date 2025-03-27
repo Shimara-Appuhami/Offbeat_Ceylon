@@ -12,6 +12,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -23,10 +28,86 @@ public class AddPlaceServiceImpl implements AddPlaceService {
     @Autowired
     private ModelMapper modelMapper;
 
+//    @Override
+//    public boolean savePlace(AddPlaces place MultipartFile image) {
+//
+//            if (image != null && !image.isEmpty()) {
+//                String imagePath = saveImage(image);
+//                if (imagePath != null) {
+//                    category.setCategoryImage(imagePath);
+//                } else {
+//                    return false;
+//                }
+//            }
+//
+//            categoryRepo.save(category);
+//            return true;
+//
+//    }
+
+
+
     @Override
-    public AddPlaces savePlace(AddPlaces place) {
-        AddPlaces savedPlace = addPlaceRepo.save(place);
-        return modelMapper.map(savedPlace, AddPlaces.class);
+    public boolean savePlace(AddPlaces place, MultipartFile image) {
+        try {
+
+        if (image != null && !image.isEmpty()) {
+            String imagePath = saveImage(image);
+            if (imagePath != null) {
+                place.setImages(imagePath);
+            } else {
+                return false;
+            }
+        }
+
+        addPlaceRepo.save(place);
+        return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+
+    }
+    public String saveImage(MultipartFile image) throws IOException {
+        try {
+            String fileName = UUID.randomUUID().toString();
+
+            String fileExtension = getFileExtension(image);
+            if (fileExtension == null) {
+                return null;
+            }
+
+            String projectRootPath = System.getProperty("user.dir");
+
+            Path path = Paths.get(projectRootPath, "uploads", "images", fileName + fileExtension);
+
+            Files.createDirectories(path.getParent());
+
+            image.transferTo(path.toFile());
+
+            return path.toString();
+        } catch (IOException e) {
+            System.err.println("Error saving image: " + e.getMessage());
+        }
+        return null;
+    }
+
+    private String getFileExtension(MultipartFile image) {
+        String contentType = image.getContentType();
+        if (contentType != null) {
+            switch (contentType) {
+                case "image/jpeg":
+                    return ".jpg";
+                case "image/png":
+                    return ".png";
+                case "image/gif":
+                    return ".gif";
+                default:
+                    return null;
+            }
+        }
+        return null;
     }
 
     @Override
@@ -89,6 +170,21 @@ public class AddPlaceServiceImpl implements AddPlaceService {
             }
         }
         return addPlaceRepo.save(existingPlace);
+    }
+
+    @Override
+    public List<AddPlaces> getAllPlaces() {
+        return addPlaceRepo.findAll();
+    }
+
+    @Override
+    public List<AddPlaces> getPlacesByCategory(String category) {
+        return addPlaceRepo.findAllByCategory(category);
+    }
+
+    @Override
+    public List<AddPlaces> getPlacesByDistrict(String district) {
+        return addPlaceRepo.findAllByDistrict(district);
     }
 
     private String saveImage(String fileName, MultipartFile image) throws IOException {

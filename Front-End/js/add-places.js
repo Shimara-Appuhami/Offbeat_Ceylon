@@ -93,7 +93,7 @@ $("#addPlaceForm").on("submit", function (e) {
     const aboutPlace = $("#aboutPlace").val();
     const district = $("#district").val();
     const status = $('input[name="status"]:checked').val();
-    const images = $("#images")[0].files;
+    // const images = $("#images")[0].files;
     const category=$("#category").val();
 
     const formData = new FormData();
@@ -105,8 +105,11 @@ $("#addPlaceForm").on("submit", function (e) {
     formData.append('longitude', selectedLng);
     formData.append('category', category);
 
-    for (let i = 0; i < images.length; i++) {
-        formData.append('images', images[i]);
+    // for (let i = 0; i < images.length; i++) {
+    //     formData.append('images', images[i]);
+    // }
+    if ($('#images')[0].files[0]) {
+        formData.append('images', $('#images')[0].files[0]);
     }
     $.ajax({
         url: 'http://localhost:8081/api/v1/addPlace/save',
