@@ -7,6 +7,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFpFDLrN4DPjDEXp7kKfGuooEL5tSheCk" async defer></script>
+
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -27,8 +29,8 @@
 </div>
 
 <!-- District Selection -->
-<label for="district">Select District:</label>
-<select name="district" id="district">
+<label for="districtSelect">Select District:</label>
+<select name="district" id="districtSelect">
     <option value="">-- Select District --</option>
     <option value="Kandy">Kandy</option>
     <option value="Colombo">Colombo</option>
@@ -57,6 +59,7 @@
     <option value="Vavuniya">Vavuniya</option>
 </select>
 
+
 <!-- Search Bar -->
 <div class="searchBox">
     <input class="searchInput" type="text" name="" placeholder="Search">
@@ -70,12 +73,17 @@
 <!-- Add New Places & Category Buttons -->
 <div class="button-group">
     <button class="shiny-cta" id="btn-add-place">
-        <a href="add-places.html">+ Add Places</a>
-    </button>
-    <button class="shiny-cta">
-        <a href="add-category-form.html">+ Add Category</a>
+        <a href="add-places.html">+ Add Places</a><br>
     </button>
 </div>
+<div class="button-group">
+    <button  id="btn-add-category">
+        <a href="add-category-form.html">+ Add Category</a><br>
+    </button>
+</div>
+
+<!--district cards-->
+<div id="place-cards-container"></div>
 
 <!-- Category Cards -->
 <section class="hero-section">
@@ -126,6 +134,10 @@
                 url: 'http://localhost:8081/api/v1/category/getAll',
                 type: 'GET',
                 dataType: 'json',
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token'),
+                    'category': 'category'
+                },
                 success: function (response) {
                     console.log("Categories fetched:", response);
                     const cardContainer = $('#category-cards');
@@ -142,7 +154,7 @@
                         const imageUrl = `http://localhost:8081/api/v1/uploads/${imageFilename}`;
 
                         cardContainer.append(`
-                            <a class="card" href="#">
+                            <a class="card" href="#" data-category-id="${category.id}" data-category-name="${category.categoryName}">
                                 <img src="${imageUrl}" class="card__background" alt="${safeCategoryName}">
                                 <div class="card__content">
                                     <p class="card__category">${safeCategoryName}</p>
@@ -161,7 +173,127 @@
         }
 
         fetchCategories();
+
+        // When a category card is clicked
+        $('#category-cards').on('click', '.card', function () {
+            const categoryId = $(this).data('category-id');
+            const categoryName = $(this).data('category-name');
+
+            // Fetch places related to the selected category
+            $.ajax({
+                url: `http://localhost:8081/api/v1/addPlace/getAllByCategory/${categoryName}`,
+                type: 'GET',
+                dataType: 'json',
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                },
+                success: function (response) {
+                    console.log("Places fetched for category:", categoryName);
+                    localStorage.setItem('categoryName',categoryName)
+
+                    // Redirect to places page or update the UI with places
+                    if (categoryName === "MOUNTAINS") {
+                        window.location.href = "mountains.html";
+                    }else if (categoryName === "WATERFALLS") {
+                        window.location.href = "waterfalls.html";
+                    }
+                    // Update places on the page dynamically if needed
+                },
+                error: function (xhr) {
+                    console.error("Error fetching places for category:", categoryId, xhr.responseText);
+                }
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                console.error("AJAX error:", textStatus, errorThrown);
+            });
+        });
     });
+//     -------------------------------------------------------------------
+    $(document).ready(function () {
+        function getAllPlaces(district) {
+            if (!district) {
+                $('#place-cards-container').html('<p>Please select a district.</p>');
+                return;
+            }
+
+            $.ajax({
+                url: `http://localhost:8081/api/v1/addPlace/getAllByDistrict/${district}`,
+                type: 'GET',
+                dataType: 'json',
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                },
+                success: function (response) {
+                    const container = $('#place-cards-container');
+                    container.empty();
+
+                    if (!response || response.length === 0) {
+                        container.append('<p>No places available in this district.</p>');
+                        return;
+                    }
+
+                    response.forEach((place, index) => {
+                        const placeName = place.placeName || "Unknown Location";
+                        const placeDescription = place.aboutPlace || "No description available.";
+                        const imageFilename = place.images ? place.images.split("\\").pop() : "default.jpg";
+                        const imageUrl = `http://localhost:8081/api/v1/uploads/${imageFilename}`;
+                        const lat = parseFloat(place.latitude) || 7.8731;
+                        const lng = parseFloat(place.longitude) || 80.7718;
+                        const videoUrl = place.videoUrl ? extractYouTubeID(place.videoUrl) : null;
+                        const status = place.status;
+
+                        const cardHtml = `
+                            <div class="cardd">
+                                <div class="image-containerr">
+                                    <img src="${imageUrl}" alt="${placeName}" />
+                                </div>
+                                <div class="contentt">
+                                    <h3>${placeName}</h3>
+                                    <p>${placeDescription}</p>
+                                    <p><strong>Status:</strong> ${status}</p>
+                                   <div class="map-sectionn">
+                                        <div id="mapp"></div>
+                                    </div>
+                                    <div class="video-containerr">
+                                        ${videoUrl ? `<iframe src="https://www.youtube.com/embed/${videoUrl}" frameborder="0" allowfullscreen></iframe>` : ''}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+
+                        container.append(cardHtml);
+                        initMap(lat, lng, `map-${index}`);
+                    });
+                },
+                error: function () {
+                    $('#place-cards-container').append('<p>Failed to load places. Please try again later.</p>');
+                }
+            });
+        }
+
+        function initMap(lat, lng, mapId) {
+            const position = { lat, lng };
+            const map = new google.maps.Map(document.getElementById(mapId), {
+                zoom: 10,
+                center: position,
+            });
+            new google.maps.Marker({ position: position, map: map });
+        }
+
+        function extractYouTubeID(url) {
+            const regex = /(?:youtube\.com\/.*[?&]v=|youtu\.be\/)([^"&?\/\s]{11})/;
+            const match = url.match(regex);
+            return match ? match[1] : "";
+        }
+
+        // Trigger API call when a district is selected
+        $('#districtSelect').change(function () {
+            const selectedDistrict = $(this).val();
+            getAllPlaces(selectedDistrict);
+        });
+    });
+//     map
+
+
 </script>
 
 </body>
