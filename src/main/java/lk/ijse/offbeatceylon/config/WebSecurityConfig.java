@@ -67,6 +67,8 @@ public class WebSecurityConfig {
                                 "/api/v1/upload/img",
                                 "/api/v1/uploads/",
                                 "/api/v1/uploads/**",
+                                "/api/v1/addPlace/getAllByCategory/${categoryName}",
+                                "/api/v1/addPlace/getAllByDistrict/**",
 
 
 
@@ -74,6 +76,8 @@ public class WebSecurityConfig {
 
                                 "/swagger-ui.html").permitAll()
                         .requestMatchers("/uploads/", "/api/v1/uploads/", "/uploads/images/").permitAll()
+//                        .requestMatchers("/uploads/"),"/api/v1/uploads/","/uploads/placeImages/").permitAll()
+
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
