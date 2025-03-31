@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Bucket List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
+</head>
+<style>
+    /* Base Styles */
+    :root {
+        --primary: #3b82f6;
+        --primary-dark: #2563eb;
+        --secondary: #10b981;
+        --dark: #1e293b;
+        --light: #f8fafc;
+        --text-dark: #0f172a;
+        --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+        --radius-md: 0.375rem;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+        background: #f0f2f5;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .destination-form {
+        background: white;
+        padding: 20px;
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-sm);
+        margin-bottom: 30px;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        margin-bottom: 15px;
+    }
+
+    .destination-card {
+        background: white;
+        padding: 15px;
+        border-radius: var(--radius-md);
+        margin-bottom: 15px;
+        display: flex;
+        gap: 15px;
+        position: relative;
+    }
+    /* Typography */
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Montserrat', sans-serif;
+        /*color: var(--dark-color);*/
+        margin-bottom: 1rem;
+    }
+
+    h1 {
+        font-size: 2rem;
+        font-weight: 700;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
+
+    h3 {
+        font-size: 1.2rem;
+        font-weight: 600;
+    }
+
+    p {
+        margin-bottom: 1rem;
+        line-height: 1.6;
+    }
+
+    /* Utility Classes */
+    .btn {
+        display: inline-block;
+        padding: 0.75rem 1.5rem;
+        /*border-radius: var(--border-radius);*/
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+        border: none;
+        outline: none;
+        font-family: 'Poppins', sans-serif;
+        font-size: 0.9rem;
+    }
+
+    .primary-btn {
+        background-color: var(--primary-color);
+        color: white;
+    }
+
+    .primary-btn:hover {
+        background-color: #3a70e0;
+        transform: translateY(-2px);
+    }
+
+    .secondary-btn {
+        background-color: #e9ecef;
+        /*color: var(--text-color);*/
+    }
+
+    .secondary-btn:hover {
+        background-color: #d8dbe0;
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+
+    .badge.visited {
+        background-color: var(--secondary-color);
+        color: white;
+    }
+
+    .badge.not-visited {
+        background-color: var(--text-light);
+        color: white;
+    }
+
+    .badge.upcoming {
+        /*background-color: var(--accent-color);*/
+        color: white;
+    }
+
+    /* Layout */
+    .sidebar {
+        width: 260px;
+        background-color: white;
+        height: 100vh;
+        position: fixed;
+        left: 0;
+        top: 0;
+        box-shadow: 5px 0 15px rgba(0, 0, 0, 0.05);
+        display: flex;
+        flex-direction: column;
+        z-index: 10;
+    }
+
+    .content {
+        flex: 1;
+        margin-left: 260px;
+        padding: 2rem;
+        max-width: calc(100vw - 260px);
+    }
+
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+        background-color: white;
+        padding: 1rem;
+        /*border-radius: var(--border-radius);*/
+        /*box-shadow: var(--box-shadow);*/
+    }
+
+    /* Sidebar Styles */
+    .profile {
+        padding: 2rem 1.5rem;
+        text-align: center;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        overflow: hidden;
+        margin: 0 auto 1rem;
+        border: 3px solid var(--primary-color);
+    }
+
+    .avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .nav-links {
+        list-style: none;
+        padding: 1.5rem 0;
+        flex: 1;
+    }
+
+    .nav-links li {
+        padding: 0.75rem 1.5rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        transition: var(--transition);
+        font-weight: 500;
+    }
+
+    .nav-links li:hover {
+        background-color: rgba(74, 128, 240, 0.1);
+        color: var(--primary-color);
+    }
+
+    .nav-links li.active {
+        background-color: rgba(74, 128, 240, 0.15);
+        color: var(--primary-color);
+        border-left: 4px solid var(--primary-color);
+    }
+
+    .nav-links li i {
+        margin-right: 10px;
+        font-size: 1.1rem;
+    }
+
+    .add-destination-btn {
+        margin: 1.5rem;
+        padding: 1rem;
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        /*border-radius: var(--border-radius);*/
+        cursor: pointer;
+        font-weight: 600;
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .add-destination-btn:hover {
+        background-color: #3a70e0;
+        transform: translateY(-2px);
+    }
+
+    .add-destination-btn i {
+        margin-right: 8px;
+    }
+
+    /* Header Styles */
+    .search-bar {
+        display: flex;
+        align-items: center;
+        /*background-color: var(--light-color);*/
+        border-radius: 25px;
+        padding: 0.5rem 1rem;
+        width: 300px;
+    }
+
+    .search-bar i {
+        color: var(--text-light);
+        margin-right: 10px;
+    }
+
+    .search-bar input {
+        border: none;
+        background: transparent;
+        width: 100%;
+        outline: none;
+        /*color: var(--text-color);*/
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .view-toggle {
+        display: flex;
+    }
+
+    .view-toggle button {
+        background: none;
+        border: none;
+        padding: 0.5rem;
+        cursor: pointer;
+        color: var(--text-light);
+        font-size: 1.2rem;
+        transition: var(--transition);
+    }
+
+    .view-toggle button.active,
+    .view-toggle button:hover {
+        color: var(--primary-color);
+    }
+
+    .filter-dropdown {
+        position: relative;
+    }
+
+    .filter-btn {
+        display: flex;
+        align-items: center;
+        background: none;
+        border: 1px solid #ddd;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        cursor: pointer;
+        /*color: var(--text-color);*/
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .filter-btn i {
+        margin-right: 5px;
+    }
+
+    .filter-btn i:last-child {
+        margin-left: 5px;
+        margin-right: 0;
+        font-size: 0.8rem;
+    }
+
+    .filter-menu {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background: white;
+        /*border-radius: var(--border-radius);*/
+        /*box-shadow: var(--box-shadow);*/
+        padding: 1rem;
+        width: 200px;
+        margin-top: 0.5rem;
+        display: none;
+        z-index: 5;
+    }
+
+    .filter-dropdown:hover .filter-menu {
+        display: block;
+    }
+
+    .filter-menu label {
+        display: block;
+        padding: 0.5rem 0;
+        cursor: pointer;
+    }
+
+    .filter-menu input {
+        margin-right: 8px;
+    }
+
+    /* Tab Content */
+    .tab-content {
+        display: none;
+    }
+
+    .tab-content.active {
+        display: block;
+    }
+
+    /* Stats Container */
+    .stats-container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .stat-card {
+        background-color: white;
+        /*border-radius: var(--border-radius);*/
+        padding: 1.5rem;
+        display: flex;
+        align-items: center;
+        /*box-shadow: var(--box-shadow);*/
+        transition: var(--transition);
+    }
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .stat-icon {
+        width: 60px;
+        height: 60px;
+        background-color: rgba(74, 128, 240, 0.15);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary-color);
+        font-size: 1.5rem;
+        margin-right: 1rem;
+    }
+
+    .stat-content {
+        flex: 1;
+    }
+
+    .stat-value {
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 0.25rem;
+        /*color: var(--dark-color);*/
+    }
+
+    .stat-label {
+        color: var(--text-light);
+        font-size: 0.9rem;
+        margin-bottom: 0;
+    }
+
+    /* Dashboard Sections */
+    .dashboard-sections {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 1.5rem;
+    }
+
+    .upcoming-section,
+    .recent-destinations {
+        background-color: white;
+        /*border-radius: var(--border-radius);*/
+        padding: 1.5rem;
+        /*box-shadow: var(--box-shadow);*/
+    }
+
+    .upcoming-trips-list {
+        margin-top: 1rem;
+    }
+
+    .upcoming-trip-item {
+        display: flex;
+        align-items: center;
+        padding: 1rem 0;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .upcoming-trip-item:last-child {
+        border-bottom: none;
+    }
+
+    .trip-date {
+        width: 70px;
+        height: 70px;
+        background-color: var(--primary-color);
+        color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        margin-right: 1rem;
+    }
+
+    .trip-date .month {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+    }
+
+    .trip-date .day {
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
+
+    .trip-info {
+        flex: 1;
+    }
+
+    .trip-info h3 {
+        margin-bottom: 0.25rem;
+    }
+
+    .trip-info p {
+        color: var(--text-light);
+        margin-bottom: 0;
+        font-size: 0.9rem;
+    }
+
+    /* Destinations Grid */
+    .destinations-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .destination-card {
+        background-color: white;
+        /*border-radius: var(--border-radius);*/
+        overflow: hidden;
+        /*box-shadow: var(--box-shadow);*/
+        transition: var(--transition);
+    }
+
+    .destination-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .destination-image {
+        height: 180px;
+        background-color: #eee;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+    }
+
+    .destination-status {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+    }
+
+    .destination-content {
+        padding: 1.5rem;
+    }
+
+    .destination-title {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .destination-location {
+        display: flex;
+        align-items: center;
+        color: var(--text-light);
+        margin-bottom: 0.75rem;
+        font-size: 0.9rem;
+    }
+
+    .destination-location i {
+        margin-right: 5px;
+    }
+
+    .destination-dates {
+        display: flex;
+        align-items: center;
+        color: var(--text-light);
+        margin-bottom: 0.75rem;
+        font-size: 0.9rem;
+    }
+
+    .destination-dates i {
+        margin-right: 5px;
+    }
+
+    .destination-description {
+        /*color: var(--text-color);*/
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .destination-actions {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    /* Map View */
+    .map-container {
+        background-color: white;
+        /*border-radius: var(--border-radius);*/
+        overflow: hidden;
+        /*box-shadow: var(--box-shadow);*/
+        position: relative;
+    }
+
+    .map-view {
+        height: 500px;
+        background-color: #e9ecef;
+        /*background-image: url("/api/placeholder/1000/500");*/
+        background-size: cover;
+        background-position: center;
+        position: relative;
+    }
+
+    .map-pin {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        position: absolute;
+        transform: translate(-50%, -50%);
+        cursor: pointer;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        transition: var(--transition);
+    }
+
+    .map-pin::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        animation: pulse 1.5s infinite;
+    }
+
+    .map-pin.visited {
+        background-color: var(--secondary-color);
+    }
+
+    .map-pin.visited::after {
+        background-color: rgba(54, 208, 197, 0.3);
+    }
+
+    .map-pin.not-visited {
+        background-color: var(--text-light);
+    }
+
+    .map-pin.not-visited::after {
+        background-color: rgba(120, 132, 158, 0.3);
+    }
+
+    .map-pin.upcoming {
+        /*background-color: var(--accent-color);*/
+    }
+
+    .map-pin.upcoming::after {
+        background-color: rgba(255, 118, 87, 0.3);
+    }
+
+    @keyframes pulse {
+        0% {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+        100% {
+            transform: translate(-50%, -50%) scale(2.5);
+            opacity: 0;
+        }
+    }
+
+    .map-legend {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        background-color: white;
+        /*border-radius: var(--border-radius);*/
+        padding: 1rem;
+        /*box-shadow: var(--box-shadow);*/
+        display: flex;
+        gap: 1rem;
+    }
+
+    .legend-item {
+        display: flex;
+        align-items: center;
+    }
+
+    .legend-marker {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        margin-right: 5px;
+    }
+
+    .legend-marker.visited {
+        background-color: var(--secondary-color);
+    }
+
+    .legend-marker.not-visited {
+        background-color: var(--text-light);
+    }
+
+    .legend-marker.upcoming {
+        /*background-color: var(--accent-color);*/
+    }
+
+    /* Journal Entries */
+    .journal-entries {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 1.5rem;
+    }
+
+
+
+
+</style>
+<body>
+<div class="loading" id="loading">
+    <div class="spinner"></div>
+</div>
+
+<nav class="sidebar">
+    <div class="profile">
+        <div class="avatar">
+            <img src="assets/images/MyImage.png" alt="Profile Picture">
+        </div>
+        <h3>Travel Explorer</h3>
+    </div>
+    <ul class="nav-links">
+        <li class="active" data-tab="dashboard"><i class="fas fa-home"></i> Dashboard</li>
+        <a href="admin-user-management.html"><li data-tab="map"><i class="fas fa-map"></i> Credentials</li></a>
+        <a href="add-category-form.html"><li data-tab="journal"><i class="fas fa-book"></i> Travel Category</li></a>
+        <a href="add-places.html"><li data-tab="destinations"><i class="fas fa-map-marker-alt"></i> Add Places</li></a>
+        <a href="select-by-district.html"><li data-tab="destinations" ><i class="fas fa-map-marker-alt" ></i>Directions</li></a>
+    </ul>
+    <button class="add-destination-btn" id="add-destination-btn">
+        <i class="fas fa-plus"></i> Add Destination
+    </button>
+</nav>
+
+<main class="content">
+    <header>
+        <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search destinations..." id="search-input">
+        </div>
+        <div class="view-toggle">
+            <button class="active" id="grid-view-btn"><i class="fas fa-th"></i></button>
+            <button id="list-view-btn"><i class="fas fa-list"></i></button>
+        </div>
+
+    </header>
+
+    <section class="tab-content active" id="dashboard-tab">
+        <h1>My Travel Dashboard</h1>
+
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-globe-americas"></i>
+                </div>
+                <div class="stat-content">
+                    <h3 class="stat-value" id="total-places">0</h3> <!-- This will show the total categories -->
+                    <p class="stat-label">Total Places</p>
+                </div>
+
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+
+                    <i class="fas fa-check-circle"></i>
+                </div>
+
+
+                <div class="stat-content">
+                    <h3 class="stat-value" id="total-categories">0</h3> <!-- This will show the total categories -->
+                    <p class="stat-label">Total Categories</p>
+                </div>
+
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-stamp"></i>
+                </div>
+                <div class="stat-content">
+                    <h3 class="stat-value" id="stamps-collected">0</h3>
+                    <p class="stat-label">Stamps Collected</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</main>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script src="js/jquery-3.7.1.min.js"></script>
+<script>
+
+    //total categories
+    // Function to fetch total categories from API and update the dashboard
+    function fetchTotalCategories() {
+        fetch('http://localhost:8081/api/v1/category/getTotalCategories')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json(); // assuming the response is in JSON format
+            })
+            .then(data => {
+                // Assuming the response is a simple number or an object with the count
+                const totalCategories = data.totalCategories || data; // Adapt based on the actual response
+                document.getElementById('total-categories').textContent = totalCategories;
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                document.getElementById('total-categories').textContent = 'Error fetching data';
+            });
+    }
+
+    // Call the function to fetch and display total categories when the page loads
+
+//total places
+    function fetchTotalPlaces() {
+        fetch('http://localhost:8081/api/v1/addPlace/getPlacesCount')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json(); // assuming the response is in JSON format
+            })
+            .then(data => {
+                // Assuming the response is a simple number or an object with the count
+                const totalPlaces = data.totalPlaces || data; // Adapt based on the actual response
+                document.getElementById('total-places').textContent = totalPlaces;
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                document.getElementById('total-places').textContent = 'Error fetching data';
+            });
+    }
+
+    // Call the function to fetch and display total places when the page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        fetchTotalPlaces();
+        fetchTotalCategories();
+    });
+
+</script>
+</body>
+</html>

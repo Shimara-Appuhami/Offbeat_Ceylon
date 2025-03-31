@@ -28,4 +28,6 @@ public interface AddPlaceService {
     List<AddPlaces> getPlacesByDistrict(String district);
 
     User getUserByEmail(String email);
+
+    int getPlacesCount();
 }

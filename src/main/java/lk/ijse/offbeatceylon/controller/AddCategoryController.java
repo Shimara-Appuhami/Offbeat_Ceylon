@@ -146,4 +146,10 @@ public class AddCategoryController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Category not found.");
         }
     }
+    //get total categories
+    @GetMapping("/getTotalCategories")
+    public ResponseEntity<Long> getTotalCategories() {
+        Long totalCategories = categoryService.getTotalCategories();
+        return ResponseEntity.ok(totalCategories);
+    }
 }

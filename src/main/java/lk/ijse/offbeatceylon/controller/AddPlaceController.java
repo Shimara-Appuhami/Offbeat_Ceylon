@@ -164,5 +164,10 @@ public class AddPlaceController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Place not found.");
         }
     }
-
+//get places count
+    @GetMapping("/getPlacesCount")
+    public ResponseEntity<Integer> getPlacesCount() {
+        int count = addPlaceService.getPlacesCount();
+        return ResponseEntity.ok(count);
+    }
 }

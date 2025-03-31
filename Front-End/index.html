@@ -9,16 +9,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFpFDLrN4DPjDEXp7kKfGuooEL5tSheCk" async defer></script>
+<!--    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFpFDLrN4DPjDEXp7kKfGuooEL5tSheCk&callback=initMap" async defer></script>-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-<!--<div id="front-img">-->
-<!--    <img src="assets/images/img_1.png" alt="Travel Image">-->
-<!--    <span class="overlay-text">Travel Makes <br>You Happier</span>-->
-<!--</div>-->
-
-
 <!-- Navigation Bar -->
 <input type="checkbox" id="active">
 <!--<label for="active" class="menu-btn"><i class="fas fa-bars"></i></label>-->
@@ -66,8 +63,9 @@
     <option value="Vavuniya">Vavuniya</option>
 </select>
 
+<div id="district-by-places-cards"></div>
 
-<!-- Search Bar -->
+<!-- search bar -->
 <div class="searchBox">
     <input class="searchInput" type="text" name="" placeholder="Search">
     <button class="searchButton">
@@ -83,22 +81,17 @@
         <a href="add-places.html">+ Add Places</a><br>
     </button>
 </div>
-<!--<div class="button-group">-->
-<!--    <button  id="btn-add-category">-->
-<!--        <a href="add-category-form.html">+ Add Category</a><br>-->
-<!--    </button>-->
-<!--</div>-->
 
 <!--district cards-->
-<div id="place-cards-container"></div>
 
-<!-- Category Cards -->
+
+<!-- category cards -->
 <section class="hero-section">
     <div class="card-grid" id="category-cards">
         <!-- Cards will be dynamically added here -->
     </div>
 </section>
-
+<!--about-->
 <section id="about" class="about-section">
     <div class="about-container">
         <h2>About Us</h2>
@@ -109,9 +102,7 @@
         </div>
     </div>
 </section>
-
 <!--service-->
-
 <section class="services" id="servicess">
 <!--    <h2 class="section-title">Our Services</h2>-->
     <a href ="select-by-district.html" id="btn-direction" class = "button">
@@ -127,21 +118,6 @@
             <h3>Travel Planning</h3>
             <p>Customized travel itineraries for exploring Sri Lanka.</p>
         </div>
-<!--        <div class="service-card">-->
-<!--            <div class="icon">🏨</div>-->
-<!--            <h3>Hotel & Stay</h3>-->
-<!--            <p>Find the best accommodations across Sri Lanka.</p>-->
-<!--        </div>-->
-<!--        <div class="service-card">-->
-<!--            <div class="icon">🚗</div>-->
-<!--            <h3>Transport Services</h3>-->
-<!--            <p>Car rentals, tuk-tuks, and public transport guidance.</p>-->
-<!--        </div>-->
-<!--        <div class="service-card">-->
-<!--            <div class="icon">🍛</div>-->
-<!--            <h3>Food & Restaurants</h3>-->
-<!--            <p>Discover the best local Sri Lankan cuisine.</p>-->
-<!--        </div>-->
         <div class="service-card">
             <div class="icon">🏝️</div>
             <h3>Beach & Adventure</h3>
@@ -150,7 +126,6 @@
 
     </div>
 </section>
-
 <!--gallery-->
 <section id="gallery" class="gallery-section">
     <h2>Explore Our Gallery</h2>
@@ -175,16 +150,6 @@
         </div>
     </div>
 </section>
-
-<!-- Review Board -->
-<!--<div id="craouselContainer" class="swiper-container">-->
-<!--    <div class="swiper-wrapper" id="slideHolder">-->
-<!--        &lt;!&ndash; Slides &ndash;&gt;-->
-
-<!--    </div>-->
-<!--    <div class="swiper-pagination"></div>-->
-
-<!--</div>-->
 <!--contact-->
 <section id="contact" class="contact-section">
     <h2>Contact Us</h2>
@@ -392,12 +357,12 @@
 </svg>
 </section><!-- Scripts -->
 <script src="js/jquery-3.7.1.min.js"></script>
-<script src="js/add-places.js"></script>
-<script src="js/add-category.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 
 <script src="js/script.js"></script>
-
+<!--<script src="js/add-places.js"></script>-->
+<!--<script src="js/add-category.js"></script>-->
 </body>
 </html>
 

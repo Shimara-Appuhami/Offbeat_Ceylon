@@ -16,7 +16,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 
 @Service
@@ -63,6 +65,35 @@ UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
+    public boolean deleteUser(String email) {
+        User user = userRepository.findByEmail(email);
+        if (user!= null) {
+            userRepository.deleteByEmail(user);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return modelMapper.map(userRepository.findAll(), List.class);
+    }
+
+    @Override
+    public UserDTO updateUser(UserDTO userDTO) {
+        User user = userRepository.findByEmail(userDTO.getEmail());
+        if (user!= null) {
+            user.setName(userDTO.getName());
+            user.setPassword(userDTO.getPassword());
+            userRepository.save(user);
+            return modelMapper.map(user, UserDTO.class);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
     public int saveUser(UserDTO userDTO) {
         if (userRepository.existsByEmail(userDTO.getEmail())) {
             return VarList.Not_Acceptable;
@@ -70,6 +101,7 @@ UserServiceImpl implements UserDetailsService, UserService {
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
             userDTO.setRole("USER");
+            userDTO.setRole("ADMIN");
             userRepository.save(modelMapper.map(userDTO, User.class));
             return VarList.Created;
         }

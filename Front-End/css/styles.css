@@ -555,7 +555,7 @@ selectt {
     border-radius: 5px;
     border: 1px solid #333;
 }
-#place-cards-container {
+#district-by-places-cards {
     margin-top: 20px;
     display: flex;
     flex-wrap: wrap;

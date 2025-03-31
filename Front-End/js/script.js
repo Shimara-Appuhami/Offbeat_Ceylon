@@ -81,7 +81,7 @@ $(document).ready(function () {
 $(document).ready(function () {
     function getAllPlaces(district) {
         if (!district) {
-            $('#place-cards-container').html('<p>Please select a district.</p>');
+            $('#district-by-places-cards').html('<p>Please select a district.</p>');
             return;
         }
 
@@ -93,7 +93,8 @@ $(document).ready(function () {
                 'Authorization': 'Bearer ' + localStorage.getItem('token')
             },
             success: function (response) {
-                const container = $('#place-cards-container');
+                console.log(response)
+                const container = $('#district-by-places-cards');
                 container.empty();
 
                 if (!response || response.length === 0) {
@@ -110,56 +111,66 @@ $(document).ready(function () {
                     const lng = parseFloat(place.longitude) || 80.7718;
                     const videoUrl = place.videoUrl ? extractYouTubeID(place.videoUrl) : null;
                     const status = place.status;
+                    const mapId = `map-${index}`; // Unique ID for each map
 
                     const cardHtml = `
-                            <div class="cardd">
-                                <div class="image-containerr">
-                                    <img src="${imageUrl}" alt="${placeName}" />
+                        <div class="cardd">
+                            <div class="image-containerr">
+                                <img src="${imageUrl}" alt="${placeName}" />
+                            </div>
+                            <div class="reaction">
+                                <div class="heart" onclick="checkStyle()"></div>
+                            </div>
+                            <div class="contentt">
+                                <h3>${placeName}</h3>
+                                <p>${placeDescription}</p>
+                                <p><strong>Status:</strong> ${status}</p>
+                                <div class="map-sectionn">
+                                    <div id="${mapId}" class="map-container"></div> <!-- Unique Map ID -->
                                 </div>
-                                 <div class="reaction">
-                                    <div class="heart" onclick="checkStyle()"></div>
-                                     </div>
-                                <div class="contentt">
-                                    <h3>${placeName}</h3>
-                                    <p>${placeDescription}</p>
-                                    <p><strong>Status:</strong> ${status}</p>
-                                   <div class="map-sectionn">
-                                        <div id="map"></div>
-                                    </div>
-                                    
-<!--                                        <p>~ made with <i class="fa fa-heart"></i> and <i class="fa fa-coffee"></i></p>-->
-                                    <div class="video-containerr">
-                                        ${videoUrl ? `<iframe src="https://www.youtube.com/embed/${videoUrl}" frameborder="0" allowfullscreen></iframe>` : ''}
-                                    </div>
+                                <div class="video-containerr">
+                                    ${videoUrl ? `<iframe src="https://www.youtube.com/embed/${videoUrl}" frameborder="0" allowfullscreen></iframe>` : ''}
                                 </div>
                             </div>
-                           
-                        `;
+                        </div>
+                    `;
 
                     container.append(cardHtml);
-                    initMap(lat, lng, `map-${index}`);
+
+                    // Wait a bit to ensure the element is in the DOM before initializing the map
+                    setTimeout(() => {
+                        initMap(lat, lng, mapId);
+                    }, 500);
                 });
             },
             error: function () {
-                $('#place-cards-container').append('<p>Failed to load places. Please try again later.</p>');
+                $('#district-by-places-cards').append('<p>Failed to load places. Please try again later.</p>');
             }
         });
     }
 
     function initMap(lat, lng, mapId) {
+        const mapDiv = document.getElementById(mapId);
+        if (!mapDiv) {
+            console.error(`Map div ${mapId} not found!`);
+            return;
+        }
+
         const position = { lat, lng };
-        const map = new google.maps.Map(document.getElementById(mapId), {
+        const map = new google.maps.Map(mapDiv, {
             zoom: 10,
             center: position,
         });
+
         new google.maps.Marker({ position: position, map: map });
     }
 
-    // function extractYouTubeID(url) {
-    //     const regex = /(?:youtube\.com\/.*[?&]v=|youtu\.be\/)([^"&?\/\s]{11})/;
-    //     const match = url.match(regex);
-    //     return match ? match[1] : "";
-    // }
+    // Extract YouTube Video ID
+    function extractYouTubeID(url) {
+        const regex = /(?:youtube\.com\/.*[?&]v=|youtu\.be\/)([^"&?\/\s]{11})/;
+        const match = url.match(regex);
+        return match ? match[1] : "";
+    }
 
     // Trigger API call when a district is selected
     $('#districtSelect').change(function () {
@@ -167,6 +178,8 @@ $(document).ready(function () {
         getAllPlaces(selectedDistrict);
     });
 });
+
+
 //     contact
 document.getElementById('contactForm').addEventListener('submit', function(event) {
     var name = document.getElementById('name').value;

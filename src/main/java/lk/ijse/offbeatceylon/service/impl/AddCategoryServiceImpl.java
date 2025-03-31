@@ -117,4 +117,9 @@ public class AddCategoryServiceImpl implements AddCategoryService {
         return categoryRepo.findByCategoryName(categoryName);
     }
 
+    @Override
+    public Long getTotalCategories() {
+        return categoryRepo.count();
+    }
+
 }

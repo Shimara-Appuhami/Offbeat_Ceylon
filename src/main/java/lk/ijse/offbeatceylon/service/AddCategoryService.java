@@ -22,4 +22,7 @@ public interface  AddCategoryService {
     boolean deleteCategory(int categoryId);
 
     Category getCategoryByName(String placeName);
+
+    Long getTotalCategories();
+
 }
