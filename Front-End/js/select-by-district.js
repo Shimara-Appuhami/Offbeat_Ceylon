@@ -1,4 +1,5 @@
 let selectedPlaces = [];
+let markers = [];
 let map, directionsService, directionsRenderer;
 let userLocation = null;
 
@@ -11,7 +12,6 @@ function initializeMap() {
     directionsRenderer = new google.maps.DirectionsRenderer();
     directionsRenderer.setMap(map);
 
-    // Get user's live location
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
             (position) => {
@@ -20,12 +20,13 @@ function initializeMap() {
                     lng: position.coords.longitude,
                 };
                 map.setCenter(userLocation);
-                new google.maps.Marker({
+                const userMarker = new google.maps.Marker({
                     position: userLocation,
                     map: map,
                     title: "Your Location",
                     icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
                 });
+                markers.push(userMarker);
             },
             () => {
                 alert("Unable to get your location. Make sure location services are enabled.");
@@ -43,6 +44,9 @@ $(document).ready(function () {
             return;
         }
 
+        // Hide all previously loaded places (but don't remove them)
+        $('.card').hide();
+
         $.ajax({
             url: `http://localhost:8081/api/v1/addPlace/getAllByDistrict/${district}`,
             type: 'GET',
@@ -50,8 +54,6 @@ $(document).ready(function () {
             headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') },
             success: function (response) {
                 const container = $('#place-cards-container');
-                container.empty();
-                selectedPlaces = [];
 
                 if (!response || response.length === 0) {
                     container.append('<p>No places available in this district.</p>');
@@ -66,22 +68,35 @@ $(document).ready(function () {
                     const lat = parseFloat(place.latitude) || 7.8731;
                     const lng = parseFloat(place.longitude) || 80.7718;
 
-                    const cardHtml = `
-                            <div class="card">
-                                <div class="image-container">
-                                    <img src="${imageUrl}" alt="${placeName}" />
-                                </div>
-                                <div class="content">
-                                    <h3>${placeName}</h3>
-                                    <p>${placeDescription}</p>
-                                    <div class="checkbox-container">
-                                        <input type="checkbox" class="place-checkbox" data-lat="${lat}" data-lng="${lng}" data-name="${placeName}">
-                                        <label>Select this place</label>
-                                    </div>
+                    // Check if the place is already selected
+                    const isChecked = selectedPlaces.some(p => p.lat === lat && p.lng === lng);
+
+                    // Check if the place is already in the container
+                    let existingCard = $(`.card[data-lat='${lat}'][data-lng='${lng}']`);
+
+                    if (existingCard.length > 0) {
+                        existingCard.show(); // Show if already added
+                    } else {
+                        const cardHtml = `
+                        <div class="card" data-district="${district}" data-lat="${lat}" data-lng="${lng}">
+                            <div class="image-container">
+                                <img src="${imageUrl}" alt="${placeName}" />
+                            </div>
+                            <div class="content">
+                                <h3>${placeName}</h3>
+                                <p>${placeDescription}</p>
+                                <div class="checkbox-container">
+                                    <label>Select this place</label>
+                                    <label>
+                                        <input type="checkbox" class="place-checkbox" data-lat="${lat}" data-lng="${lng}" data-name="${placeName}" ${isChecked ? "checked" : ""}>
+                                        <img src="../js/../assets/icon/icons8-select-48.png">
+                                    </label>
                                 </div>
                             </div>
-                        `;
-                    container.append(cardHtml);
+                        </div>
+                    `;
+                        container.append(cardHtml);
+                    }
                 });
 
                 $('.place-checkbox').change(function () {
@@ -105,35 +120,46 @@ $(document).ready(function () {
         });
     }
 
+
+    function clearMarkers() {
+        markers.forEach(marker => marker.setMap(null));
+        markers = [];
+    }
+
     function updateMap() {
+        clearMarkers();
         selectedPlaces.forEach(place => {
-            new google.maps.Marker({
+            const marker = new google.maps.Marker({
                 position: { lat: place.lat, lng: place.lng },
                 map: map,
                 title: place.name
             });
+            markers.push(marker);
         });
     }
 
     function getDirections() {
-        if (!userLocation) return alert("Could not get your current location.");
+        if (!userLocation) {
+            alert("Could not get your current location.");
+            return;
+        }
 
-        if (selectedPlaces.length === 0) {
+        if (selectedPlaces.length < 1) {
             alert("Please select at least one location.");
             return;
         }
 
-        const waypoints = selectedPlaces.map(place => ({
+        const waypoints = selectedPlaces.slice(0, -1).map(place => ({
             location: new google.maps.LatLng(place.lat, place.lng),
             stopover: true
         }));
 
         const request = {
             origin: userLocation,
-            destination: waypoints[waypoints.length - 1].location,
-            waypoints: waypoints.slice(0, -1),  // Remove the last waypoint from waypoints (it will be the destination)
+            destination: new google.maps.LatLng(selectedPlaces[selectedPlaces.length - 1].lat, selectedPlaces[selectedPlaces.length - 1].lng),
+            waypoints: waypoints,
             travelMode: google.maps.TravelMode.DRIVING,
-            optimizeWaypoints: true // Let Google optimize the order
+            optimizeWaypoints: false
         };
 
         directionsService.route(request, (result, status) => {
@@ -144,7 +170,6 @@ $(document).ready(function () {
             }
         });
     }
-
 
     $('#districtSelect').change(function () {
         getAllPlaces($(this).val());
