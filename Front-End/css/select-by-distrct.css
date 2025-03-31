@@ -53,8 +53,8 @@ input[type="checkbox"] {
 #districtSelect {
     padding: 12px;
     font-size: 16px;
-    border-radius: 8px;
-    border: 2px solid #2575fc;
+    border-radius: 50px;
+    border: 2px solid #2db897;
     outline: none;
     width: 280px;
     margin: 50px 0;
@@ -64,8 +64,8 @@ input[type="checkbox"] {
 }
 
 #districtSelect:hover {
-    border-color: #6a11cb;
-    background: #e3f2fd;
+    border-color: #24caa3;
+    background: #ffffff;
 }
 
 /* Button Styling */
@@ -73,9 +73,10 @@ input[type="checkbox"] {
     padding: 12px 24px;
     font-size: 16px;
     color: white;
-    background: #2575fc;
+    background: #e81132;
+
     border: none;
-    border-radius: 8px;
+    border-radius: 100px;
     cursor: pointer;
     transition: 0.3s;
     font-weight: bold;
@@ -83,7 +84,8 @@ input[type="checkbox"] {
 }
 
 #getDirections:hover {
-    background: #6a11cb;
+    background: #23bc98;
+
 }
 
 /* Map Section */
@@ -91,9 +93,9 @@ input[type="checkbox"] {
     width: 70%;
     height: 500px;
     margin: 20px auto;
-    border-radius: 12px;
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
-    border: 3px solid #2575fc;
+    border-radius: 1px;
+    box-shadow: 0px 5px 15px rgb(5, 5, 5);
+    /*border: 10px solid #bab6b6;*/
 }
 
 /* Place Cards Container */
@@ -107,8 +109,7 @@ input[type="checkbox"] {
 }
 
 .card {
-    background: #ffffff;
-    padding: 20px;
+    background: linear-gradient(135deg, #ffffff, #cdcdcd); border-radius: 0; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); transition: all 0.3s ease-in-out; padding: 15px; margin: 15px; width: 300px;    padding: 20px;
     border-radius: 12px;
     box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.25);
     display: flex;
@@ -116,8 +117,8 @@ input[type="checkbox"] {
     align-items: center;
     gap: 15px;
     width: 600px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border-left: 6px solid #2575fc;
+    transition: transform 0.3s ease;
+    border: 6px solid #1b9365;
     position: relative;
     overflow: hidden;
 }
@@ -144,7 +145,7 @@ input[type="checkbox"] {
 
 .content h3 {
     font-size: 20px;
-    color: #333;
+    color: #1B9365FF;
     margin-bottom: 8px;
     font-weight: 600;
     text-transform: uppercase;
