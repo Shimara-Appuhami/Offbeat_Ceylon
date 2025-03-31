@@ -24,6 +24,7 @@ public class User implements Serializable {
     private String name;
     private String role;
 
+
     public UUID getUid() {
         return uid;
     }

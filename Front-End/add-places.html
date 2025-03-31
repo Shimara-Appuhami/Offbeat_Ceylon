@@ -4,23 +4,20 @@
     <meta charset="UTF-8">
     <title>Add Places</title>
     <link rel="stylesheet" href="css/add-places.css">
-    <link rel="stylesheet" href="https://unpkg.com/ionicons@5.5.2/dist/css/ionicons.min.css">
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFpFDLrN4DPjDEXp7kKfGuooEL5tSheCk" async defer></script>
 </head>
 <body>
 
+<h1>Add New Place</h1>
+
 <form id="addPlaceForm">
-
-    <div class="segment">
-        <h1>Add New Place</h1>
-    </div>
-
     <label>
         <input type="text" placeholder="Place Name" required id="placeName" name="placeName" />
     </label>
+
     <label>
-        <select id="category" name="category">
-            <option value="" disabled selected>Select Category </option>
+        <select id="category" name="category" required>
+            <option value="" disabled selected>Select Category</option>
             <option value="hidden">Hidden & Unexplored Places</option>
             <option value="kingdom">Kingdom</option>
             <option value="waterfall">Waterfall</option>
@@ -39,19 +36,16 @@
             <option value="park">Park</option>
             <option value="zoo">Zoo</option>
             <option value="hospital">Hospital</option>
-            <option value="park">Park</option>
-            <option value="beach">Beach</option>
-
         </select>
     </label>
 
     <label>
-        <input type="text" placeholder="About Place" id="aboutPlace" name="aboutPlace" />
+        <input type="text" placeholder="About Place" id="aboutPlace" name="aboutPlace" required />
     </label>
 
     <label>
-        <select required id="district" name="district">
-            <option value="" disabled selected>Select District </option>
+        <select id="district" name="district" required>
+            <option value="" disabled selected>Select District</option>
             <option value="Colombo">Colombo</option>
             <option value="Gampaha">Gampaha</option>
             <option value="Kalutara">Kalutara</option>
@@ -100,20 +94,19 @@
         </div>
     </div>
 
-    <!-- map Section -->
-    <h3>Click on the map to select a location</h3>
+    <div id="btn-section">
+        <button type="submit" class="submit-btn" id="btn-save-place">Add Place</button>
+        <button type="button" class="submit-btn" id="btn-update-place">Update</button>
+        <button type="button" class="submit-btn" id="btn-delete-place">Delete</button>
+    </div>
 
-<!--location search bar-->
-    <input type="text" id="locationSearch" placeholder="Search for a location" />
-
-    <div id="mapContainer"></div>
-    <p id="coordinates" style="color: green; font-weight: bold;"></p>
-    <div id="map" style="height: 400px; width: 100%;"></div>
-
-    <button type="submit" class="submit-btn">Add Place</button>
-    <button type="button" class="submit-btn" id="btn-update-place">update</button>
-    <button type="button" class="submit-btn" id="btn-delete-place" >delete</button>
-
+    <div id="map-section">
+        <h3>Click on the map to select a location</h3>
+        <input type="text" id="locationSearch" placeholder="Search for a location" aria-label="Search location" />
+        <div id="mapContainer"></div>
+        <p id="coordinates" style="color: green; font-weight: bold;"></p>
+        <div id="map" style="height: 400px; width: 100%;"></div>
+    </div>
 </form>
 
 <script src="js/jquery-3.7.1.min.js"></script>

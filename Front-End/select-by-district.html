@@ -3,215 +3,416 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Styled Location Cards</title>
-
-    <!-- Google Maps API -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFpFDLrN4DPjDEXp7kKfGuooEL5tSheCk" async defer></script>
-
-    <!-- jQuery Library -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <!-- Google Fonts -->
+    <title>Directions in Sri Lanka</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFpFDLrN4DPjDEXp7kKfGuooEL5tSheCk"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-        body {
-            background-color: #D4DAD9;
-            color: #252525;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-        }
-        header {
-            font-size: 30px;
-            background: #0faf84;
-            color: #fff;
-            padding: 10px;
-            text-align: center;
-            width: 100%;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 999;
-        }
-        select {
-            margin-top: 70px;
-            padding: 10px;
-            font-size: 18px;
-            border-radius: 5px;
-            border: 1px solid #333;
-        }
-        #place-cards-container {
-            margin-top: 20px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-        }
-        .card {
-            width: 1000px;
-            display: flex;
-            box-shadow: 0 30px 40px -15px rgba(0,0,0,0.35);
-            background: #fff;
-            overflow: hidden;
-            transition: 0.3s ease-in-out;
-        }
-        .card:hover {
-            transform: scale(1.02);
-        }
-        .image-container img {
-            width: 350px;
-            height: 400px;
-            object-fit: cover;
-        }
-        .content {
-            width: 60%;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        .map-section {
-            height: 200px;
-            width: 250px;
-            border-radius: 5px;
-            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        iframe {
-            width: 100%;
-            height: 180px;
-            border-radius: 6px;
-        }
-    </style>
+    <link rel="stylesheet" href="css/select-by-distrct.css">
 </head>
+<style>
+    /** {*/
+    /*    margin: 0;*/
+    /*    padding: 0;*/
+    /*    box-sizing: border-box;*/
+    /*    font-family: 'Oswald', sans-serif;*/
+    /*}*/
+
+    /*.wrapper {*/
+    /*    position: fixed;*/
+    /*    border-radius: 50px;*/
+    /*    top: 0;*/
+    /*    left: 0;*/
+    /*    height: 70px;*/
+    /*    width: 100%;*/
+    /*    background: #32a582;*/
+    /*    display: flex;*/
+    /*    justify-content: space-between;*/
+    /*    align-items: center;*/
+    /*    padding: 0 30px;*/
+    /*    z-index: 1;*/
+    /*}*/
+
+    /*.menu-btn {*/
+    /*    z-index: 2;*/
+    /*    height: 50px;*/
+    /*    width: 50px;*/
+    /*    display: flex;*/
+    /*    justify-content: center;*/
+    /*    align-items: center;*/
+    /*    border-radius: 50%;*/
+    /*    font-size: 20px;*/
+    /*    color: #fff;*/
+    /*    cursor: pointer;*/
+    /*    background: #000;*/
+    /*    transition: all 0.3s ease-in-out;*/
+    /*}*/
+
+    /*!* Hide checkbox *!*/
+    /*input[type="checkbox"] {*/
+    /*    display: none;*/
+    /*}*/
+
+    /*!* Menu list *!*/
+    /*.wrapper ul {*/
+    /*    list-style: none;*/
+    /*    display: flex;*/
+    /*    gap: 25px;*/
+    /*}*/
+
+    /*!* Menu items *!*/
+    /*.wrapper ul li a {*/
+    /*    text-decoration: none;*/
+    /*    font-size: 18px;*/
+    /*    font-weight: 500;*/
+    /*    padding: 10px 20px;*/
+    /*    color: #fff;*/
+    /*    border-radius: 50px;*/
+    /*    !*background: #06a99D;*!*/
+    /*    position: relative;*/
+    /*    transition: all 0.3s ease;*/
+    /*}*/
+
+    /*!* Hover effect *!*/
+    /*.wrapper ul li a:after {*/
+    /*    position: absolute;*/
+    /*    content: "";*/
+    /*    background: linear-gradient(#06A99D, #2A63AC, #919FD6);*/
+    /*    width: 110%;*/
+    /*    height: 120%;*/
+    /*    left: -5%;*/
+    /*    top: -10%;*/
+    /*    border-radius: 50px;*/
+    /*    transform: scaleY(0);*/
+    /*    z-index: -1;*/
+    /*    animation: rotate 1.5s linear infinite;*/
+    /*    transition: transform 0.3s ease;*/
+    /*}*/
+
+    /*.wrapper ul li a:hover:after {*/
+    /*    transform: scaleY(1);*/
+    /*}*/
+
+    /*.wrapper ul li a:hover {*/
+    /*    color: #fff;*/
+    /*}*/
+
+    /*!* Optional content styling *!*/
+    /*.content {*/
+    /*    position: absolute;*/
+    /*    top: 50%;*/
+    /*    left: 50%;*/
+    /*    transform: translate(-50%, -50%);*/
+    /*    z-index: -1;*/
+    /*    text-align: center;*/
+    /*    width: 100%;*/
+    /*    color: #202020;*/
+    /*}*/
+
+    /*.content .title {*/
+    /*    font-size: 40px;*/
+    /*    font-weight: 700;*/
+    /*}*/
+
+    /*.content p {*/
+    /*    font-size: 35px;*/
+    /*    font-weight: 600;*/
+    /*}*/
+
+    /*!* Gradient rotation animation *!*/
+    /*@keyframes rotate {*/
+    /*    0% {*/
+    /*        filter: hue-rotate(0deg);*/
+    /*    }*/
+    /*    100% {*/
+    /*        filter: hue-rotate(360deg);*/
+    /*    }*/
+    /*}*/
+</style>
 <body>
 
-<header>WATERFALLS IN SRI LANKA</header>
+<!-- Navigation Bar -->
+<input type="checkbox" id="active">
+<!--<label for="active" class="menu-btn"><i class="fas fa-bars"></i></label>-->
+<div class="wrapper">
+    <ul>
+        <li><a href="index.html/hero">Home</a></li>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#servicess">Services</a></li>
+        <li><a href="index.html#gallery">Gallery</a></li>
+        <li><a href="index.html#review">Feedback</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+        <li><a href="signup.html">Register</a></li>
+    </ul>
+</div>
+
+
+<header>PLAN YOUR TRIP IN SRI LANKA</header>
 
 <!-- Dropdown for selecting district -->
 <select id="districtSelect">
-    <option value="">-- Select District --</option>
+    <option value=""> Select District </option>
     <option value="Kandy">Kandy</option>
-    <option value="Colombo">Colombo</option>
-    <option value="Anuradhapura">Anuradhapura</option>
-    <option value="Badulla">Badulla</option>
-    <option value="Batticaloa">Batticaloa</option>
-    <option value="Galle">Galle</option>
-    <option value="Gampaha">Gampaha</option>
-    <option value="Hambantota">Hambantota</option>
-    <option value="Jaffna">Jaffna</option>
-    <option value="Kalutara">Kalutara</option>
-    <option value="Kegalle">Kegalle</option>
-    <option value="Kilinochchi">Kilinochchi</option>
-    <option value="Kurunegala">Kurunegala</option>
-    <option value="Mannar">Mannar</option>
-    <option value="Matale">Matale</option>
-    <option value="Matara">Matara</option>
-    <option value="Monaragala">Monaragala</option>
-    <option value="Mullaitivu">Mullaitivu</option>
     <option value="Nuwara Eliya">Nuwara Eliya</option>
-    <option value="Polonnaruwa">Polonnaruwa</option>
-    <option value="Ampara">Ampara</option>
-    <option value="Puttalam">Puttalam</option>
     <option value="Ratnapura">Ratnapura</option>
+    <option value="Badulla">Badulla</option>
+    <option value="Gampaha">Gampaha</option>
+    <option value="Colombo">Colombo</option>
+    <option value="Galle">Galle</option>
+    <option value="Kilinochchi">Kilinochchi</option>
+    <option value="Matara">Matara</option>
+    <option value="Jaffna">Jaffna</option>
+    <option value="Matale">Matale</option>
+    <option value="Ampara">Ampara</option>
+    <option value="Vavuniyaka">Vavuniyaka</option>
+    <option value="Kandy Central">Kandy Central</option>
+    <option value="Hambantota">Hambantota</option>
+    <option value="Moneragala">Moneragala</option>
+    <option value="Kurunegala">Kurunegala</option>
+    <option value="Anuradhapura">Anuradhapura</option>
+    <option value="Kegalle">Kegalle</option>
+    <option value="Kalutara">Kalutara</option>
     <option value="Trincomalee">Trincomalee</option>
-    <option value="Vavuniya">Vavuniya</option>
+    <option value="Batticaloa">Batticaloa</option>
+    <option value="Puttalam">Puttalam</option>
+    <option value="Kalaniya">Kalaniya</option>
+    <option value="Mullaitivu">Mullaitivu</option>
+    <option value="Gampaha ">Gampaha </option>
+
+
 </select>
+
+<!-- Button to get directions -->
+<button id="getDirections" style="display:none;">Get Directions</button>
 
 <div id="place-cards-container"></div>
 
-<script>
-    $(document).ready(function () {
-        function getAllPlaces(district) {
-            if (!district) {
-                $('#place-cards-container').html('<p>Please select a district.</p>');
-                return;
-            }
+<!-- Map Container -->
+<div id="map" class="map-section"></div>
 
-            $.ajax({
-                url: `http://localhost:8081/api/v1/addPlace/getAllByDistrict/${district}`,
-                type: 'GET',
-                dataType: 'json',
-                headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('token')
-                },
-                success: function (response) {
-                    const container = $('#place-cards-container');
-                    container.empty();
-
-                    if (!response || response.length === 0) {
-                        container.append('<p>No places available in this district.</p>');
-                        return;
-                    }
-
-                    response.forEach((place, index) => {
-                        const placeName = place.placeName || "Unknown Location";
-                        const placeDescription = place.aboutPlace || "No description available.";
-                        const imageFilename = place.images ? place.images.split("\\").pop() : "default.jpg";
-                        const imageUrl = `http://localhost:8081/api/v1/uploads/${imageFilename}`;
-                        const lat = parseFloat(place.latitude) || 7.8731;
-                        const lng = parseFloat(place.longitude) || 80.7718;
-                        const videoUrl = place.videoUrl ? extractYouTubeID(place.videoUrl) : null;
-                        const status = place.status;
-
-                        const cardHtml = `
-                            <div class="card">
-                                <div class="image-container">
-                                    <img src="${imageUrl}" alt="${placeName}" />
-                                </div>
-                                <div class="content">
-                                    <h3>${placeName}</h3>
-                                    <p>${placeDescription}</p>
-                                    <p><strong>Status:</strong> ${status}</p>
-                                  <div class="map-section">
-                                        <div id="map"></div>
-                                    </div>
-                                    <div class="video-container">
-                                        ${videoUrl ? `<iframe src="https://www.youtube.com/embed/${videoUrl}" frameborder="0" allowfullscreen></iframe>` : ''}
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-
-                        container.append(cardHtml);
-                        initMap(lat, lng, `map-${index}`);
-                    });
-                },
-                error: function () {
-                    $('#place-cards-container').append('<p>Failed to load places. Please try again later.</p>');
-                }
-            });
-        }
-
-        function initMap(lat, lng, mapId) {
-            const position = { lat, lng };
-            const map = new google.maps.Map(document.getElementById(mapId), {
-                zoom: 10,
-                center: position,
-            });
-            new google.maps.Marker({ position: position, map: map });
-        }
-
-        function extractYouTubeID(url) {
-            const regex = /(?:youtube\.com\/.*[?&]v=|youtu\.be\/)([^"&?\/\s]{11})/;
-            const match = url.match(regex);
-            return match ? match[1] : "";
-        }
-
-        // Trigger API call when a district is selected
-        $('#districtSelect').change(function () {
-            const selectedDistrict = $(this).val();
-            getAllPlaces(selectedDistrict);
-        });
-    });
-</script>
+<script src="js/jquery-3.7.1.min.js"></script>
+<script src="js/select-by-district.js"></script>
 
 </body>
 </html>
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Styled Location Cards</title>-->
+
+<!--    &lt;!&ndash; Google Maps API &ndash;&gt;-->
+<!--    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFpFDLrN4DPjDEXp7kKfGuooEL5tSheCk" async defer></script>-->
+
+<!--    &lt;!&ndash; jQuery Library &ndash;&gt;-->
+<!--    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+
+<!--    &lt;!&ndash; Google Fonts &ndash;&gt;-->
+<!--    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">-->
+
+<!--    <style>-->
+<!--        * {-->
+<!--            margin: 0;-->
+<!--            padding: 0;-->
+<!--            box-sizing: border-box;-->
+<!--            font-family: 'Poppins', sans-serif;-->
+<!--        }-->
+<!--        body {-->
+<!--            background-color: #D4DAD9;-->
+<!--            color: #252525;-->
+<!--            display: flex;-->
+<!--            flex-direction: column;-->
+<!--            align-items: center;-->
+<!--            padding: 20px;-->
+<!--        }-->
+<!--        header {-->
+<!--            font-size: 30px;-->
+<!--            background: #0faf84;-->
+<!--            color: #fff;-->
+<!--            padding: 10px;-->
+<!--            text-align: center;-->
+<!--            width: 100%;-->
+<!--            position: fixed;-->
+<!--            top: 0;-->
+<!--            left: 0;-->
+<!--            z-index: 999;-->
+<!--        }-->
+<!--        select {-->
+<!--            margin-top: 70px;-->
+<!--            padding: 10px;-->
+<!--            font-size: 18px;-->
+<!--            border-radius: 5px;-->
+<!--            border: 1px solid #333;-->
+<!--        }-->
+<!--        #place-cards-container {-->
+<!--            margin-top: 20px;-->
+<!--            display: flex;-->
+<!--            flex-wrap: wrap;-->
+<!--            justify-content: center;-->
+<!--            gap: 20px;-->
+<!--        }-->
+<!--        .card {-->
+<!--            width: 1000px;-->
+<!--            display: flex;-->
+<!--            box-shadow: 0 30px 40px -15px rgba(0,0,0,0.35);-->
+<!--            background: #fff;-->
+<!--            overflow: hidden;-->
+<!--            transition: 0.3s ease-in-out;-->
+<!--        }-->
+<!--        .card:hover {-->
+<!--            transform: scale(1.02);-->
+<!--        }-->
+<!--        .image-container img {-->
+<!--            width: 350px;-->
+<!--            height: 400px;-->
+<!--            object-fit: cover;-->
+<!--        }-->
+<!--        .content {-->
+<!--            width: 60%;-->
+<!--            padding: 15px;-->
+<!--            display: flex;-->
+<!--            flex-direction: column;-->
+<!--            justify-content: space-between;-->
+<!--        }-->
+<!--        .map-section {-->
+<!--            height: 200px;-->
+<!--            width: 250px;-->
+<!--            border-radius: 5px;-->
+<!--            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);-->
+<!--        }-->
+<!--        iframe {-->
+<!--            width: 100%;-->
+<!--            height: 180px;-->
+<!--            border-radius: 6px;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--<header>WATERFALLS IN SRI LANKA</header>-->
+
+<!--&lt;!&ndash; Dropdown for selecting district &ndash;&gt;-->
+<!--<select id="districtSelect">-->
+<!--    <option value="">&#45;&#45; Select District &#45;&#45;</option>-->
+<!--    <option value="Kandy">Kandy</option>-->
+<!--    <option value="Colombo">Colombo</option>-->
+<!--    <option value="Anuradhapura">Anuradhapura</option>-->
+<!--    <option value="Badulla">Badulla</option>-->
+<!--    <option value="Batticaloa">Batticaloa</option>-->
+<!--    <option value="Galle">Galle</option>-->
+<!--    <option value="Gampaha">Gampaha</option>-->
+<!--    <option value="Hambantota">Hambantota</option>-->
+<!--    <option value="Jaffna">Jaffna</option>-->
+<!--    <option value="Kalutara">Kalutara</option>-->
+<!--    <option value="Kegalle">Kegalle</option>-->
+<!--    <option value="Kilinochchi">Kilinochchi</option>-->
+<!--    <option value="Kurunegala">Kurunegala</option>-->
+<!--    <option value="Mannar">Mannar</option>-->
+<!--    <option value="Matale">Matale</option>-->
+<!--    <option value="Matara">Matara</option>-->
+<!--    <option value="Monaragala">Monaragala</option>-->
+<!--    <option value="Mullaitivu">Mullaitivu</option>-->
+<!--    <option value="Nuwara Eliya">Nuwara Eliya</option>-->
+<!--    <option value="Polonnaruwa">Polonnaruwa</option>-->
+<!--    <option value="Ampara">Ampara</option>-->
+<!--    <option value="Puttalam">Puttalam</option>-->
+<!--    <option value="Ratnapura">Ratnapura</option>-->
+<!--    <option value="Trincomalee">Trincomalee</option>-->
+<!--    <option value="Vavuniya">Vavuniya</option>-->
+<!--</select>-->
+
+<!--<div id="place-cards-container"></div>-->
+
+<!--<script>-->
+<!--    $(document).ready(function () {-->
+<!--        function getAllPlaces(district) {-->
+<!--            if (!district) {-->
+<!--                $('#place-cards-container').html('<p>Please select a district.</p>');-->
+<!--                return;-->
+<!--            }-->
+
+<!--            $.ajax({-->
+<!--                url: `http://localhost:8081/api/v1/addPlace/getAllByDistrict/${district}`,-->
+<!--                type: 'GET',-->
+<!--                dataType: 'json',-->
+<!--                headers: {-->
+<!--                    'Authorization': 'Bearer ' + localStorage.getItem('token')-->
+<!--                },-->
+<!--                success: function (response) {-->
+<!--                    const container = $('#place-cards-container');-->
+<!--                    container.empty();-->
+
+<!--                    if (!response || response.length === 0) {-->
+<!--                        container.append('<p>No places available in this district.</p>');-->
+<!--                        return;-->
+<!--                    }-->
+
+<!--                    response.forEach((place, index) => {-->
+<!--                        const placeName = place.placeName || "Unknown Location";-->
+<!--                        const placeDescription = place.aboutPlace || "No description available.";-->
+<!--                        const imageFilename = place.images ? place.images.split("\\").pop() : "default.jpg";-->
+<!--                        const imageUrl = `http://localhost:8081/api/v1/uploads/${imageFilename}`;-->
+<!--                        const lat = parseFloat(place.latitude) || 7.8731;-->
+<!--                        const lng = parseFloat(place.longitude) || 80.7718;-->
+<!--                        const videoUrl = place.videoUrl ? extractYouTubeID(place.videoUrl) : null;-->
+<!--                        const status = place.status;-->
+
+<!--                        const cardHtml = `-->
+<!--                            <div class="card">-->
+<!--                                <div class="image-container">-->
+<!--                                    <img src="${imageUrl}" alt="${placeName}" />-->
+<!--                                </div>-->
+<!--                                <div class="content">-->
+<!--                                    <h3>${placeName}</h3>-->
+<!--                                    <p>${placeDescription}</p>-->
+<!--                                    <p><strong>Status:</strong> ${status}</p>-->
+<!--                                  <div class="map-section">-->
+<!--                                        <div id="map"></div>-->
+<!--                                    </div>-->
+<!--                                    <div class="video-container">-->
+<!--                                        ${videoUrl ? `<iframe src="https://www.youtube.com/embed/${videoUrl}" frameborder="0" allowfullscreen></iframe>` : ''}-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        `;-->
+
+<!--                        container.append(cardHtml);-->
+<!--                        initMap(lat, lng, `map-${index}`);-->
+<!--                    });-->
+<!--                },-->
+<!--                error: function () {-->
+<!--                    $('#place-cards-container').append('<p>Failed to load places. Please try again later.</p>');-->
+<!--                }-->
+<!--            });-->
+<!--        }-->
+
+<!--        function initMap(lat, lng, mapId) {-->
+<!--            const position = { lat, lng };-->
+<!--            const map = new google.maps.Map(document.getElementById(mapId), {-->
+<!--                zoom: 10,-->
+<!--                center: position,-->
+<!--            });-->
+<!--            new google.maps.Marker({ position: position, map: map });-->
+<!--        }-->
+
+<!--        function extractYouTubeID(url) {-->
+<!--            const regex = /(?:youtube\.com\/.*[?&]v=|youtu\.be\/)([^"&?\/\s]{11})/;-->
+<!--            const match = url.match(regex);-->
+<!--            return match ? match[1] : "";-->
+<!--        }-->
+
+<!--        // Trigger API call when a district is selected-->
+<!--        $('#districtSelect').change(function () {-->
+<!--            const selectedDistrict = $(this).val();-->
+<!--            getAllPlaces(selectedDistrict);-->
+<!--        });-->
+<!--    });-->
+<!--    -->
+<!--//     direction-->
+<!--    -->
+<!--    -->
+<!--</script>-->
+
+<!--</body>-->
+<!--</html>-->

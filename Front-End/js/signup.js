@@ -33,6 +33,7 @@ window.openPopupSignup = function () {
     function onClickBtn(e) {
         setCookieVariable("DontShowEmailPopup", 180); //   3 min
     }
+
     //==================================================================================================
     document.getElementById("signup-facebook").href = createLink(
         "/challenge/facebook",
@@ -84,23 +85,25 @@ window.openPopupSignup = function () {
 function createLink(q) {
     return "http://tipraks.com" + q;
 }
+
 function setCookieVariable() {
     return "fsdf";
 }
+
 // window.openPopupSignup();
 
 
 ////////////////////////
 
-$(document).ready(function() {
-    $('#btn-signup').click(function(event) {
+$(document).ready(function () {
+    $('#btn-signup').click(function (event) {
         event.preventDefault();
 
         var username = $('#username').val();
         var email = $('#email').val();
         var password = $('#password').val();
         var confirmPassword = $('#confirmPassword').val();
-        var role= $('#role').val();
+        var role = $('#role').val();
 
         if (password !== confirmPassword) {
             alert('Passwords do not match!');
@@ -111,7 +114,7 @@ $(document).ready(function() {
             name: username,
             email: email,
             password: password,
-            role:role
+            role: role
         };
 
         $.ajax({
@@ -120,19 +123,19 @@ $(document).ready(function() {
             dataType: 'json',
             contentType: 'application/json',
             data: JSON.stringify(formData),
-            success: function(response) {
+            success: function (response) {
                 console.log(response);
-                    alert('User registered successfully!');
-                    $('#username').val('');
-                    $('#email').val('');
-                    $('#password').val('');
-                    $('#confirmPassword').val('');
-                    $('#role').val('');
-                    window.location.href="../js/../index.html"
+                alert('User registered successfully!');
+                $('#username').val('');
+                $('#email').val('');
+                $('#password').val('');
+                $('#confirmPassword').val('');
+                $('#role').val('');
+                window.location.href = "../js/../index.html"
 
 
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.log("Error:", error);
                 alert("Error: " + xhr.responseText);
 
@@ -174,13 +177,13 @@ $(document).ready(function () {
                 console.log("Server Response:", response);
                 localStorage.setItem('token', response.data.token);
                 if (response.code === 201) {
-                    if (response.role='USER'){
+                    if (response.role = 'USER') {
                         alert('Welcome User!');
-                        window.location.href="../js/../index.html"
-                    }else if (response.role='ADMIN'){
+                        window.location.href = "../js/../index.html"
+                    } else if (response.role = 'ADMIN') {
                         alert('Welcome Admin!');
-                        window.location.href="../js/../index.html"
-                    }else {
+                        window.location.href = "../js/../index.html"
+                    } else {
                         alert('Invalid Credentials!');
                     }
                 }
@@ -195,3 +198,9 @@ $(document).ready(function () {
         });
     });
 });
+//continue with google
+
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-XXXXXXXXX-X');

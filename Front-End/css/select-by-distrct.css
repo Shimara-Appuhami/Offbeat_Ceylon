@@ -1,0 +1,198 @@
+/* General Reset */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    /*background: linear-gradient(135deg, #6a11cb, #2575fc);*/
+    background-image: url("https://media.istockphoto.com/id/1266572591/photo/curvy-road-in-summer-pine-forest-top-down-drone-photography-outdoor-wilderness.jpg?s=2048x2048&w=is&k=20&c=2eCppVpPe2vSXBoAkSMEYP04464uvxZLgT27lhWcqjA=");
+    text-align: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: #333;
+}
+/*nav*/
+
+
+.wrapper {
+    position: fixed;
+    border-radius: 50px;
+    top: 0;
+    left: 0;
+    height: 70px;
+    width: 100%;
+    background: #32a582;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+    z-index: 1;
+}
+input[type="checkbox"] {
+    display: none;
+}
+.wrapper ul {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+}
+
+/* Menu items */
+.wrapper ul li a {
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 10px 20px;
+    color: #fff;
+    border-radius: 50px;
+    /*background: #06a99D;*/
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+/* Dropdown Styling */
+#districtSelect {
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 2px solid #2575fc;
+    outline: none;
+    width: 280px;
+    margin: 50px 0;
+    background: #fff;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#districtSelect:hover {
+    border-color: #6a11cb;
+    background: #e3f2fd;
+}
+
+/* Button Styling */
+#getDirections {
+    padding: 12px 24px;
+    font-size: 16px;
+    color: white;
+    background: #2575fc;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+#getDirections:hover {
+    background: #6a11cb;
+}
+
+/* Map Section */
+.map-section {
+    width: 70%;
+    height: 500px;
+    margin: 20px auto;
+    border-radius: 12px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+    border: 3px solid #2575fc;
+}
+
+/* Place Cards Container */
+#place-cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 30px auto;
+    gap: 20px;
+    max-width: 90%;
+}
+
+.card {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+    width: 600px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-left: 6px solid #2575fc;
+    position: relative;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.image-container img {
+    width: 180px;
+    height: 120px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    flex-grow: 1;
+}
+
+.content h3 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 8px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.content p {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 10px;
+    text-align: left;
+    padding: 0 10px;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.checkbox-container input[type="checkbox"] {
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.checkbox-container label {
+    font-size: 14px;
+    color: #333;
+}
+
+@media (max-width: 768px) {
+    .map-section {
+        height: 400px;
+    }
+
+    #districtSelect, #getDirections {
+        width: 85%;
+    }
+
+    .card {
+        width: 90%;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .image-container img {
+        width: 100%;
+        height: auto;
+    }
+}

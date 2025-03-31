@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find & Visit Nearby Places</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFpFDLrN4DPjDEXp7kKfGuooEL5tSheCk&libraries=places" async defer></script>
+    <style>
+        #map { height: 500px; width: 100%; }
+        .controls { margin: 10px 0; }
+        input, select, button { padding: 8px; margin: 5px; }
+        .places-list { margin-top: 10px; max-width: 400px; }
+        .places-list label { display: block; margin-bottom: 5px; }
+    </style>
+</head>
+<body>
+
+<h2>Find Nearby Places & Get Directions</h2>
+
+<div class="controls">
+    <input type="text" id="start" placeholder="Enter Start Location" />
+    <input type="text" id="end" placeholder="Enter End Location" />
+    <select id="category">
+        <option value="mountain">Mountain</option>
+        <option value="waterfall">Waterfall</option>
+        <option value="park">Park</option>
+    </select>
+    <button onclick="fetchPlaces()">Find Places</button>
+</div>
+
+<div id="map"></div>
+
+<h3>Nearby Places</h3>
+<div class="places-list" id="placesList"></div>
+
+<button onclick="getDirections()">Get Directions</button>
+
+<script>
+    let map, directionsService, directionsRenderer;
+    let savedPlaces = [];
+    let markers = [];
+
+    function initMap() {
+        map = new google.maps.Map(document.getElementById("map"), { zoom: 12, center: { lat: 7.8731, lng: 80.7718 } });
+        directionsService = new google.maps.DirectionsService();
+        directionsRenderer = new google.maps.DirectionsRenderer();
+        directionsRenderer.setMap(map);
+    }
+
+    function fetchPlaces() {
+        let start = document.getElementById("start").value;
+        let end = document.getElementById("end").value;
+        let category = document.getElementById("category").value;
+
+        if (!start || !end) {
+            alert("Please enter both start and end locations.");
+            return;
+        }
+
+        fetch(`/api/v1/addPlace/getAllByCategory/?start=${encodeURIComponent(start)}&end=${encodeURIComponent(end)}&category=${category}`)
+            .then(response => response.json())
+            .then(data => {
+                savedPlaces = data;
+                displayPlaces();
+            })
+            .catch(error => console.error("Error fetching places:", error));
+    }
+
+    function displayPlaces() {
+        const placesList = document.getElementById("placesList");
+        placesList.innerHTML = "";
+
+        markers.forEach(marker => marker.setMap(null));
+        markers = [];
+
+        savedPlaces.forEach((place, index) => {
+            let label = document.createElement("label");
+            label.innerHTML = `<input type="checkbox" id="place${index}" value="${index}"> ${place.name}`;
+            placesList.appendChild(label);
+
+            let marker = new google.maps.Marker({
+                position: { lat: place.lat, lng: place.lng },
+                map,
+                title: place.name
+            });
+            markers.push(marker);
+        });
+    }
+
+    function getDirections() {
+        let selectedPlaces = [];
+        savedPlaces.forEach((place, index) => {
+            if (document.getElementById(`place${index}`)?.checked) {
+                selectedPlaces.push(place);
+            }
+        });
+
+        if (selectedPlaces.length === 0) {
+            alert("Please select at least one place.");
+            return;
+        }
+
+        let start = document.getElementById("start").value;
+        let end = document.getElementById("end").value;
+
+        let waypoints = selectedPlaces.map(place => ({
+            location: new google.maps.LatLng(place.lat, place.lng),
+            stopover: true
+        }));
+
+        let request = {
+            origin: start,
+            destination: end,
+            waypoints: waypoints,
+            travelMode: google.maps.TravelMode.DRIVING
+        };
+
+        directionsService.route(request, (result, status) => {
+            if (status === google.maps.DirectionsStatus.OK) {
+                directionsRenderer.setDirections(result);
+            } else {
+                alert("Could not get directions: " + status);
+            }
+        });
+    }
+
+    window.onload = initMap;
+
+    let map;
+    let marker;
+
+    function initMap() {
+        const mapOptions = {
+            center: { lat: 6.9271, lng: 79.8612 }, // Default center (e.g., Colombo)
+            zoom: 10,
+        };
+
+        map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+        // Add a click event listener to place a marker and show coordinates
+        google.maps.event.addListener(map, 'click', function (event) {
+            const lat = event.latLng.lat();
+            const lng = event.latLng.lng();
+            if (marker) marker.setMap(null);  // Remove previous marker
+            marker = new google.maps.Marker({
+                position: event.latLng,
+                map: map,
+            });
+            document.getElementById("coordinates").textContent = `Coordinates: ${lat}, ${lng}`;
+        });
+    }
+
+    function searchLocation() {
+        const input = document.getElementById("locationSearch");
+        const searchBox = new google.maps.places.SearchBox(input);
+
+        map.addListener("bounds_changed", function () {
+            searchBox.setBounds(map.getBounds());
+        });
+
+        searchBox.addListener("places_changed", function () {
+            const places = searchBox.getPlaces();
+            if (places.length == 0) return;
+
+            const place = places[0];
+            map.setCenter(place.geometry.location);
+            marker = new google.maps.Marker({
+                position: place.geometry.location,
+                map: map,
+            });
+            document.getElementById("coordinates").textContent = `Coordinates: ${place.geometry.location.lat()}, ${place.geometry.location.lng()}`;
+        });
+    }
+
+    document.getElementById("addPlaceForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+        const placeName = document.getElementById("placeName").value;
+        const category = document.getElementById("category").value;
+        const aboutPlace = document.getElementById("aboutPlace").value;
+        const district = document.getElementById("district").value;
+        const images = document.getElementById("images").files;
+        const status = document.querySelector('input[name="status"]:checked').value;
+        const coordinates = document.getElementById("coordinates").textContent.split(":")[1].trim();
+
+        // Handle form submission logic here (e.g., sending the data to a server)
+    });
+
+    document.getElementById("btn-update-place").addEventListener("click", function () {
+        // Handle update logic
+    });
+
+    document.getElementById("btn-delete-place").addEventListener("click", function () {
+        // Handle delete logic
+    });
+
+    window.onload = initMap; // Load the map when the page loads
+
+</script>
+
+</body>
+</html>

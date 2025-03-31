@@ -1,150 +1,97 @@
 body, html {
     background-color: #EBECF0;
-}
-
-body, p, input, select, textarea, button {
     font-family: 'Montserrat', sans-serif;
-    letter-spacing: -0.2px;
-    font-size: 16px;
 }
 
-div, p {
-    color: #BABECC;
-    text-shadow: 1px 1px 1px #FFF;
+h1 {
+    text-align: center;
+    font-size: 30px;
+    color: #4A4A4A;
+    margin-top: 30px;
 }
 
 form {
-    padding: 16px;
-    width: 320px; /* 16px * 20 */
-    margin: 0 auto;
+    width: 400px;
+    margin: 40px auto;
+    padding: 20px;
 }
 
-.segment {
-    padding: 32px 0; /* 16px * 2 */
-    text-align: center;
-}
-
-button, input,select {
-    border: 0;
-    outline: 0;
-    font-size: 16px;
-    border-radius: 320px; /* 16px * 20 */
-    padding: 16px;
-    background-color: #EBECF0;
-    text-shadow: 1px 1px 0 #FFF;
-}
-
-label,select {
+label {
     display: block;
-    margin-bottom: 24px; /* 16px * 1.5 */
+    margin-bottom: 10px;
+}
+
+input, select {
     width: 100%;
+    padding: 12px;
+    border: 1px solid #CCC;
+    border-radius: 8px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
 }
 
-input,select {
-    margin-right: 8px; /* 16px / 2 */
-    box-shadow: inset 2px 2px 5px #BABECC, inset -5px -5px 10px #FFF;
-    width: 100%;
-    box-sizing: border-box;
-    transition: all 0.2s ease-in-out;
-    appearance: none;
-    -webkit-appearance: none;
+input:focus, select:focus {
+    border-color: #7A7A7A;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
 }
 
-input,select:focus {
-    box-shadow: inset 1px 1px 2px #BABECC, inset -1px -1px 2px #FFF;
-}
-
-button,select,[type="file"] {
-    color: #61677C;
-    font-weight: 600;
-    box-shadow: -5px -5px 20px #FFF, 5px 5px 20px #BABECC;
-    transition: all 0.2s ease-in-out;
+button {
+    width: 120px;
+    padding: 10px;
+    margin: 10px 5px;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+#btn-save-place {
+    background-color: #007BFF;
+    color: white;
+}
+
+#btn-update-place {
+    background-color: #FFC107;
+    color: white;
+}
+
+#btn-delete-place {
+    background-color: #DC3545;
+    color: white;
 }
 
 button:hover {
-    box-shadow: -2px -2px 5px #FFF, 2px 2px 5px #BABECC;
+    opacity: 0.8;
 }
 
-button:active {
-    box-shadow: inset 1px 1px 2px #BABECC, inset -1px -1px 2px #FFF;
+#map-section {
+    width: 80%;
+    margin: 40px auto;
+    text-align: center;
 }
 
-button .icon {
-    margin-right: 8px; /* 16px / 2 */
+#map {
+    height: 300px;
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
 }
 
-/* Button unit */
-button.unit {
-    border-radius: 8px; /* 16px / 2 */
-    line-height: 0;
-    width: 48px; /* 16px * 3 */
-    height: 48px;
-    display: inline-flex;
+#locationSearch {
+    width: 80%;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+#radios {
+    margin: 20px auto;
+    text-align: center;
+}
+
+.input-group {
+    display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0 8px; /* 16px / 2 */
-    font-size: 19.2px; /* 16px * 1.2 */
+    gap: 10px;
 }
-
-button.unit .icon {
-    margin-right: 0;
-}
-
-/* Button red */
-button.red {
-    display: block;
-    width: 100%;
-    color: #AE1100;
-}
-
-/* Input group */
-.input-group {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-}
-
-.input-group label {
-    margin: 0;
-    flex: 1;
-}
-/*dfghjk*/
-/* Add this to your existing CSS file */
-.input-group {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    margin-bottom: 15px;
-}
-
-
-
-.radio-label {
-    font-size: 16px;
-    color: #BABECC;
-    text-shadow: 1px 1px 1px #FFF;
-    padding-left: 10px;
-}
-
-/* Style for the radio buttons */
-input[type="radio"] {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    border: 2px solid #BABECC;
-    background-color: #FFF;
-    margin-right: 10px;
-    transition: all 0.2s ease-in-out;
-}
-
-input[type="radio"]:checked {
-    background-color: #AE1100; /* Red color when checked */
-    border-color: #AE1100;
-}
-
-input[type="radio"]:focus {
-    outline: none;
-    box-shadow: 0 0 3px 3px #AE1100;
-}
-#map { height: 300px; width: 100%; border-radius: 12px;}

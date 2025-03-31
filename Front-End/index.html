@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
+      xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Landing Page</title>
@@ -12,26 +13,32 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+<!--<div id="front-img">-->
+<!--    <img src="assets/images/img_1.png" alt="Travel Image">-->
+<!--    <span class="overlay-text">Travel Makes <br>You Happier</span>-->
+<!--</div>-->
+
 
 <!-- Navigation Bar -->
 <input type="checkbox" id="active">
-<label for="active" class="menu-btn"><i class="fas fa-bars"></i></label>
+<!--<label for="active" class="menu-btn"><i class="fas fa-bars"></i></label>-->
 <div class="wrapper">
     <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Services</a></li>
-        <li><a href="#">Gallery</a></li>
-        <li><a href="#">Feedback</a></li>
-        <li><a href="#">Contact</a></li>
-        <li><a href="#">Register</a></li>
+        <li><a href="#heroPage">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#servicess">Services</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#review">Feedback</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="signup.html">Register</a></li>
     </ul>
 </div>
 
+
 <!-- District Selection -->
-<label for="districtSelect">Select District:</label>
-<select name="district" id="districtSelect">
-    <option value="">-- Select District --</option>
+<label for="districtSelect" style="display: none">Select District:</label>
+<select  name="district" id="districtSelect">
+    <option value="" id="select-district">-- Select District --</option>
     <option value="Kandy">Kandy</option>
     <option value="Colombo">Colombo</option>
     <option value="Anuradhapura">Anuradhapura</option>
@@ -76,11 +83,11 @@
         <a href="add-places.html">+ Add Places</a><br>
     </button>
 </div>
-<div class="button-group">
-    <button  id="btn-add-category">
-        <a href="add-category-form.html">+ Add Category</a><br>
-    </button>
-</div>
+<!--<div class="button-group">-->
+<!--    <button  id="btn-add-category">-->
+<!--        <a href="add-category-form.html">+ Add Category</a><br>-->
+<!--    </button>-->
+<!--</div>-->
 
 <!--district cards-->
 <div id="place-cards-container"></div>
@@ -92,209 +99,305 @@
     </div>
 </section>
 
+<section id="about" class="about-section">
+    <div class="about-container">
+        <h2>About Us</h2>
+        <p>Welcome to our travel platform! We aim to make your travel experiences more exciting by providing the best locations, attractions, and recommendations. Whether you are looking for breathtaking mountains, serene waterfalls, or historical sites, we have it all covered.</p>
+        <p>Our mission is to connect travelers with beautiful destinations while offering an easy-to-use platform to explore places based on districts and categories. Start your journey with us and discover the wonders of Sri Lanka!</p>
+        <div class="about-image">
+            <img src="assets/images/img_1.png" alt="About Us">
+        </div>
+    </div>
+</section>
+
+<!--service-->
+
+<section class="services" id="servicess">
+<!--    <h2 class="section-title">Our Services</h2>-->
+    <a href ="select-by-district.html" id="btn-direction" class = "button">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        Plan your Trip</a>
+    <div class="service-container">
+
+        <div class="service-card">
+            <div class="icon">🌍</div>
+            <h3>Travel Planning</h3>
+            <p>Customized travel itineraries for exploring Sri Lanka.</p>
+        </div>
+<!--        <div class="service-card">-->
+<!--            <div class="icon">🏨</div>-->
+<!--            <h3>Hotel & Stay</h3>-->
+<!--            <p>Find the best accommodations across Sri Lanka.</p>-->
+<!--        </div>-->
+<!--        <div class="service-card">-->
+<!--            <div class="icon">🚗</div>-->
+<!--            <h3>Transport Services</h3>-->
+<!--            <p>Car rentals, tuk-tuks, and public transport guidance.</p>-->
+<!--        </div>-->
+<!--        <div class="service-card">-->
+<!--            <div class="icon">🍛</div>-->
+<!--            <h3>Food & Restaurants</h3>-->
+<!--            <p>Discover the best local Sri Lankan cuisine.</p>-->
+<!--        </div>-->
+        <div class="service-card">
+            <div class="icon">🏝️</div>
+            <h3>Beach & Adventure</h3>
+            <p>Enjoy surfing, hiking, and nature tours.</p>
+        </div>
+
+    </div>
+</section>
+
+<!--gallery-->
+<section id="gallery" class="gallery-section">
+    <h2>Explore Our Gallery</h2>
+    <div class="gallery-container">
+        <div class="gallery-item">
+            <img src="https://img.freepik.com/free-photo/aerial-view-reflections-palm-trees-turquoise-water-sea_181624-23162.jpg?t=st=1743065514~exp=1743069114~hmac=2e09a14803ac87d7f650f7c0a64e1e7fe493425a6f2ed103e3be4bfc500d8bec&w=740" alt="Beach">
+        </div>
+        <div class="gallery-item">
+            <img src="https://img.freepik.com/free-photo/beautiful-landscape-phu-chi-fa-phu-chi-fa-national-park-chiang-rai-province-thailand_335224-1021.jpg?t=st=1743065609~exp=1743069209~hmac=373882c704eebed2868043747f034105f21eb794a49aa511ca88ffcca4aca9a6&w=1380" alt="Mountains">
+        </div>
+        <div class="gallery-item">
+            <img src="https://img.freepik.com/free-photo/trusetaler-waterfall-flowing-through-forest-germany_181624-13740.jpg?t=st=1743065657~exp=1743069257~hmac=c3c4e9dce8244cf70052ee1fce76f1e3375ad8adcb28e78598c6e0e244a148a2&w=740" alt="Waterfall">
+        </div>
+        <div class="gallery-item">
+            <img src="https://img.freepik.com/free-photo/travel-adventure-fashionable-young-man-wearing-snapback-backpack-sitting-stone-looking-back-waterfall-beautiful-green-rainforest-barefooted-tourist-having-rest-rock-jungle_273609-1618.jpg?t=st=1743065700~exp=1743069300~hmac=30ec69d297584c49e5be2498112696db3bf52a8b412acaf9cc978be0765025da&w=1380" alt="Forest">
+        </div>
+        <div class="gallery-item">
+            <img src="https://img.freepik.com/free-photo/young-couple-love_661209-612.jpg?ga=GA1.1.138588466.1729570493&semt=ais_hybrid" alt="Sunset">
+        </div>
+        <div class="gallery-item">
+            <img src="https://img.freepik.com/free-photo/pattaya-chonburi-thailand-28-may-2019-beautiful-landscape-cityscape-pattaya-city-is-popular-destination-thailand-with-white-cloud-blue-sky_74190-8741.jpg?ga=GA1.1.138588466.1729570493&semt=ais_hybrid" alt="City">
+        </div>
+    </div>
+</section>
+
 <!-- Review Board -->
-<div class="review-board">
-    <h2>Customer Reviews</h2>
+<!--<div id="craouselContainer" class="swiper-container">-->
+<!--    <div class="swiper-wrapper" id="slideHolder">-->
+<!--        &lt;!&ndash; Slides &ndash;&gt;-->
 
-    <div class="review-card">
-        <div class="review-content">
-            <h3>John Doe</h3>
-            <div class="stars">★★★★☆</div>
-            <p>"Amazing service! Highly recommended for anyone looking for quality."</p>
+<!--    </div>-->
+<!--    <div class="swiper-pagination"></div>-->
+
+<!--</div>-->
+<!--contact-->
+<section id="contact" class="contact-section">
+    <h2>Contact Us</h2>
+    <p>We'd love to hear from you. Please fill out the form below and we'll get in touch with you shortly.</p>
+
+    <div class="contact-form">
+        <form action="#" method="POST" id="contactForm">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required placeholder="Your Name">
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required placeholder="Your Email">
+            </div>
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="5" required placeholder="Your Message"></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Send Message</button>
+        </form>
+    </div>
+</section>
+
+<!-- Footer -->
+<section id="footer">
+<div class="main"></div>
+<div class="footer">
+    <div class="bubbles">
+        <div class="bubble" style="--size:3.4111413373854136rem; --distance:9.286049514598714rem; --position:78.3504834951464%; --time:3.5111509786034394s; --delay:-3.731666055685951s;"></div>
+        <div class="bubble" style="--size:3.430025233536762rem; --distance:9.10598576239524rem; --position:15.46601377512599%; --time:3.9770970535203025s; --delay:-3.040264926471714s;"></div>
+        <div class="bubble" style="--size:2.1325299447453387rem; --distance:6.1876299406749204rem; --position:60.0981883504743%; --time:3.6447282517484796s; --delay:-2.1482444629061157s;"></div>
+        <div class="bubble" style="--size:4.569377608707065rem; --distance:6.57110289115855rem; --position:39.83747243462738%; --time:2.1495562493260567s; --delay:-2.3921142307117442s;"></div>
+        <div class="bubble" style="--size:5.90869992084001rem; --distance:6.251563474543861rem; --position:16.747472656207037%; --time:3.157114675826593s; --delay:-2.6131686949991946s;"></div>
+        <div class="bubble" style="--size:2.5073723683071423rem; --distance:8.352320657176133rem; --position:64.42981958953125%; --time:3.7237603475709258s; --delay:-3.282833301472989s;"></div>
+        <div class="bubble" style="--size:2.8311850086743844rem; --distance:9.224350153194198rem; --position:73.32789935421981%; --time:2.4273875492109567s; --delay:-3.9886165842918975s;"></div>
+        <div class="bubble" style="--size:2.2214177960236094rem; --distance:9.525819810152626rem; --position:11.644998365375816%; --time:3.310182184620074s; --delay:-3.966875905906179s;"></div>
+        <div class="bubble" style="--size:5.88300115793855rem; --distance:6.197348147404063rem; --position:86.99375089487383%; --time:3.620912572147334s; --delay:-3.5542223151529884s;"></div>
+        <div class="bubble" style="--size:4.147960426191116rem; --distance:8.335756709724617rem; --position:98.26950449299545%; --time:2.376842578026475s; --delay:-3.0958398097952484s;"></div>
+        <div class="bubble" style="--size:3.8425525605281825rem; --distance:7.763005035910874rem; --position:67.21773438559387%; --time:2.0849451591203607s; --delay:-3.7657571442304785s;"></div>
+        <div class="bubble" style="--size:3.347089646252585rem; --distance:8.561310335748086rem; --position:-3.851207932102969%; --time:2.3190521091093563s; --delay:-3.3275529179647205s;"></div>
+        <div class="bubble" style="--size:5.67405434342818rem; --distance:9.038226367415334rem; --position:-1.7296624051829435%; --time:3.236457433240433s; --delay:-2.865155450437467s;"></div>
+        <div class="bubble" style="--size:3.199784629399126rem; --distance:6.546990503514558rem; --position:55.63026550206726%; --time:2.4134625447606552s; --delay:-2.003804618066288s;"></div>
+        <div class="bubble" style="--size:2.9002962355630775rem; --distance:7.316540445440787rem; --position:77.16910369653075%; --time:3.869869951331493s; --delay:-2.5344867892818788s;"></div>
+        <div class="bubble" style="--size:2.934399874768773rem; --distance:7.352392750170125rem; --position:93.13374506540903%; --time:3.1574344996238075s; --delay:-3.0233120794847355s;"></div>
+        <div class="bubble" style="--size:5.959802112893987rem; --distance:9.077377191548484rem; --position:90.8622597519672%; --time:3.7344421799406993s; --delay:-2.8814374076036713s;"></div>
+        <div class="bubble" style="--size:3.4940986359714534rem; --distance:7.976015242243195rem; --position:92.76759308829823%; --time:2.4316803615008196s; --delay:-2.1093096371800333s;"></div>
+        <div class="bubble" style="--size:5.100229734253908rem; --distance:6.420900258057829rem; --position:60.91752529799753%; --time:3.27797415857129s; --delay:-3.6505012304964493s;"></div>
+        <div class="bubble" style="--size:4.176882735490046rem; --distance:6.332482005170123rem; --position:62.81391401574312%; --time:2.6587123542768336s; --delay:-2.712223904820807s;"></div>
+        <div class="bubble" style="--size:4.238899946566908rem; --distance:6.400843526753467rem; --position:46.1588140797434%; --time:3.590841447034341s; --delay:-2.9473134930522544s;"></div>
+        <div class="bubble" style="--size:2.1200531522011588rem; --distance:8.78528966880873rem; --position:8.66765893754079%; --time:3.142000257625461s; --delay:-2.449480701627899s;"></div>
+        <div class="bubble" style="--size:4.155539099720344rem; --distance:8.139780149902414rem; --position:75.91284886979231%; --time:3.995969485286777s; --delay:-3.478993652832325s;"></div>
+        <div class="bubble" style="--size:4.458846508364129rem; --distance:7.649365085389689rem; --position:65.17068238803172%; --time:3.6609883591098833s; --delay:-2.5830164528064925s;"></div>
+        <div class="bubble" style="--size:4.638259036251814rem; --distance:8.470047228826104rem; --position:12.46570742940484%; --time:3.4934201329915524s; --delay:-3.6927350304555s;"></div>
+        <div class="bubble" style="--size:3.1709080589058978rem; --distance:8.659698591359628rem; --position:5.523671730334399%; --time:3.4341576153798976s; --delay:-3.19180660637716s;"></div>
+        <div class="bubble" style="--size:5.0285943286735515rem; --distance:6.129037832902804rem; --position:61.786552149139894%; --time:3.793086877731271s; --delay:-3.2042431577918475s;"></div>
+        <div class="bubble" style="--size:3.984821320744766rem; --distance:8.298865538113137rem; --position:74.32570891479506%; --time:3.437945503460477s; --delay:-2.3780301073020884s;"></div>
+        <div class="bubble" style="--size:4.36919456683578rem; --distance:7.517820251873106rem; --position:10.93045722324647%; --time:3.428294646446799s; --delay:-2.695443342226214s;"></div>
+        <div class="bubble" style="--size:5.839087058600845rem; --distance:9.00339909736218rem; --position:63.63174237614743%; --time:2.5413265477550957s; --delay:-2.98052374221918s;"></div>
+        <div class="bubble" style="--size:5.446695276283401rem; --distance:7.427382935399003rem; --position:69.77976297704669%; --time:2.457111075348489s; --delay:-3.8021634688191366s;"></div>
+        <div class="bubble" style="--size:4.114655188235584rem; --distance:8.486832139691428rem; --position:60.908886847424625%; --time:3.87972663978124s; --delay:-3.367370552370568s;"></div>
+        <div class="bubble" style="--size:2.947335904915896rem; --distance:6.380339883180042rem; --position:87.48388704704531%; --time:3.8226285335869252s; --delay:-3.6880471467961993s;"></div>
+        <div class="bubble" style="--size:2.9542088737640313rem; --distance:6.967468665762593rem; --position:40.527328865729494%; --time:2.892002379704809s; --delay:-2.692398134131365s;"></div>
+        <div class="bubble" style="--size:5.1589602839799324rem; --distance:7.053316984130264rem; --position:69.7762747850236%; --time:2.9183091157047194s; --delay:-2.0080315717868737s;"></div>
+        <div class="bubble" style="--size:2.8548795026320093rem; --distance:9.642748770446968rem; --position:65.2725462120523%; --time:2.8565171128563867s; --delay:-3.3709729624285596s;"></div>
+        <div class="bubble" style="--size:2.0567935732883678rem; --distance:7.019980396329826rem; --position:29.838100502144158%; --time:3.7478451281125493s; --delay:-2.3532444570367033s;"></div>
+        <div class="bubble" style="--size:4.392915926259299rem; --distance:7.526859204595896rem; --position:42.57193976952607%; --time:2.0935967014685994s; --delay:-3.3471605266803133s;"></div>
+        <div class="bubble" style="--size:3.04922241847901rem; --distance:7.833106327979261rem; --position:79.01726790384174%; --time:3.710821729306294s; --delay:-3.351215458622056s;"></div>
+        <div class="bubble" style="--size:3.176276435180342rem; --distance:6.439342490651143rem; --position:15.931115702936445%; --time:3.3750711946415257s; --delay:-2.2073492056156097s;"></div>
+        <div class="bubble" style="--size:2.9913576058610367rem; --distance:9.037062599608507rem; --position:58.91515557323261%; --time:2.564847259478575s; --delay:-3.979953320336403s;"></div>
+        <div class="bubble" style="--size:3.4616303009167098rem; --distance:9.093449304106095rem; --position:37.02684132009648%; --time:3.1867623811787005s; --delay:-3.123702639699336s;"></div>
+        <div class="bubble" style="--size:5.408075217501481rem; --distance:9.725931040455828rem; --position:30.9074717374287%; --time:3.8510592738584815s; --delay:-3.377859368117867s;"></div>
+        <div class="bubble" style="--size:2.82902880336633rem; --distance:8.344316041755299rem; --position:18.409662751312307%; --time:3.8629408609368117s; --delay:-2.3509168521465877s;"></div>
+        <div class="bubble" style="--size:3.9755300226496297rem; --distance:9.481593870263305rem; --position:59.63667077457701%; --time:3.6444946776677543s; --delay:-3.3015777790339573s;"></div>
+        <div class="bubble" style="--size:4.379301035097155rem; --distance:8.244422766328574rem; --position:85.4779463819423%; --time:2.0040224471245405s; --delay:-2.4093115091924906s;"></div>
+        <div class="bubble" style="--size:2.052582844582542rem; --distance:9.284537265165168rem; --position:-0.8595260199234511%; --time:3.7781794593175526s; --delay:-3.295934751487813s;"></div>
+        <div class="bubble" style="--size:2.303015390635986rem; --distance:7.0890435934348535rem; --position:30.86921601746286%; --time:2.2255182360135355s; --delay:-2.0365730030815903s;"></div>
+        <div class="bubble" style="--size:2.9791508444596086rem; --distance:7.006384123906205rem; --position:104.0226014251886%; --time:3.187407056035645s; --delay:-2.803965580348493s;"></div>
+        <div class="bubble" style="--size:3.4260719610617665rem; --distance:8.00022112891824rem; --position:81.0044560821766%; --time:3.4836335086872134s; --delay:-2.039661750967978s;"></div>
+        <div class="bubble" style="--size:4.949555881683735rem; --distance:6.935334924688481rem; --position:34.624022743561184%; --time:3.0903689679499355s; --delay:-2.9185592254698753s;"></div>
+        <div class="bubble" style="--size:4.465766615794941rem; --distance:7.439101554963113rem; --position:20.187623259729925%; --time:2.9131435479314813s; --delay:-3.556487543588592s;"></div>
+        <div class="bubble" style="--size:3.4897670382858506rem; --distance:9.700881698589875rem; --position:26.1421547261035%; --time:3.1700258714914926s; --delay:-2.581700466397738s;"></div>
+        <div class="bubble" style="--size:2.6750950599302827rem; --distance:7.146009043047747rem; --position:23.003371376806378%; --time:3.779057722349505s; --delay:-3.6361540444154343s;"></div>
+        <div class="bubble" style="--size:5.227304451818144rem; --distance:7.224101218794956rem; --position:60.88719260454167%; --time:2.795508312827512s; --delay:-2.039282315884051s;"></div>
+        <div class="bubble" style="--size:5.137338474611728rem; --distance:9.448068174303112rem; --position:103.05207284963112%; --time:3.8790759661926515s; --delay:-2.055994284194379s;"></div>
+        <div class="bubble" style="--size:5.417893970515258rem; --distance:9.189102205551382rem; --position:79.61461667627447%; --time:3.337058458321373s; --delay:-3.225928771442096s;"></div>
+        <div class="bubble" style="--size:2.9295454261752942rem; --distance:9.770013494076084rem; --position:14.554372974244515%; --time:2.8714222193790477s; --delay:-2.947504098814786s;"></div>
+        <div class="bubble" style="--size:5.639252182362542rem; --distance:9.680753935589609rem; --position:7.488292821213033%; --time:3.0904980870700376s; --delay:-2.976882438695788s;"></div>
+        <div class="bubble" style="--size:3.2343033410262203rem; --distance:9.421331362825374rem; --position:49.24645908336315%; --time:2.1498970313972885s; --delay:-3.068100904723678s;"></div>
+        <div class="bubble" style="--size:3.5200080776109735rem; --distance:6.243121099654418rem; --position:45.14364616594957%; --time:3.5066062769824815s; --delay:-2.9604012505329087s;"></div>
+        <div class="bubble" style="--size:4.317779150560218rem; --distance:9.978702575168104rem; --position:36.18068728849326%; --time:3.2345429057621202s; --delay:-2.2492992563433827s;"></div>
+        <div class="bubble" style="--size:2.4577973422148043rem; --distance:8.430006312444586rem; --position:93.96992105417814%; --time:3.497735442960087s; --delay:-3.762717418609624s;"></div>
+        <div class="bubble" style="--size:5.4611303873131405rem; --distance:8.750301145303673rem; --position:17.04962977788903%; --time:2.336071886413454s; --delay:-3.4358264651292325s;"></div>
+        <div class="bubble" style="--size:3.357726950503997rem; --distance:8.456562750201234rem; --position:43.656645766187786%; --time:3.5983528870643138s; --delay:-3.5804480238809533s;"></div>
+        <div class="bubble" style="--size:5.195227523598701rem; --distance:9.031370528417025rem; --position:27.169839082898868%; --time:3.667899934233784s; --delay:-2.7970468938816015s;"></div>
+        <div class="bubble" style="--size:4.480261411087573rem; --distance:8.065954440286962rem; --position:55.09151845710517%; --time:2.3363151894211605s; --delay:-2.139019177405294s;"></div>
+        <div class="bubble" style="--size:4.4562867432019rem; --distance:6.180855049604687rem; --position:23.9017143137066%; --time:3.2908322642684453s; --delay:-3.6604207036515533s;"></div>
+        <div class="bubble" style="--size:2.1492431019168414rem; --distance:6.141064085086547rem; --position:48.85859657329679%; --time:3.930882576357737s; --delay:-3.4997156164835497s;"></div>
+        <div class="bubble" style="--size:2.4088355656422076rem; --distance:6.855676448203866rem; --position:74.76750304138186%; --time:3.9274347962965717s; --delay:-3.9842132804069057s;"></div>
+        <div class="bubble" style="--size:5.622465574378163rem; --distance:7.238338629571195rem; --position:13.09575391935764%; --time:3.8744365076429985s; --delay:-2.7175339741255002s;"></div>
+        <div class="bubble" style="--size:4.163848516135043rem; --distance:6.967150651398538rem; --position:85.55495422649466%; --time:2.7260996584503787s; --delay:-3.160105491232495s;"></div>
+        <div class="bubble" style="--size:4.921633933575658rem; --distance:7.541699074510664rem; --position:33.63234588509713%; --time:3.4364022134081322s; --delay:-3.025114399391696s;"></div>
+        <div class="bubble" style="--size:3.548141166555559rem; --distance:9.37315855876591rem; --position:79.01198998975163%; --time:2.0188060012194833s; --delay:-3.9607415749527526s;"></div>
+        <div class="bubble" style="--size:3.309465250695765rem; --distance:7.551677604156118rem; --position:46.8456925159825%; --time:3.61236854411273s; --delay:-3.828053563103322s;"></div>
+        <div class="bubble" style="--size:2.2073479496947552rem; --distance:6.3628926044424166rem; --position:59.085312079602176%; --time:3.158221265641799s; --delay:-3.5212435162261233s;"></div>
+        <div class="bubble" style="--size:4.193369318909427rem; --distance:7.500202266232154rem; --position:2.03121523684419%; --time:3.9386943657640727s; --delay:-3.0905261970332583s;"></div>
+        <div class="bubble" style="--size:3.4656387241284516rem; --distance:9.689877276502214rem; --position:79.68426899707524%; --time:2.8721035184086094s; --delay:-3.780726501117021s;"></div>
+        <div class="bubble" style="--size:2.744200058160949rem; --distance:6.488438999373623rem; --position:26.26711507158462%; --time:3.797407792501586s; --delay:-2.638134479039326s;"></div>
+        <div class="bubble" style="--size:4.196570983475429rem; --distance:7.873763879420391rem; --position:89.22527239825287%; --time:2.551008680970634s; --delay:-2.956473566254099s;"></div>
+        <div class="bubble" style="--size:4.034401295426194rem; --distance:9.125151247456383rem; --position:91.76754039359872%; --time:3.913814751205225s; --delay:-3.2217403740005626s;"></div>
+        <div class="bubble" style="--size:5.070648037037915rem; --distance:9.820500694970045rem; --position:78.75163726649278%; --time:3.119129115094023s; --delay:-3.8318497311994273s;"></div>
+        <div class="bubble" style="--size:4.900493079593079rem; --distance:8.797621668954518rem; --position:56.14347065658708%; --time:3.318170925579997s; --delay:-2.5433703395274803s;"></div>
+        <div class="bubble" style="--size:3.9487569659023123rem; --distance:8.232326373306591rem; --position:-1.8113988284349913%; --time:2.9965524582461525s; --delay:-3.5699502677332338s;"></div>
+        <div class="bubble" style="--size:2.106265875907024rem; --distance:9.15261508522403rem; --position:46.163309706228276%; --time:2.8895735284733854s; --delay:-3.7165236151510066s;"></div>
+        <div class="bubble" style="--size:4.787298247289444rem; --distance:7.466229058820918rem; --position:68.81009571701%; --time:2.3026475465643497s; --delay:-2.449223448507623s;"></div>
+        <div class="bubble" style="--size:4.115582749893133rem; --distance:7.64890758578618rem; --position:96.9043221031995%; --time:3.208003072244878s; --delay:-3.6018466304451904s;"></div>
+        <div class="bubble" style="--size:3.9580069386375065rem; --distance:7.217407699069863rem; --position:17.889173332000937%; --time:2.445740522470475s; --delay:-2.28347805888903s;"></div>
+        <div class="bubble" style="--size:5.307071117451638rem; --distance:7.506524845059719rem; --position:52.13653370408639%; --time:3.711803733888236s; --delay:-2.1602888809320184s;"></div>
+        <div class="bubble" style="--size:5.1013174241207135rem; --distance:8.526572442239317rem; --position:4.0243219518913715%; --time:2.972916074311851s; --delay:-2.671397742322111s;"></div>
+        <div class="bubble" style="--size:3.3363129997127228rem; --distance:8.289397217799682rem; --position:63.66133429387946%; --time:2.906701200876699s; --delay:-3.379972066175427s;"></div>
+        <div class="bubble" style="--size:5.136775993601706rem; --distance:6.497016623014087rem; --position:24.25396599891306%; --time:2.7127783306918056s; --delay:-3.9049188913660298s;"></div>
+        <div class="bubble" style="--size:5.3660781374616535rem; --distance:7.408262965453892rem; --position:31.876254448889014%; --time:2.4994247407881964s; --delay:-3.2523653008488695s;"></div>
+        <div class="bubble" style="--size:5.466389303050009rem; --distance:9.740411555322076rem; --position:91.68127190811015%; --time:2.999770508709551s; --delay:-3.723890843163426s;"></div>
+        <div class="bubble" style="--size:5.509060985904724rem; --distance:6.6338811305876115rem; --position:80.89173636713909%; --time:2.141952989036472s; --delay:-3.734268196115708s;"></div>
+        <div class="bubble" style="--size:4.993814200728673rem; --distance:8.37618636052844rem; --position:5.1684690338712045%; --time:2.634616820614723s; --delay:-2.999241167178055s;"></div>
+        <div class="bubble" style="--size:2.3708668823847683rem; --distance:9.640827419877017rem; --position:66.85372572750316%; --time:2.335841511167136s; --delay:-2.5106751440051345s;"></div>
+        <div class="bubble" style="--size:3.358734721933641rem; --distance:8.27115846974576rem; --position:36.45257855896003%; --time:3.2392521945209873s; --delay:-3.761027842346308s;"></div>
+        <div class="bubble" style="--size:2.856377261169248rem; --distance:8.074494994036849rem; --position:43.737086529881154%; --time:2.1816479888817946s; --delay:-2.720040613810612s;"></div>
+        <div class="bubble" style="--size:2.4782320669694604rem; --distance:9.93920075645238rem; --position:47.50498004083152%; --time:2.646931369689709s; --delay:-3.506846405679953s;"></div>
+        <div class="bubble" style="--size:3.8245839605460947rem; --distance:8.466043550451055rem; --position:87.7764161902303%; --time:3.2840926483192s; --delay:-3.3789715200755355s;"></div>
+        <div class="bubble" style="--size:4.119100844955631rem; --distance:8.50345687409396rem; --position:-2.480055711817175%; --time:3.792551816062557s; --delay:-3.8521001466976754s;"></div>
+        <div class="bubble" style="--size:3.680970378153015rem; --distance:9.880874393310691rem; --position:79.52782839687191%; --time:3.328260800671943s; --delay:-2.7377640345037184s;"></div>
+        <div class="bubble" style="--size:5.603884743010789rem; --distance:9.993024958798902rem; --position:85.84315739942201%; --time:2.040556231367859s; --delay:-3.371640557233151s;"></div>
+        <div class="bubble" style="--size:2.1946967371378765rem; --distance:8.858480492759849rem; --position:28.02328298823501%; --time:3.8189513860012436s; --delay:-2.5933725684671765s;"></div>
+        <div class="bubble" style="--size:5.7834269125250115rem; --distance:8.312792386544002rem; --position:29.715469312886846%; --time:3.809903654635889s; --delay:-2.3375641371426723s;"></div>
+        <div class="bubble" style="--size:4.624000272599742rem; --distance:7.255247050076891rem; --position:103.37187468625726%; --time:3.82013780307206s; --delay:-3.3187484108022676s;"></div>
+        <div class="bubble" style="--size:2.3097178114454486rem; --distance:9.415233316930612rem; --position:101.859460051124%; --time:3.5553750742304295s; --delay:-2.767713395769916s;"></div>
+        <div class="bubble" style="--size:5.880953008681543rem; --distance:9.74387953754978rem; --position:98.38354819050734%; --time:2.3156652966500664s; --delay:-2.971356783675995s;"></div>
+        <div class="bubble" style="--size:3.9351302085839697rem; --distance:8.48057203237812rem; --position:52.35033052113387%; --time:2.147382268116759s; --delay:-3.68872030033736s;"></div>
+        <div class="bubble" style="--size:5.822841760378814rem; --distance:7.242860024835816rem; --position:58.07319140592053%; --time:3.1011317537170937s; --delay:-3.602062183579369s;"></div>
+        <div class="bubble" style="--size:5.531363792486459rem; --distance:6.446049786387482rem; --position:44.74963196644113%; --time:2.852564813958775s; --delay:-3.335432220280539s;"></div>
+        <div class="bubble" style="--size:3.4677775395092443rem; --distance:9.257764889626841rem; --position:91.5912719905943%; --time:3.520995603974499s; --delay:-2.3429942219646045s;"></div>
+        <div class="bubble" style="--size:2.6270941522306215rem; --distance:8.269004141811347rem; --position:59.95239256223623%; --time:3.050835252390006s; --delay:-2.0110166228852155s;"></div>
+        <div class="bubble" style="--size:5.646422115558438rem; --distance:7.424628591364516rem; --position:49.48318695759122%; --time:2.014621053116604s; --delay:-2.5061545966695764s;"></div>
+        <div class="bubble" style="--size:3.8923541159220703rem; --distance:6.439135621877787rem; --position:17.027297862813718%; --time:2.5292737766274236s; --delay:-3.330370653143737s;"></div>
+        <div class="bubble" style="--size:3.5736544379041693rem; --distance:9.080294631165074rem; --position:54.42727313521501%; --time:2.0378506888748866s; --delay:-3.914250727348523s;"></div>
+        <div class="bubble" style="--size:3.3760202709722726rem; --distance:6.773340993390775rem; --position:28.685768458541965%; --time:3.464219753108514s; --delay:-3.0790923825156193s;"></div>
+        <div class="bubble" style="--size:3.4361245233836035rem; --distance:7.444456364081527rem; --position:23.45873593369451%; --time:2.8851510128238895s; --delay:-3.8639290015078456s;"></div>
+        <div class="bubble" style="--size:2.320910236449823rem; --distance:8.73382202706486rem; --position:91.20206399684251%; --time:2.7228098340008344s; --delay:-2.8281693248110695s;"></div>
+        <div class="bubble" style="--size:3.9061738540958766rem; --distance:8.677391873016685rem; --position:52.656768122373194%; --time:3.3061958647076937s; --delay:-2.4458577856948005s;"></div>
+        <div class="bubble" style="--size:4.181545774907535rem; --distance:7.96445169898217rem; --position:90.23818834971777%; --time:3.412312288631424s; --delay:-3.333303395462556s;"></div>
+        <div class="bubble" style="--size:4.010164079791182rem; --distance:7.323187110248153rem; --position:93.0313146948851%; --time:3.849182214791744s; --delay:-3.435847937473679s;"></div>
+        <div class="bubble" style="--size:4.8849505853793165rem; --distance:8.137885346497573rem; --position:-1.0738403044087708%; --time:3.6867173519791145s; --delay:-2.5790857270855643s;"></div>
+        <div class="bubble" style="--size:2.6606644237270984rem; --distance:9.220129814475605rem; --position:22.048687215250563%; --time:3.266162472734808s; --delay:-2.1061300201959683s;"></div>
+        <div class="bubble" style="--size:5.399246912516067rem; --distance:9.930515377935638rem; --position:87.24457444366892%; --time:2.0389373692296893s; --delay:-2.921816743591021s;"></div>
+        <div class="bubble" style="--size:5.565281668971541rem; --distance:9.990444866363713rem; --position:57.90136324687866%; --time:3.9109004974319865s; --delay:-2.6008055602292073s;"></div>
+        <div class="bubble" style="--size:5.885619284257296rem; --distance:8.926679162338667rem; --position:4.614668696389186%; --time:2.4277619383582456s; --delay:-3.870553210197618s;"></div>
+    </div>
+    <div class="content">
+        <div>
+            <div><b>Western Province</b>
+                <a href="#">Colombo</a>
+                <a href="#">Galle Face Green</a>
+                <a href="#">Mount Lavinia Beach</a>
+                <a href="#">Diyatha Uyana</a>
+                <a href="#">Kelaniya Raja Maha Viharaya</a>
+            </div>
+            <div><b>Central Province</b>
+                <a href="#">Kandy</a>
+                <a href="#">Temple of the Tooth</a>
+                <a href="#">Nuwara Eliya</a>
+                <a href="#">Horton Plains</a>
+                <a href="#">Adam’s Peak</a>
+            </div>
+            <div><b>Southern Province</b>
+                <a href="#">Galle Fort</a>
+                <a href="#">Unawatuna Beach</a>
+                <a href="#">Mirissa Whale Watching</a>
+                <a href="#">Tangalle</a>
+                <a href="#">Sinharaja Forest</a>
+            </div>
+            <div><b>North & East</b>
+                <a href="#">Jaffna Fort</a>
+                <a href="#">Nallur Kandaswamy Temple</a>
+                <a href="#">Nilaveli Beach</a>
+                <a href="#">Pasikuda Beach</a>
+                <a href="#">Trincomalee</a>
+            </div>
         </div>
     </div>
 
-    <div class="review-card">
-        <div class="review-content">
-            <h3>Jane Smith</h3>
-            <div class="stars">★★★★★</div>
-            <p>"Very professional and quick response. Will come back again for sure!"</p>
-        </div>
-    </div>
-
-    <div class="review-card">
-        <div class="review-content">
-            <h3>Emily Johnson</h3>
-            <div class="stars">★★★☆☆</div>
-            <p>"Loved the experience. They are really supportive and friendly."</p>
+    <div><a class="image" href="https://codepen.io/z-" target="_blank" ></a>
+            <p>©2019 Not Really</p>
         </div>
     </div>
 </div>
-
-<!-- Scripts -->
+<svg style="position:fixed; top:100vh">
+    <defs>
+        <filter id="blob">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur"></feGaussianBlur>
+            <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="blob"></feColorMatrix>
+            <!--feComposite(in="SourceGraphic" in2="blob" operator="atop") //After reviewing this after years I can't remember why I added this but it isn't necessary for the blob effect-->
+        </filter>
+    </defs>
+</svg>
+</section><!-- Scripts -->
 <script src="js/jquery-3.7.1.min.js"></script>
 <script src="js/add-places.js"></script>
 <script src="js/add-category.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 
-<script>
-    $(document).ready(function () {
-        function fetchCategories() {
-            $.ajax({
-                url: 'http://localhost:8081/api/v1/category/getAll',
-                type: 'GET',
-                dataType: 'json',
-                headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('token'),
-                    'category': 'category'
-                },
-                success: function (response) {
-                    console.log("Categories fetched:", response);
-                    const cardContainer = $('#category-cards');
-                    cardContainer.empty();
-
-                    if (!response || response.length === 0) {
-                        cardContainer.append('<p>No categories available.</p>');
-                        return;
-                    }
-
-                    response.forEach(category => {
-                        const safeCategoryName = $('<div>').text(category.categoryName).html();
-                        const imageFilename = category.categoryImage ? category.categoryImage.split("\\").pop() : "default.jpg";
-                        const imageUrl = `http://localhost:8081/api/v1/uploads/${imageFilename}`;
-
-                        cardContainer.append(`
-                            <a class="card" href="#" data-category-id="${category.id}" data-category-name="${category.categoryName}">
-                                <img src="${imageUrl}" class="card__background" alt="${safeCategoryName}">
-                                <div class="card__content">
-                                    <p class="card__category">${safeCategoryName}</p>
-                                </div>
-                            </a>
-                        `);
-                    });
-                },
-                error: function (xhr) {
-                    console.error("Error fetching categories:", xhr.responseText);
-                    $('#category-cards').empty().append('<p>Failed to load categories. Please try again later.</p>');
-                }
-            }).fail(function (jqXHR, textStatus, errorThrown) {
-                console.error("AJAX error:", textStatus, errorThrown);
-            });
-        }
-
-        fetchCategories();
-
-        // When a category card is clicked
-        $('#category-cards').on('click', '.card', function () {
-            const categoryId = $(this).data('category-id');
-            const categoryName = $(this).data('category-name');
-
-            // Fetch places related to the selected category
-            $.ajax({
-                url: `http://localhost:8081/api/v1/addPlace/getAllByCategory/${categoryName}`,
-                type: 'GET',
-                dataType: 'json',
-                headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('token')
-                },
-                success: function (response) {
-                    console.log("Places fetched for category:", categoryName);
-                    localStorage.setItem('categoryName',categoryName)
-
-                    // Redirect to places page or update the UI with places
-                    if (categoryName === "MOUNTAINS") {
-                        window.location.href = "mountains.html";
-                    }else if (categoryName === "WATERFALLS") {
-                        window.location.href = "waterfalls.html";
-                    }
-                    // Update places on the page dynamically if needed
-                },
-                error: function (xhr) {
-                    console.error("Error fetching places for category:", categoryId, xhr.responseText);
-                }
-            }).fail(function (jqXHR, textStatus, errorThrown) {
-                console.error("AJAX error:", textStatus, errorThrown);
-            });
-        });
-    });
-//     -------------------------------------------------------------------
-    $(document).ready(function () {
-        function getAllPlaces(district) {
-            if (!district) {
-                $('#place-cards-container').html('<p>Please select a district.</p>');
-                return;
-            }
-
-            $.ajax({
-                url: `http://localhost:8081/api/v1/addPlace/getAllByDistrict/${district}`,
-                type: 'GET',
-                dataType: 'json',
-                headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('token')
-                },
-                success: function (response) {
-                    const container = $('#place-cards-container');
-                    container.empty();
-
-                    if (!response || response.length === 0) {
-                        container.append('<p>No places available in this district.</p>');
-                        return;
-                    }
-
-                    response.forEach((place, index) => {
-                        const placeName = place.placeName || "Unknown Location";
-                        const placeDescription = place.aboutPlace || "No description available.";
-                        const imageFilename = place.images ? place.images.split("\\").pop() : "default.jpg";
-                        const imageUrl = `http://localhost:8081/api/v1/uploads/${imageFilename}`;
-                        const lat = parseFloat(place.latitude) || 7.8731;
-                        const lng = parseFloat(place.longitude) || 80.7718;
-                        const videoUrl = place.videoUrl ? extractYouTubeID(place.videoUrl) : null;
-                        const status = place.status;
-
-                        const cardHtml = `
-                            <div class="cardd">
-                                <div class="image-containerr">
-                                    <img src="${imageUrl}" alt="${placeName}" />
-                                </div>
-                                <div class="contentt">
-                                    <h3>${placeName}</h3>
-                                    <p>${placeDescription}</p>
-                                    <p><strong>Status:</strong> ${status}</p>
-                                   <div class="map-sectionn">
-                                        <div id="mapp"></div>
-                                    </div>
-                                    <div class="video-containerr">
-                                        ${videoUrl ? `<iframe src="https://www.youtube.com/embed/${videoUrl}" frameborder="0" allowfullscreen></iframe>` : ''}
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-
-                        container.append(cardHtml);
-                        initMap(lat, lng, `map-${index}`);
-                    });
-                },
-                error: function () {
-                    $('#place-cards-container').append('<p>Failed to load places. Please try again later.</p>');
-                }
-            });
-        }
-
-        function initMap(lat, lng, mapId) {
-            const position = { lat, lng };
-            const map = new google.maps.Map(document.getElementById(mapId), {
-                zoom: 10,
-                center: position,
-            });
-            new google.maps.Marker({ position: position, map: map });
-        }
-
-        function extractYouTubeID(url) {
-            const regex = /(?:youtube\.com\/.*[?&]v=|youtu\.be\/)([^"&?\/\s]{11})/;
-            const match = url.match(regex);
-            return match ? match[1] : "";
-        }
-
-        // Trigger API call when a district is selected
-        $('#districtSelect').change(function () {
-            const selectedDistrict = $(this).val();
-            getAllPlaces(selectedDistrict);
-        });
-    });
-//     map
-
-
-</script>
+<script src="js/script.js"></script>
 
 </body>
 </html>
+

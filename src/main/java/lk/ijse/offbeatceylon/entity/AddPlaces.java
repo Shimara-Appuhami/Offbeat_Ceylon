@@ -22,6 +22,7 @@ public class AddPlaces {
     private Double longitude;
     private String category;
 
+
     public String getCategory() {
         return category;
     }
