@@ -95,6 +95,13 @@ $("#addPlaceForm").on("submit", function (e) {
     const status = $('input[name="status"]:checked').val();
     // const images = $("#images")[0].files;
     const category=$("#category").val();
+    const email = localStorage.getItem('email'); // Assuming userId is stored in localStorage
+
+    if (!email) {
+        alert("email is not logged in or email is missing!");
+        return;
+    }
+
 
     const formData = new FormData();
     formData.append('placeName', placeName);
@@ -104,6 +111,8 @@ $("#addPlaceForm").on("submit", function (e) {
     formData.append('latitude', selectedLat);
     formData.append('longitude', selectedLng);
     formData.append('category', category);
+    formData.append("email", email); // Add userId to the request
+
 
     // for (let i = 0; i < images.length; i++) {
     //     formData.append('images', images[i]);
@@ -124,6 +133,7 @@ $("#addPlaceForm").on("submit", function (e) {
 
             console.log("Response received:", response);
             console.log("token"+token);
+
 
             alert('Place added successfully!');
             $("#addPlaceForm")[0].reset();

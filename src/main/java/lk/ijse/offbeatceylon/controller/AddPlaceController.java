@@ -2,20 +2,16 @@ package lk.ijse.offbeatceylon.controller;
 
 import lk.ijse.offbeatceylon.dto.ResponseDTO;
 import lk.ijse.offbeatceylon.entity.AddPlaces;
-import lk.ijse.offbeatceylon.entity.Category;
-import lk.ijse.offbeatceylon.repo.AddPlaceRepo;
+import lk.ijse.offbeatceylon.entity.User;
 import lk.ijse.offbeatceylon.service.AddPlaceService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lk.ijse.offbeatceylon.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -26,14 +22,17 @@ public class AddPlaceController {
 
     private final ResponseDTO responseDTO;
     private final AddPlaceService addPlaceService;
+    private final UserService userService;
 
-    public AddPlaceController(ResponseDTO responseDTO, AddPlaceService addPlaceService) {
+    public AddPlaceController(ResponseDTO responseDTO, AddPlaceService addPlaceService, UserService userService) {
         this.responseDTO = responseDTO;
         this.addPlaceService = addPlaceService;
+        this.userService = userService;
     }
 
     @PostMapping("/save")
     public ResponseEntity<ResponseDTO> savePlace(
+            @RequestParam("email") String email, // Accept email instead of userId
             @RequestParam("placeName") String placeName,
             @RequestParam("aboutPlace") String aboutPlace,
             @RequestParam("district") String district,
@@ -59,8 +58,14 @@ public class AddPlaceController {
 //                imagePaths.add(imagePath);
 //            }
 //        }
-
+        User user=userService.getUserByEmail(email);
+        if (user == null) {
+            responseDTO.setMessage("User not found with this email.");
+            responseDTO.setData(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(responseDTO, HttpStatus.NOT_FOUND);
+        }
         AddPlaces place = new AddPlaces();
+        place.setEmail(user); // Add user ID to associate the place
         place.setPlaceName(placeName);
         place.setAboutPlace(aboutPlace);
         place.setDistrict(district);
@@ -122,6 +127,7 @@ public class AddPlaceController {
     }
     @PutMapping("/update/{placeId}")
     public ResponseEntity<String> updatePlace(
+            @RequestParam("email") String email,
             @PathVariable int placeId,
             @RequestParam String placeName,
             @RequestParam String category,
@@ -134,7 +140,7 @@ public class AddPlaceController {
 
         try {
             AddPlaces updatedPlace = addPlaceService.updatePlace(
-                    placeId, placeName, category, aboutPlace, district, status, latitude, longitude, image);
+                    email,placeId, placeName, category, aboutPlace, district, status, latitude, longitude, image);
 
             if (updatedPlace != null) {
                 return ResponseEntity.ok("Place updated successfully.");

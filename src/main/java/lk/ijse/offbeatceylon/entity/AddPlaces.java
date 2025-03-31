@@ -21,7 +21,17 @@ public class AddPlaces {
     private Double latitude;
     private Double longitude;
     private String category;
+    @ManyToOne
+    @JoinColumn(name = "email", referencedColumnName = "email")  // Email in User is unique, so this will work as FK
+    private User email;
 
+    public User getEmail() {
+        return email;
+    }
+
+    public void setEmail(User email) {
+        this.email = email;
+    }
 
     public String getCategory() {
         return category;

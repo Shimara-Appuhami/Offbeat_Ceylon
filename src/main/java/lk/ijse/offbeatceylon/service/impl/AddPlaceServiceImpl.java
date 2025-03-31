@@ -1,7 +1,9 @@
 package lk.ijse.offbeatceylon.service.impl;
 
 import lk.ijse.offbeatceylon.entity.AddPlaces;
+import lk.ijse.offbeatceylon.entity.User;
 import lk.ijse.offbeatceylon.repo.AddPlaceRepo;
+import lk.ijse.offbeatceylon.repo.UserRepository;
 import lk.ijse.offbeatceylon.service.AddPlaceService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,8 @@ public class AddPlaceServiceImpl implements AddPlaceService {
 
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private UserRepository userRepository;
 
 //    @Override
 //    public boolean savePlace(AddPlaces place MultipartFile image) {
@@ -145,13 +149,18 @@ public class AddPlaceServiceImpl implements AddPlaceService {
     }
 
     @Override
-    public AddPlaces updatePlace(int placeId, String placeName, String category, String aboutPlace, String district,
+    public AddPlaces updatePlace(String email, int placeId, String placeName, String category, String aboutPlace, String district,
                                  String status, double latitude, double longitude, MultipartFile image) {
         AddPlaces existingPlace = addPlaceRepo.findByPlaceId(placeId);
         if (existingPlace == null) {
             return null;
         }
 
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            throw new RuntimeException("User not found with email: " + email); // Handle the case where user is not found
+        }
+        existingPlace.setEmail(user);
         existingPlace.setPlaceName(placeName);
         existingPlace.setCategory(category);
         existingPlace.setAboutPlace(aboutPlace);
@@ -185,6 +194,11 @@ public class AddPlaceServiceImpl implements AddPlaceService {
     @Override
     public List<AddPlaces> getPlacesByDistrict(String district) {
         return addPlaceRepo.findAllByDistrict(district);
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
     private String saveImage(String fileName, MultipartFile image) throws IOException {

@@ -21,7 +21,8 @@ import java.util.Set;
 
 @Service
 @Transactional
-public class UserServiceImpl implements UserDetailsService, UserService {
+public class
+UserServiceImpl implements UserDetailsService, UserService {
 
     @Autowired
     private UserRepository userRepository;
@@ -54,6 +55,11 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
     @Override

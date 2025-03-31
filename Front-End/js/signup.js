@@ -176,13 +176,15 @@ $(document).ready(function () {
             success: function (response) {
                 console.log("Server Response:", response);
                 localStorage.setItem('token', response.data.token);
+                localStorage.setItem('email', response.data.email);
+
                 if (response.code === 201) {
                     if (response.role = 'USER') {
                         alert('Welcome User!');
                         window.location.href = "../js/../index.html"
                     } else if (response.role = 'ADMIN') {
                         alert('Welcome Admin!');
-                        window.location.href = "../js/../index.html"
+                        window.location.href = "../js/../admin-dashboard.html"
                     } else {
                         alert('Invalid Credentials!');
                     }
@@ -200,7 +202,7 @@ $(document).ready(function () {
 });
 //continue with google
 
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'UA-XXXXXXXXX-X');
+    // window.dataLayer = window.dataLayer || [];
+    // function gtag(){dataLayer.push(arguments);}
+    // gtag('js', new Date());
+    // gtag('config', 'UA-XXXXXXXXX-X');
