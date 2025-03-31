@@ -78,7 +78,7 @@ $(document).ready(function () {
                         existingCard.show(); // Show if already added
                     } else {
                         const cardHtml = `
-                        <div class="card" data-district="${district}" data-lat="${lat}" data-lng="${lng}">
+                        <div class="card" data-district="${district}" data-lat="${lat}" data-lng="${lng}" style="box-shadow: black">
                             <div class="image-container">
                                 <img src="${imageUrl}" alt="${placeName}" />
                             </div>
@@ -92,6 +92,7 @@ $(document).ready(function () {
                                         <img src="../js/../assets/icon/icons8-select-48.png">
                                     </label>
                                 </div>
+                                <h3 style="color: #0048c6">Click Again to UnSelect<br/></h3>
                             </div>
                         </div>
                     `;
