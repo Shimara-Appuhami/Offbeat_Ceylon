@@ -206,6 +206,8 @@ public class AddPlaceServiceImpl implements AddPlaceService {
         return (int) addPlaceRepo.count();
     }
 
+
+
     private String saveImage(String fileName, MultipartFile image) throws IOException {
         String directoryPath = "C:\\Users\\shima\\AppData\\Local\\Temp\\tomcat.8081.6928745218397181951\\work\\Tomcat\\localhost\\ROOT\\resources\\static\\imageFolder";
 

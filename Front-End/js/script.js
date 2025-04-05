@@ -44,12 +44,10 @@ $(document).ready(function () {
 
     fetchCategories();
 
-    // When a category card is clicked
     $('#category-cards').on('click', '.card', function () {
         const categoryId = $(this).data('category-id');
         const categoryName = $(this).data('category-name');
 
-        // Fetch places related to the selected category
         $.ajax({
             url: `http://localhost:8081/api/v1/addPlace/getAllByCategory/${categoryName}`,
             type: 'GET',
@@ -61,13 +59,11 @@ $(document).ready(function () {
                 console.log("Places fetched for category:", categoryName);
                 localStorage.setItem('categoryName',categoryName)
 
-                // Redirect to places page or update the UI with places
                 if (categoryName === "MOUNTAINS") {
                     window.location.href = "mountains.html";
                 }else if (categoryName === "WATERFALLS") {
                     window.location.href = "waterfalls.html";
                 }
-                // Update places on the page dynamically if needed
             },
             error: function (xhr) {
                 console.error("Error fetching places for category:", categoryId, xhr.responseText);
@@ -111,7 +107,7 @@ $(document).ready(function () {
                     const lng = parseFloat(place.longitude) || 80.7718;
                     const videoUrl = place.videoUrl ? extractYouTubeID(place.videoUrl) : null;
                     const status = place.status;
-                    const mapId = `map-${index}`; // Unique ID for each map
+                    const mapId = `map-${index}`;
 
                     const cardHtml = `
                         <div class="cardd">
@@ -126,7 +122,7 @@ $(document).ready(function () {
                                 <p>${placeDescription}</p>
                                 <p><strong>Status:</strong> ${status}</p>
                                 <div class="map-sectionn">
-                                    <div id="${mapId}" class="map-container"></div> <!-- Unique Map ID -->
+                                    <div id="${mapId}" class="map-container"></div>
                                 </div>
                                 <div class="video-containerr">
                                     ${videoUrl ? `<iframe src="https://www.youtube.com/embed/${videoUrl}" frameborder="0" allowfullscreen></iframe>` : ''}
@@ -137,7 +133,6 @@ $(document).ready(function () {
 
                     container.append(cardHtml);
 
-                    // Wait a bit to ensure the element is in the DOM before initializing the map
                     setTimeout(() => {
                         initMap(lat, lng, mapId);
                     }, 500);
@@ -165,14 +160,12 @@ $(document).ready(function () {
         new google.maps.Marker({ position: position, map: map });
     }
 
-    // Extract YouTube Video ID
     function extractYouTubeID(url) {
         const regex = /(?:youtube\.com\/.*[?&]v=|youtu\.be\/)([^"&?\/\s]{11})/;
         const match = url.match(regex);
         return match ? match[1] : "";
     }
 
-    // Trigger API call when a district is selected
     $('#districtSelect').change(function () {
         const selectedDistrict = $(this).val();
         getAllPlaces(selectedDistrict);

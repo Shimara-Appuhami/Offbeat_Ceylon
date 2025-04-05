@@ -44,7 +44,6 @@ $(document).ready(function () {
             return;
         }
 
-        // Hide all previously loaded places (but don't remove them)
         $('.card').hide();
 
         $.ajax({
@@ -68,14 +67,12 @@ $(document).ready(function () {
                     const lat = parseFloat(place.latitude) || 7.8731;
                     const lng = parseFloat(place.longitude) || 80.7718;
 
-                    // Check if the place is already selected
                     const isChecked = selectedPlaces.some(p => p.lat === lat && p.lng === lng);
 
-                    // Check if the place is already in the container
                     let existingCard = $(`.card[data-lat='${lat}'][data-lng='${lng}']`);
 
                     if (existingCard.length > 0) {
-                        existingCard.show(); // Show if already added
+                        existingCard.show();
                     } else {
                         const cardHtml = `
                         <div class="card" data-district="${district}" data-lat="${lat}" data-lng="${lng}" style="box-shadow: black">

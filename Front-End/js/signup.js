@@ -81,7 +81,6 @@ window.openPopupSignup = function () {
     };
 };
 
-//======================DONT COPY THIS====================================
 function createLink(q) {
     return "http://tipraks.com" + q;
 }

@@ -4,14 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Styled Location Cards</title>
-
-    <!-- Google Maps API -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFpFDLrN4DPjDEXp7kKfGuooEL5tSheCk" async defer></script>
 
-    <!-- jQuery Library -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
     <style>
@@ -162,7 +157,7 @@
                 },
                 success: function (response) {
                     const container = $('#place-cards-container');
-                    container.empty(); // Clear existing content
+                    container.empty();
 
                     if (!response || response.length === 0) {
                         container.append('<p>No places available.</p>');
@@ -179,7 +174,6 @@
                         const videoUrl = place.videoUrl ? extractYouTubeID(place.videoUrl) : null;
                         const status = place.status;
 
-                        // Creating the card content dynamically
                         const cardHtml = `
                             <div class="card">
                                 <div class="image-container">
@@ -199,10 +193,8 @@
                             </div>
                         `;
 
-                        // Append the new card
                         container.append(cardHtml);
 
-                        // Initialize Google Map for the first card
                         if (container.children().length === 1) {
                             initMap(lat, lng);
                         }

@@ -9,7 +9,7 @@
 <body>
 <div id="container" class="container">
     <div class="row">
-        <!-- Sign Up -->
+        <!-- sign up -->
         <div class="col align-items-center flex-col sign-up" id="signup">
             <div class="form-wrapper align-items-center">
                 <div class="form sign-up">
@@ -42,7 +42,7 @@
             </div>
         </div>
 
-        <!-- Sign In -->
+        <!-- sign in -->
         <div class="col align-items-center flex-col sign-in">
             <div class="form-wrapper align-items-center">
                 <div class="form sign-in">
@@ -56,16 +56,15 @@
                     </div>
                     <button id="btn-signin">Sign in</button>
 
-                    <!-- OR Divider -->
                     <div class="OR"><span>OR</span></div>
 
-                    <!-- Social Login -->
+                    <!-- social login -->
                     <div class="socials">
                         <a class="social fb" id="signup-facebook">
                             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/2021_Facebook_icon.svg/768px-2021_Facebook_icon.svg.png" height="30" />
                         </a>
 
-                        <!-- Google Sign-In -->
+                        <!-- google sign-in -->
                         <div id="g_id_onload"
                              data-client_id="764543840411-e1fldq10oa648uq7p8ditfbb9pcvu55o.apps.googleusercontent.com"
                              data-context="signin"
@@ -76,7 +75,7 @@
                         <div class="g_id_signin" data-type="standard"></div>
                     </div>
 
-                    <!-- Forgot Password -->
+                    <!-- forgot password -->
                     <p>
                         <a href="forgot-password.html"><b>Forgot password?</b></a>
                     </p>
@@ -91,14 +90,14 @@
     </div>
 
     <div class="row content-row">
-        <!-- Sign In Content -->
+        <!-- sign in content -->
         <div class="col align-items-center flex-col">
             <div class="text sign-in">
                 <h2>Welcome</h2>
             </div>
         </div>
 
-        <!-- Sign Up Content -->
+        <!-- sign up content -->
         <div class="col align-items-center flex-col">
             <div class="text sign-up">
                 <h2>Join with us</h2>
@@ -107,20 +106,14 @@
     </div>
 </div>
 
-<!-- Google Sign-In Script -->
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <script>
     function handleGoogleLogin(response) {
         console.log("User Token: ", response.credential);
-        // 200 ok nam navigate index.html
         window.location.href = "index.html";
     }
 </script>
-
-<!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXXXX-X"></script>
-
-<!-- jQuery & Custom Script -->
 <script src="js/jquery-3.7.1.min.js"></script>
 <script src="js/signup.js"></script>
 

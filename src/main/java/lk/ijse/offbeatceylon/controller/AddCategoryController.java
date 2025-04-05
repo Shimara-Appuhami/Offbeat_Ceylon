@@ -26,7 +26,6 @@ import java.util.Optional;
 public class AddCategoryController {
     //save the category
 
-//        @Autowired
         private final AddCategoryService categoryService;
         private final ResponseDTO responseDTO;
 

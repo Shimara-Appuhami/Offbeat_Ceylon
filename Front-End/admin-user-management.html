@@ -184,7 +184,6 @@
     $(document).ready(function () {
         loadUsers();
 
-        // Register User
         $('#registerForm').submit(function (event) {
             event.preventDefault();
             const user = {
@@ -210,7 +209,6 @@
             });
         });
 
-        // Load Users into Table
         function loadUsers() {
             $.ajax({
                 url: 'http://localhost:8081/api/v1/user/getAll',
@@ -234,7 +232,6 @@
             });
         }
 
-        // Select User for Editing
         $(document).on('click', '.edit-btn', function () {
             $('#name').val($(this).data('name'));
             $('#email').val($(this).data('email'));
@@ -242,7 +239,6 @@
             $('#updateBtn').data('email', $(this).data('email'));
         });
 
-        // Update User
         $('#updateBtn').click(function () {
             const userEmail = $(this).data('email');
             if (!userEmail) {
@@ -277,7 +273,6 @@
             });
         });
 
-        // Delete User
         $(document).on('click', '.delete-btn', function () {
             const userEmail = $(this).data('email');
             // if (!userEmail) {

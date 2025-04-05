@@ -32,7 +32,7 @@ public class AddPlaceController {
 
     @PostMapping("/save")
     public ResponseEntity<ResponseDTO> savePlace(
-            @RequestParam("email") String email, // Accept email instead of userId
+            @RequestParam("email") String email,
             @RequestParam("placeName") String placeName,
             @RequestParam("aboutPlace") String aboutPlace,
             @RequestParam("district") String district,
@@ -65,7 +65,7 @@ public class AddPlaceController {
             return new ResponseEntity<>(responseDTO, HttpStatus.NOT_FOUND);
         }
         AddPlaces place = new AddPlaces();
-        place.setEmail(user); // Add user ID to associate the place
+        place.setEmail(user);
         place.setPlaceName(placeName);
         place.setAboutPlace(aboutPlace);
         place.setDistrict(district);

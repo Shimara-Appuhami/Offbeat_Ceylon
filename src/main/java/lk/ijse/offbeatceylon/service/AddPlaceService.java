@@ -30,4 +30,5 @@ public interface AddPlaceService {
     User getUserByEmail(String email);
 
     int getPlacesCount();
+
 }
