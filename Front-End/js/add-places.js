@@ -95,7 +95,7 @@ $("#addPlaceForm").on("submit", function (e) {
     const status = $('input[name="status"]:checked').val();
     // const images = $("#images")[0].files;
     const category=$("#category").val();
-    const email = localStorage.getItem('email'); // Assuming userId is stored in localStorage
+    const email = localStorage.getItem('email');
 
     if (!email) {
         alert("email is not logged in or email is missing!");

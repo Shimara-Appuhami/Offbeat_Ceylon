@@ -345,6 +345,7 @@
         background: #45a049;
         width: 950px;
         height: 350px;
+
     }
 
 
@@ -369,6 +370,7 @@
         <a href="add-category-form.html"><li data-tab="journal"><i class="fas fa-book"></i> Travel Category</li></a>
         <a href="add-places.html"><li data-tab="destinations"><i class="fas fa-map-marker-alt"></i> Add Places</li></a>
         <a href="select-by-district.html"><li data-tab="destinations" ><i class="fas fa-map-marker-alt" ></i>Directions</li></a>
+        <a href="index.html"><li data-tab="map"><i class="fas fa-map"></i> Website Login</li></a>
     </ul>
     <button class="add-destination-btn" id="add-destination-btn">
         <i class="fas fa-plus"></i> Add Destination
@@ -483,32 +485,36 @@
             });
     }
 
-        document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function () {
         const map = L.map('full-map').setView([7.8731, 80.7718], 7);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
 
         fetch('http://localhost:8081/api/v1/addPlace/getAll')
-        .then(response => response.json())
-        .then(data => {
-        data.forEach(place => {
-        const {latitude, longitude, placeName} = place;
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(place => {
+                    const {latitude, longitude, placeName} = place;
 
-        if (latitude && longitude) {
-        L.marker([latitude, longitude])
-        .addTo(map)
-        .bindPopup(`<strong>${placeName}</strong>`)
-        .openPopup();
-    }
+                    if (latitude && longitude) {
+                        L.marker([latitude, longitude])
+                            .addTo(map)
+                            .bindPopup(`<strong>${placeName}</strong>`)
+                            .openPopup();
+                    }
+                });
+            })
+            .catch(error => {
+                console.error("Error loading places:", error);
+            });
     });
-    })
-        .catch(error => {
-        console.error("Error loading places:", error);
+        const searchInput = document.getElementById('search-input');
+        searchInput.addEventListener('input', () => {
+        const query = searchInput.value.toLowerCase();
+        // Filter your place list or cards here based on 'query'
     });
-    });
-
 
 document.addEventListener('DOMContentLoaded', function() {
 fetchTotalPlaces();

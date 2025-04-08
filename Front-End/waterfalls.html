@@ -5,54 +5,86 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Styled Location Cards</title>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFpFDLrN4DPjDEXp7kKfGuooEL5tSheCk" async defer></script>
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
     <style>
-        * {
+        body, html {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: 'Source Sans Pro', sans-serif;
+            font-family: 'Poppins', sans-serif;
+            height: 100%;
+        }
 
-            /*font-family: 'Poppins', sans-serif;*/
-        }
-        body {
-            font-family: 'Source Sans Pro', sans-serif;
-            background-color: #D4DAD9;
-            color: #252525;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            flex-wrap: wrap;
-            padding: 20px;
-        }
-        #place-cards-container {
+        .hero {
+            background: url('assets/images/waterfallfront.png') center/cover no-repeat;
+            height: 100vh;
             position: relative;
-            top: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
+        .overlay {
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3));
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-content {
+            color: #fff;
+            text-align: center;
+            padding: 0 20px;
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .hero-btn {
+            padding: 12px 30px;
+            font-size: 16px;
+            border: 2px solid #fff;
+            background: transparent;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 25px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .hero-btn:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        #place-cards-container {
+            margin-top: 50px;
             display: flex;
             flex-wrap: wrap;
-            justify-content: flex-start;
+            justify-content: center;
             gap: 20px;
+            width: 100%;
         }
         .card {
-            width: 90vmin;
-            height: 55vmin;
+            width: 700px;
+            height: 400px;
             display: flex;
             box-shadow: 0 30px 40px -15px rgba(0,0,0,0.35);
-            background-color: #fff;
-            position: relative;
-            left: 0;
-            right: 0;
-            margin: auto;
-            display: flex;
-            width: 1000px;
-            background: #fff;
+            background-color: rgb(255, 255, 255);
             border-radius: 0;
-            box-shadow: 0 30px 40px -15px rgba(0,0,0,0.35);
-            overflow: hidden;
             transition: 0.3s ease-in-out;
         }
         .card:hover {
@@ -62,8 +94,8 @@
             width: 40%;
         }
         .image-container img {
-            width: 350px;
-            height: 400px;
+            width: 100%;
+            height: 100%;
             object-fit: cover;
         }
         .content {
@@ -73,35 +105,33 @@
             flex-direction: column;
             justify-content: space-between;
         }
-        #placeName {
+        .placeName {
             font-weight: 900;
-            font-size: 54px;
-            font-size: 7vmin;
-            text-transform: capitalize;
-            letter-spacing: 0.01em;
-            line-height: 0.91;
-            margin: 3vmin 0 3.5vmin;
-        }
-        #placeDescription {
+            font-size: 30px;
+            color: #787c7e;
+            text-transform: uppercase;
+            margin: 1vmin 0 2vmin;
 
+        }
+        .placeDescription {
             font-size: 2.1vmin;
             line-height: 1.7;
             font-weight: 300;
             margin-bottom: 2.5vmin;
         }
+        .status {
+            font-size: 2vmin;
+            color: #dc3036;
+            font-weight: 600;
+        }
         .map-section {
             height: 200px;
-            width: 250px;
-            border-radius: 0;
-            margin-left: 320px;
+            width: 100%;
             margin-top: 10px;
-            /*overflow: hidden;*/
-            /*margin-top: 10px;*/
-            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
         }
-        #map {
-            height: 200px;
-            width: 250px;
+        .map {
+            height: 100%;
+            width: 100%;
         }
         .video-container {
             margin-top: 10px;
@@ -110,42 +140,124 @@
             width: 100%;
             height: 180px;
             border-radius: 6px;
+            border: none;
         }
-        header{
-            font-size: 30px;
-            background: #0faf84;
+        .direction-button {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #2c9ec8;
             color: #fff;
-            padding: 10px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-decoration: none;
+            width: 150px;
+            transition: background 0.3s ease;
             text-align: center;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 999;
         }
-        /*.image-container{*/
-        /*    background-position: center;*/
-        /*    width: 350px;*/
-        /*    height: 570px;*/
-        /*    background-size: cover;*/
-        /*    background-repeat: no-repeat;*/
-        /*}*/
-        /*    image*/
 
+        .direction-button:hover {
+            background-color: #0c9c72;
+        }
+        #back-btn{
+            background: transparent;
+            border: none;
+            margin-left: -700px;
+            margin-top: 10px;
 
+        }
+        header h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #ffffff;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .description {
+            padding: 20px;
+            background-color: #fafafa;
+            border-radius: 8px;
+        }
+
+        .description  {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 20px;
+            text-align: center;
+            line-height: 1.8;
+        }
+
+        /* Add a nice border to separate paragraphs */
+        .description :last-of-type {
+            margin-bottom: 0;
+        }
+
+        .description ::first-letter {
+            font-size: 2.5rem;
+            color: #2c6b5c;
+            font-weight: bold;
+            float: left;
+            margin-right: 10px;
+        }
+        h2{
+            text-align: center;
+            font-size: 40px;
+            color: black;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+            }
+
+             h2 {
+                font-size: 2rem;
+            }
+
+            .description  {
+                font-size: 1rem;
+            }
+        }
+        .placeDescription{
+            color: #3a3838;
+        }
 
     </style>
 </head>
 <body>
-<header>WATERFALLS IN SRI LANKA</header>
-<img src="assets/images/waterfall.png">
+<header class="hero">
+    <div class="overlay">
+        <div class="hero-content">
+            <h1>Waterfalls</h1>
+            <p>
+                Having the highest waterfall density in the world with a recorded 382 waterfalls spread throughout the country, Sri Lanka is the place to be to see all kinds of waterfalls.
+            </p>
+            <a href="#description" ><button class="hero-btn" >Explore</button></a>
+        </div>
+    </div>
+</header>
+<h2 id="description">Waterfalls</h2>
+<p class="description">Waterfalls in Sri Lanka are a captivating aspect of the country's natural beauty, scattered across the island's varied landscapes. These waterfalls are mainly located in the central and southern regions, nestled amidst lush forests, tea plantations, and mountain ranges. The diverse range of waterfalls varies in size, height, and accessibility, making them popular among tourists and nature lovers alike.<br/>
 
+    Waterfalls in Sri Lanka typically originate from the island’s numerous rivers and streams, flowing down from the central highlands toward the lowlands. The scenic views, cool climate, and serene environment around these falls provide a peaceful retreat for visitors. Many waterfalls are surrounded by hiking trails that lead to panoramic viewpoints, giving visitors the opportunity to explore Sri Lanka's verdant landscapes.<br/>
+
+    The most impressive waterfalls are often those with multiple tiers, where water cascades down in layers, creating a breathtaking display. The region’s frequent monsoon rains help maintain a constant flow of water, especially during the wet season. Some waterfalls are easily accessible by road, while others require trekking through dense forests or along winding mountain paths.
+
+    In addition to their beauty, many of Sri Lanka's waterfalls are also tied to local legends and cultural history. Some are associated with ancient myths, like the legend of King Ravana in the southern regions, further enriching the cultural experience of visiting these natural wonders.
+
+    Overall, Sri Lanka's waterfalls are not only a significant part of the country's ecological diversity but also a place where travelers can experience the tranquility and raw beauty of nature.</p>
+
+
+<br/>
+<a href="index.html"><button id="back-btn"><img src="assets/icon/back.png"></button></a>
 <div id="place-cards-container"></div>
-
 <script>
     $(document).ready(function () {
         const category = "Waterfall";
-
 
         function getAllPlaces() {
             $.ajax({
@@ -153,7 +265,7 @@
                 type: 'GET',
                 dataType: 'json',
                 headers: {
-                    'Authorization': 'Bearer'+ localStorage.getItem('token')
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
                 },
                 success: function (response) {
                     const container = $('#place-cards-container');
@@ -164,40 +276,45 @@
                         return;
                     }
 
-                    response.forEach((place) => {
+                    response.forEach((place, index) => {
                         const placeName = place.placeName || "Unknown Location";
                         const placeDescription = place.aboutPlace || "No description available.";
                         const imageFilename = place.images ? place.images.split("\\").pop() : "default.jpg";
                         const imageUrl = `http://localhost:8081/api/v1/uploads/${imageFilename}`;
+                        const district=place.district;
                         const lat = parseFloat(place.latitude) || 7.8731;
                         const lng = parseFloat(place.longitude) || 80.7718;
                         const videoUrl = place.videoUrl ? extractYouTubeID(place.videoUrl) : null;
-                        const status = place.status;
+                        const status = place.status || "No status available";
+                        const mapId = `map-${index}`;
 
                         const cardHtml = `
-                            <div class="card">
-                                <div class="image-container">
-                                    <img src="${imageUrl}" alt="${placeName}" />
-                                </div>
-                                <div class="content">
-                                    <h3 id="placeName">${placeName}</h3>
-                                    <p id="placeDescription">${placeDescription}</p>
-                                    <p id="status>">${status} in this place</p>
-                                    <div class="map-section">
-                                        <div id="map"></div>
-                                    </div>
-                                    <div class="video-container">
-                                        <iframe src="${videoUrl ? `https://www.youtube.com/embed/${videoUrl}` : ''}" frameborder="0" allowfullscreen></iframe>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
+    <div class="card">
+        <div class="image-container">
+            <img src="${imageUrl}" alt="${placeName}" />
+        </div>
+        <div class="content">
+            <h3 class="placeName">${placeName}</h3>
+            <p class="placeDescription">${placeDescription}<br/>District : ${district}</p>
+            <p class="status">${status} in this place</p>
+            <div class="map-section">
+                <div class="map" id="${mapId}"></div>
+            </div>
+
+            ${videoUrl ? `
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/${videoUrl}" allowfullscreen></iframe>
+            </div>` : ''}
+
+            <a class="direction-button" href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}" target="_blank">
+                Get Directions
+            </a>
+        </div>
+    </div>
+`;
 
                         container.append(cardHtml);
-
-                        if (container.children().length === 1) {
-                            initMap(lat, lng);
-                        }
+                        initMap(mapId, lat, lng);
                     });
                 },
                 error: function () {
@@ -206,28 +323,25 @@
             });
         }
 
-        function initMap(lat, lng) {
+
+
+        function initMap(mapId, lat, lng) {
             const position = { lat, lng };
-            const map = new google.maps.Map(document.getElementById("map"), {
+            const map = new google.maps.Map(document.getElementById(mapId), {
                 zoom: 10,
                 center: position,
             });
-            new google.maps.Marker({ position: position, map: map });
+            new google.maps.Marker({ position, map });
         }
 
         function extractYouTubeID(url) {
             const regex = /(?:youtube\.com\/.*[?&]v=|youtu\.be\/)([^"&?\/\s]{11})/;
             const match = url.match(regex);
-            return match ? match[1] : "";
+            return match ? match[1] : null;
         }
 
         getAllPlaces();
     });
-
-    //     images
-
-
 </script>
-
 </body>
 </html>
