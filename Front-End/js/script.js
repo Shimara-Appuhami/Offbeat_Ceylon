@@ -127,6 +127,9 @@ $(document).ready(function () {
                                 <div class="video-containerr">
                                     ${videoUrl ? `<iframe src="https://www.youtube.com/embed/${videoUrl}" frameborder="0" allowfullscreen></iframe>` : ''}
                                 </div>
+                                 <a class="direction-button" href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}" target="_blank">
+                                    Get Directions
+                                </a>
                             </div>
                         </div>
                     `;
@@ -209,3 +212,28 @@ function checkStyle() {
         localStorage.setItem("styleIcon", "grid");
     }
 };
+document.addEventListener("DOMContentLoaded", function () {
+    emailjs.init("HbvVYBEdM3efL930n"); // ✅ Your Public Key
+
+    const form = document.getElementById("contactForm");
+
+    form.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const params = {
+            from_name: document.getElementById("name").value,
+            from_email: document.getElementById("email").value,
+            message: document.getElementById("message").value
+        };
+
+        emailjs.send('service_1ocos02', 'template_9k45ayn', params)
+            .then(function (res) {
+                alert("✅ Email sent! Status: " + res.status);
+                form.reset();
+            })
+            .catch(function (error) {
+                alert("❌ Email failed: " + error.text);
+                console.error(error);
+            });
+    });
+});

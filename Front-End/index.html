@@ -148,7 +148,9 @@
         </div>
     </div>
 </section>
+
 <!--contact-->
+
 <section id="contact" class="contact-section">
     <h2>Contact Us</h2>
     <p>We'd love to hear from you. Please fill out the form below and we'll get in touch with you shortly.</p>
@@ -354,11 +356,25 @@
     </defs>
 </svg>
 </section>
+<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+
 <script src="js/jquery-3.7.1.min.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 
-<script src="js/script.js"></script>
+
+<script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+</script>
+<script type="text/javascript">
+    (function(){
+        emailjs.init({
+            publicKey: "HbvVYBEdM3efL930n",
+        });
+    })();
+</script>
+<script type="module" src="js/script.js"></script>
+
 </body>
 </html>
 
