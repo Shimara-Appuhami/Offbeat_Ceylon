@@ -19,7 +19,7 @@ public interface AddPlaceService {
     public boolean deletePlaceById(int placeId);
 //    ResponseEntity<String> updatePlace(int placeId, String placeName, String category, String aboutPlace, String district, String status, double latitude, double longitude, MultipartFile image);
 
-    AddPlaces updatePlace(String email, int placeId, String placeName, String category, String aboutPlace, String district, String status, double latitude, double longitude, MultipartFile image);
+    AddPlaces updatePlace(String email, int placeId, String placeName, String category, String aboutPlace, String district, String status, double latitude, double longitude, MultipartFile image,String videoUrl);
 
     List<AddPlaces> getAllPlaces();
 

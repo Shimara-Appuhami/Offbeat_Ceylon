@@ -22,7 +22,7 @@ $(document).ready(function () {
                     const safeCategoryName = $('<div>').text(category.categoryName).html();
                     const imageFilename = category.categoryImage ? category.categoryImage.split("\\").pop() : "default.jpg";
                     const imageUrl = `http://localhost:8081/api/v1/uploads/${imageFilename}`;
-
+                    const videoUrl=$()
                     cardContainer.append(`
                             <a class="card" href="#" data-category-id="${category.id}" data-category-name="${category.categoryName}">
                                 <img src="${imageUrl}" class="card__background" alt="${safeCategoryName}">
@@ -121,12 +121,13 @@ $(document).ready(function () {
                                 <h3>${placeName}</h3>
                                 <p>${placeDescription}</p>
                                 <p><strong>Status:</strong> ${status}</p>
+                                  <div class="video-containerr">
+                                    ${videoUrl ? `<iframe src="https://www.youtube.com/embed/${videoUrl}" frameborder="0" allowfullscreen></iframe>` : ''}
+                                </div>
                                 <div class="map-sectionn">
                                     <div id="${mapId}" class="map-container"></div>
                                 </div>
-                                <div class="video-containerr">
-                                    ${videoUrl ? `<iframe src="https://www.youtube.com/embed/${videoUrl}" frameborder="0" allowfullscreen></iframe>` : ''}
-                                </div>
+                              
                                  <a class="direction-button" href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}" target="_blank">
                                     Get Directions
                                 </a>
@@ -164,10 +165,11 @@ $(document).ready(function () {
     }
 
     function extractYouTubeID(url) {
-        const regex = /(?:youtube\.com\/.*[?&]v=|youtu\.be\/)([^"&?\/\s]{11})/;
-        const match = url.match(regex);
-        return match ? match[1] : "";
+        const regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+        const match = url.match(regExp);
+        return (match && match[2].length === 11) ? match[2] : null;
     }
+
 
     $('#districtSelect').change(function () {
         const selectedDistrict = $(this).val();

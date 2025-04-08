@@ -96,6 +96,7 @@ $("#addPlaceForm").on("submit", function (e) {
     // const images = $("#images")[0].files;
     const category=$("#category").val();
     const email = localStorage.getItem('email');
+    const videoUrl =$ ("#videoUrl").val();
 
     if (!email) {
         alert("email is not logged in or email is missing!");
@@ -111,6 +112,7 @@ $("#addPlaceForm").on("submit", function (e) {
     formData.append('latitude', selectedLat);
     formData.append('longitude', selectedLng);
     formData.append('category', category);
+    formData.append('videoUrl',videoUrl);
     formData.append("email", email); // Add userId to the request
 
 
@@ -233,6 +235,7 @@ $("#btn-update-place").on("click", function () {
     formData.append("status", $("input[name='status']:checked").val());
     formData.append("latitude", selectedLat);
     formData.append("longitude", selectedLng);
+    formData.append("videoUrl",$("#videoUrl").val());
 
     const imageInput = $("#imageUpload")[0];
     if (imageInput && imageInput.files.length > 0) {
@@ -285,6 +288,7 @@ $("#btn-delete-place").on("click", function () {
                 $("#district").val("");
                 $("input[name='status']").prop("checked", false);
                 $("#coordinates").text("");
+                $("#videoUrl").val("");
                 $("#images").hide();
                 if (marker) {
                     marker.setMap(null);

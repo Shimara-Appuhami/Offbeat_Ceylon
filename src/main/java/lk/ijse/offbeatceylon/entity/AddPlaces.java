@@ -21,9 +21,18 @@ public class AddPlaces {
     private Double latitude;
     private Double longitude;
     private String category;
+    private String videoUrl;
     @ManyToOne
     @JoinColumn(name = "email", referencedColumnName = "email")
     private User email;
+
+    public String getVideoUrl() {
+        return videoUrl;
+    }
+
+    public void setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl;
+    }
 
     public User getEmail() {
         return email;

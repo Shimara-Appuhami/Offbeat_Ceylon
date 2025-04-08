@@ -40,6 +40,7 @@ public class AddPlaceController {
             @RequestParam("latitude") double latitude,
             @RequestParam("longitude") double longitude,
             @RequestParam("category")String category,
+            @RequestParam("videoUrl")String videoUrl,
             @RequestParam(value = "images", required = false) MultipartFile placeImages) throws IOException {
 
 //        if (placeName.isEmpty() || aboutPlace.isEmpty() || district.isEmpty() || status.isEmpty()||category.isEmpty()) {
@@ -73,6 +74,7 @@ public class AddPlaceController {
         place.setLatitude(latitude);
         place.setLongitude(longitude);
         place.setCategory(category);
+        place.setVideoUrl(videoUrl);
         boolean isAdded=addPlaceService.savePlace(place,placeImages);
         if (isAdded) {
             responseDTO.setMessage("Place listed for place successfully!");
@@ -136,11 +138,12 @@ public class AddPlaceController {
             @RequestParam String status,
             @RequestParam double latitude,
             @RequestParam double longitude,
+            @RequestParam String videoUrl,
             @RequestParam(value = "image", required = false) MultipartFile image) {
 
         try {
             AddPlaces updatedPlace = addPlaceService.updatePlace(
-                    email,placeId, placeName, category, aboutPlace, district, status, latitude, longitude, image);
+                    email,placeId, placeName, category, aboutPlace, district, status, latitude, longitude, image,videoUrl);
 
             if (updatedPlace != null) {
                 return ResponseEntity.ok("Place updated successfully.");

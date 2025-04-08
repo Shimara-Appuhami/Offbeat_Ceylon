@@ -150,7 +150,7 @@ public class AddPlaceServiceImpl implements AddPlaceService {
 
     @Override
     public AddPlaces updatePlace(String email, int placeId, String placeName, String category, String aboutPlace, String district,
-                                 String status, double latitude, double longitude, MultipartFile image) {
+                                 String status, double latitude, double longitude, MultipartFile image,String videoUrl) {
         AddPlaces existingPlace = addPlaceRepo.findByPlaceId(placeId);
         if (existingPlace == null) {
             return null;
@@ -168,6 +168,7 @@ public class AddPlaceServiceImpl implements AddPlaceService {
         existingPlace.setStatus(status);
         existingPlace.setLatitude(latitude);
         existingPlace.setLongitude(longitude);
+        existingPlace.setVideoUrl(videoUrl);
 
         if (image != null && !image.isEmpty()) {
             try {

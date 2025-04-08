@@ -17,7 +17,7 @@
         }
 
         .hero {
-            background: url('assets/images/waterfallfront.png') center/cover no-repeat;
+            background: url('https://media.istockphoto.com/id/2055829406/video/aerial-view-of-swiss-alps-mountain-ridge-in-summer.jpg?s=640x640&k=20&c=klJ3q43JuvO8TbHBJ0ITsbZwb2FH3-AYgPTnZ8K547M=') center/cover no-repeat;
             height: 100vh;
             position: relative;
             display: flex;
@@ -65,7 +65,7 @@
             transition: background 0.3s, color 0.3s;
         }
 
-        .hero-btn:hover {
+        .hero-btn :hover {
             background: #fff;
             color: #000;
         }
@@ -79,8 +79,8 @@
             width: 100%;
         }
         .card {
-            width: 700px;
-            height: 400px;
+            width: 1000px;
+            height: 450px;
             display: flex;
             box-shadow: 0 30px 40px -15px rgba(0,0,0,0.35);
             background-color: rgb(255, 255, 255);
@@ -125,16 +125,19 @@
             font-weight: 600;
         }
         .map-section {
-            height: 200px;
-            width: 100%;
-            margin-top: 10px;
+            height: 340px;
+            width: 250px;
+            margin-top: -187px;
+            margin-left: 311px;
         }
         .map {
             height: 100%;
             width: 100%;
         }
         .video-container {
-            margin-top: 10px;
+            margin-top: 31px;
+            width: 300px;
+            height: 500px;
         }
         iframe {
             width: 100%;
@@ -154,6 +157,7 @@
             width: 150px;
             transition: background 0.3s ease;
             text-align: center;
+            margin-left: 343px;
         }
 
         .direction-button:hover {
@@ -162,7 +166,7 @@
         #back-btn{
             background: transparent;
             border: none;
-            margin-left: -700px;
+            margin-left: -1350px;
             margin-top: 10px;
 
         }
@@ -214,7 +218,7 @@
                 width: 90%;
             }
 
-             h2 {
+            h2 {
                 font-size: 2rem;
             }
 
@@ -225,7 +229,6 @@
         .placeDescription{
             color: #3a3838;
         }
-
     </style>
 </head>
 <body>
@@ -297,14 +300,15 @@
             <h3 class="placeName">${placeName}</h3>
             <p class="placeDescription">${placeDescription}<br/>District : ${district}</p>
             <p class="status">${status} in this place</p>
-            <div class="map-section">
-                <div class="map" id="${mapId}"></div>
-            </div>
+
 
             ${videoUrl ? `
             <div class="video-container">
                 <iframe src="https://www.youtube.com/embed/${videoUrl}" allowfullscreen></iframe>
             </div>` : ''}
+            <div class="map-section">
+                <div class="map" id="${mapId}"></div>
+            </div>
 
             <a class="direction-button" href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}" target="_blank">
                 Get Directions
@@ -331,6 +335,7 @@
                 zoom: 10,
                 center: position,
             });
+
             new google.maps.Marker({ position, map });
         }
 

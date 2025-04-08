@@ -19,6 +19,15 @@ public class AddPlaceDTO {
     private Double longitude;
     private String category;
     private String email;
+    private String videoUrl;
+
+    public String getVideoUrl() {
+        return videoUrl;
+    }
+
+    public void setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl;
+    }
 
     public String getEmail() {
         return email;
