@@ -118,7 +118,7 @@ $(document).ready(function () {
                                 <div class="heart" onclick="checkStyle()"></div>
                             </div>
                             <div class="contentt">
-                                <h3>${placeName}</h3>
+                                <h3 class="placeName">${placeName}</h3>
                                 <p>${placeDescription}</p>
                                 <p><strong>Status:</strong> ${status}</p>
                                   <div class="video-containerr">
@@ -239,3 +239,19 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     });
 });
+
+//search
+
+function filterPlacesByName(query) {
+    query = query.toLowerCase();
+    $(".cardd").each(function () {
+        const placeName = $(this).find(".placeName").text().toLowerCase();
+        $(this).toggle(placeName.includes(query));
+    });
+}
+
+$("#searchInput").on("input", function () {
+    const searchValue = $(this).val();
+    filterPlacesByName(searchValue);
+});
+

@@ -257,6 +257,13 @@
 
 <br/>
 <a href="index.html"><button id="back-btn"><img src="assets/icon/back.png"></button></a>
+<!--search bar-->
+<div style="text-align: center; margin-top: 30px;">
+    <input type="text" id="searchInput" placeholder="Search waterfalls by name..." style="padding: 10px; width: 300px; border-radius: 20px; border: 1px solid #ccc; font-size: 16px;">
+</div>
+
+
+
 <div id="place-cards-container"></div>
 <script>
     $(document).ready(function () {
@@ -347,6 +354,22 @@
 
         getAllPlaces();
     });
+    function filterPlacesByName(query) {
+        query = query.toLowerCase();
+        $(".card").each(function () {
+            const placeName = $(this).find(".placeName").text().toLowerCase();
+            if (placeName.includes(query)) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+    }
+    $("#searchInput").on("input", function () {
+        const searchValue = $(this).val();
+        filterPlacesByName(searchValue);
+    });
+
 </script>
 </body>
 </html>
