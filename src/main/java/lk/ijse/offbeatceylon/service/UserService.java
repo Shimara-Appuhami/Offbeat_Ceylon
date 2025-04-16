@@ -20,4 +20,6 @@ public interface UserService {
     List<User> getAllUsers();
 
     UserDTO updateUser(UserDTO userDTO);
+
+    boolean resetPassword(String email, String password);
 }

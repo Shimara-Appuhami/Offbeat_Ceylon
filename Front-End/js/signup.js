@@ -130,7 +130,7 @@ $(document).ready(function () {
                 $('#password').val('');
                 $('#confirmPassword').val('');
                 $('#role').val('');
-                window.location.href = "../js/../index.html"
+                window.location.href = "../js/../signup.html"
 
 
             },
@@ -156,6 +156,7 @@ $(document).ready(function () {
 
         var email = $('#email2').val();
         var password = $('#password2').val();
+        var role=$('#role').val();
 
         if (!email || !password) {
             alert("Please enter both email and password.");
@@ -164,7 +165,8 @@ $(document).ready(function () {
 
         var userData = {
             email: email,
-            password: password
+            password: password,
+            role:role
         };
 
         $.ajax({
@@ -176,14 +178,15 @@ $(document).ready(function () {
                 console.log("Server Response:", response);
                 localStorage.setItem('token', response.data.token);
                 localStorage.setItem('email', response.data.email);
+                console.log(role);
 
                 if (response.code === 201) {
-                    if (response.role = 'USER') {
+                    if (role === 'USER') {
                         alert('Welcome User!');
                         window.location.href = "../js/../index.html"
-                    } else if (response.role = 'ADMIN') {
+                    } else if (role === 'ADMIN') {
                         alert('Welcome Admin!');
-                        window.location.href = "../js/../admin-dashboard.html"
+                        window.location.href = "../js/../dashboard.html"
                     } else {
                         alert('Invalid Credentials!');
                     }

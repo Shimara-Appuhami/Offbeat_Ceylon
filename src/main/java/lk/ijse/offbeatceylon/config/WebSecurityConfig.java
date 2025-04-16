@@ -52,6 +52,11 @@ public class WebSecurityConfig {
                                 "/api/v1/category/getTotalCategories",
                                 "/api/v1/addPlace/getPlacesCount",
 
+                                "/api/v1/auth/resend-otp",
+                                "/api/v1/auth/forgot-password",
+                                "/api/v1/auth/verify-otp",
+                                "/api/v1/auth/reset-password",
+
                                 "/v3/api-docs/**",
                                 "/swagger-ui/**",
                                 "/api/v1/admin/test1",

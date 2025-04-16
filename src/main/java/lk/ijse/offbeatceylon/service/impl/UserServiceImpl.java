@@ -23,8 +23,7 @@ import java.util.UUID;
 
 @Service
 @Transactional
-public class
-UserServiceImpl implements UserDetailsService, UserService {
+public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Autowired
     private UserRepository userRepository;
@@ -91,6 +90,25 @@ UserServiceImpl implements UserDetailsService, UserService {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public boolean resetPassword(String email, String password) {
+        User user = userRepository.findByEmail(email);
+
+        if (user == null) {
+            return false;
+        }
+        if (password.length() < 8) {
+            return false;
+        }
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+        String hashedPassword = encoder.encode(password);
+        user.setPassword(hashedPassword);
+        userRepository.save(user);
+
+        return true;
     }
 
     @Override
