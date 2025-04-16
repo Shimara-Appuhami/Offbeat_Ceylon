@@ -1,4 +1,4 @@
-![signin](https://github.com/user-attachments/assets/10f432e5-6ba0-4388-be45-871393aeebf5)﻿# Offbeat_Ceylon
+# Offbeat_Ceylon
  
 #Description
 Offbeat Cylon is an innovative travel application designed to help users discover unique and off-the-beaten-path destinations in Sri Lanka. It allows users to search for various travel spots, view detailed information, and explore travel options by district. Users can also add new travel locations along with YouTube videos showcasing these places. Additionally, Offbeat Cylon offers trip planning features where users can select and organize destinations to create their ideal itinerary, making it easier to explore Sri Lanka's hidden gems.
