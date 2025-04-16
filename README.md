@@ -10,6 +10,8 @@ The code provided below showcases how the application can integrate and manage t
 ![Screenshot 2025-04-16 225023](https://github.com/user-attachments/assets/972f2fab-7729-4a96-8f17-03e6fa771277)
 ![Screenshot 2025-04-16 225045](https://github.com/user-attachments/assets/d2d14d46-0cde-4813-8f75-f4e61c65af12)
 ![Screenshot 2025-04-16 225136](https://github.com/user-attachments/assets/35a5a87e-32cf-4884-b0f9-9f9c26c89eca)
+![Screenshot 2025-04-17 000607](https://github.com/user-attachments/assets/ee9c3f7f-3e8b-4df7-b13c-09372bf9771c)
+![Screenshot 2025-04-17 000622](https://github.com/user-attachments/assets/fdaff792-7a6f-4e65-a137-4ace9f8568b3)
 ![Screenshot 2025-04-16 225151](https://github.com/user-attachments/assets/dcd7d8f2-2b0a-4281-802a-cae6e2250497)
 ![Screenshot 2025-04-16 225228](https://github.com/user-attachments/assets/606aba0f-2df1-45b0-8103-0d8ffb41e643)
 ![Screenshot 2025-04-16 225245](https://github.com/user-attachments/assets/58955aed-ca14-4c89-95fb-2876e581e4a6)
