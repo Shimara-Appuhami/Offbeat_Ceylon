@@ -15,6 +15,8 @@ The code provided below showcases how the application can integrate and manage t
 ![Screenshot 2025-04-16 225245](https://github.com/user-attachments/assets/58955aed-ca14-4c89-95fb-2876e581e4a6)
 ![Screenshot 2025-04-17 000622](https://github.com/user-attachments/assets/fdaff792-7a6f-4e65-a137-4ace9f8568b3)
 ![Screenshot 2025-04-16 225151](https://github.com/user-attachments/assets/dcd7d8f2-2b0a-4281-802a-cae6e2250497)
+![Screenshot 2025-04-17 001301](https://github.com/user-attachments/assets/3268adf8-4066-4465-a733-f5c734f55bf6)
+![Screenshot 2025-04-17 001534](https://github.com/user-attachments/assets/ace27493-9e2f-4315-8971-f7dcd69cfe78)
 ![Screenshot 2025-04-16 225245](https://github.com/user-attachments/assets/07e3ffe4-e6c6-4c15-b30b-c6dd37f15513)
 ![Screenshot 2025-04-16 225302](https://github.com/user-attachments/assets/c3d4fc55-aab5-4cad-abae-abc1d50bfaac)
 ![Screenshot 2025-04-16 225321](https://github.com/user-attachments/assets/be3418e2-7745-4b05-8f7c-fe5aaf4e5f5c)
