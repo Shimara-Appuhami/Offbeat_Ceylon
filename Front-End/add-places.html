@@ -77,6 +77,8 @@
     <label>
         <input type="file" accept="image/*" multiple required id="images" name="images" />
     </label>
+    <img id="imagePreview" src="" alt="Image preview" style="display: none; width: 100px; height: 100px;">
+
 
     <label for="videoUrl">Video URL:</label>
     <input type="url" id="videoUrl" name="videoUrl" placeholder="Enter YouTube or video link" required>
@@ -98,11 +100,7 @@
         </div>
     </div>
 
-    <div id="btn-section">
-        <button type="submit" class="submit-btn" id="btn-save-place">Add Place</button>
-        <button type="button" class="submit-btn" id="btn-update-place">Update</button>
-        <button type="button" class="submit-btn" id="btn-delete-place">Delete</button>
-    </div>
+
 
     <div id="map-section">
         <h3>Click on the map to select a location</h3>
@@ -111,10 +109,16 @@
         <p id="coordinates" style="color: green; font-weight: bold;"></p>
         <div id="map" style="height: 400px; width: 100%;"></div>
     </div>
+    <div id="btn-section">
+        <button type="submit" class="submit-btn" id="btn-save-place">Add Place</button>
+        <button type="button" class="submit-btn" id="btn-update-place">Update</button>
+        <button type="button" class="submit-btn" id="btn-delete-place">Delete</button>
+    </div>
 </form>
 
 <script src="js/jquery-3.7.1.min.js"></script>
 <script src="js/add-places.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </body>
 </html>

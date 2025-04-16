@@ -32,7 +32,7 @@ $(document).ready(function () {
 
             },
             error: function (xhr) {
-                alert("Failed to load categories. Error: " + xhr.responseText);
+                Swal.fire("Failed to load categories. Error: " + xhr.responseText);
             }
         });
     }
@@ -54,7 +54,7 @@ $(document).ready(function () {
 
 
         if (!categoryName || !categoryDescription) {
-            alert('Please fill in all fields.');
+            Swal.fire('Please fill in all fields.');
             return;
         }
 
@@ -76,14 +76,14 @@ $(document).ready(function () {
             processData: false,
             contentType: false,
             success: function () {
-                alert('Category added successfully!');
+                Swal.fire('Category added successfully!');
                 $('#category-form').val('');
                 $('#category-name, #category-description').val('');
                 $('#category-image').val('');
                 fetchCategories();
             },
             error: function (xhr) {
-                alert('Error adding category: ' + xhr.responseText);
+                Swal.fire('Error adding category: ' + xhr.responseText);
             }
         });
     });
@@ -99,11 +99,11 @@ $(document).ready(function () {
                     'Authorization': 'Bearer ' + localStorage.getItem('token')
                 },
                 success: function () {
-                    alert('Category deleted successfully!');
+                    Swal.fire('Category deleted successfully!');
                     fetchCategories();
                 },
                 error: function (xhr) {
-                    alert('Error deleting category: ' + xhr.responseText);
+                    Swal.fire('Error deleting category: ' + xhr.responseText);
                 }
             });
         }

@@ -199,12 +199,12 @@
                 contentType: 'application/json',
                 data: JSON.stringify(user),
                 success: function (response) {
-                    alert(response.message);
+                    Swal.fire(response.message);
                     loadUsers();
                     $('#registerForm')[0].reset();
                 },
                 error: function (error) {
-                    alert('Registration failed: ' + error.responseJSON.message);
+                    Swal.fire('Registration failed: ' + error.responseJSON.message);
                 }
             });
         });
@@ -242,7 +242,7 @@
         $('#updateBtn').click(function () {
             const userEmail = $(this).data('email');
             if (!userEmail) {
-                alert('Please select a user to update');
+                Swal.fire('Please select a user to update');
                 return;
             }
             const password = $('#password').val();
@@ -260,7 +260,7 @@
                 contentType: 'application/json',
                 data: JSON.stringify(user),
                 success: function (response) {
-                    alert(response.message);
+                    Swal.fire(response.message);
                     loadUsers();
                     $('#registerForm')[0].reset();
                     // $('#updateBtn').removeData('email');
@@ -268,7 +268,7 @@
 
                 },
                 error: function (error) {
-                    alert('Update failed: ' + (error.responseJSON ? error.responseJSON.message : 'User not found'));
+                    Swal.fire('Update failed: ' + (error.responseJSON ? error.responseJSON.message : 'User not found'));
                 }
             });
         });
@@ -284,16 +284,18 @@
                     url: `http://localhost:8081/api/v1/user/delete/${userEmail}`,
                     type: 'DELETE',
                     success: function (response) {
-                        alert(response.message);
+                        Swal.fire(response.message);
                         loadUsers();
                     },
                     error: function (error) {
-                        alert('Delete failed: ' + (error.responseJSON ? error.responseJSON.message : 'User not found'));
+                        Swal.fire('Delete failed: ' + (error.responseJSON ? error.responseJSON.message : 'User not found'));
                     }
                 });
             }
         });
     });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </body>
 </html>

@@ -85,7 +85,7 @@ $("#addPlaceForm").on("submit", function (e) {
     e.preventDefault();
 
     if (!selectedLat || !selectedLng) {
-        alert("Please select a location on the map!");
+        Swal.fire("Please select a location on the map!");
         return;
     }
 
@@ -99,7 +99,7 @@ $("#addPlaceForm").on("submit", function (e) {
     const videoUrl =$ ("#videoUrl").val();
 
     if (!email) {
-        alert("email is not logged in or email is missing!");
+        Swal.fire("email is not logged in or email is missing!");
         return;
     }
 
@@ -137,7 +137,7 @@ $("#addPlaceForm").on("submit", function (e) {
             console.log("token"+token);
 
 
-            alert('Place added successfully!');
+            Swal.fire('Place added successfully!');
             $("#addPlaceForm")[0].reset();
             $("#coordinates").text("");
             // localStorage.removeItem("savedPlaces");
@@ -145,7 +145,7 @@ $("#addPlaceForm").on("submit", function (e) {
         },
         error: function (xhr, status, error) {
             console.error('Error:', error);
-            alert('Failed to add place!');
+            Swal.fire('Failed to add place!');
         }
     });
 });
@@ -208,12 +208,12 @@ $("#placeName").on("keypress", function (event) {
                             $("#images").hide();
                         }
                     } else {
-                        alert("Place not found or placeId is missing!");
+                        Swal.fire("Place not found or placeId is missing!");
                     }
                 },
                 error: function (xhr, status, error) {
                     console.error("Error fetching place:", error);
-                    alert("Error fetching place details!");
+                    Swal.fire("Error fetching place details!");
                 }
             });
         }
@@ -252,12 +252,12 @@ $("#btn-update-place").on("click", function () {
         processData: false,
         contentType: false,
         success: function (response) {
-            alert("Place updated successfully!");
+            Swal.fire("Place updated successfully!");
             console.log("Update Response:", response);
         },
         error: function (xhr, status, error) {
             console.error("Error updating place:", error);
-            alert("Error updating place details!");
+            Swal.fire("Error updating place details!");
         }
     });
 });
@@ -265,7 +265,7 @@ $("#btn-update-place").on("click", function () {
 //delete
 $("#btn-delete-place").on("click", function () {
     if (!placeId || isNaN(placeId)) {
-        alert("Please search for a valid place before deleting!");
+        Swal.fire("Please search for a valid place before deleting!");
         console.warn("Delete attempt failed: Invalid placeId.");
         return;
     }
@@ -278,7 +278,7 @@ $("#btn-delete-place").on("click", function () {
                 "Authorization": "Bearer " + localStorage.getItem('token')
             },
             success: function (response) {
-                alert("Place deleted successfully!");
+                Swal.fire("Place deleted successfully!");
                 console.log("Delete Response:", response);
 
                 placeId = null;
@@ -296,8 +296,20 @@ $("#btn-delete-place").on("click", function () {
             },
             error: function (xhr, status, error) {
                 console.error("Error deleting place:", er/ror);
-                alert("Error deleting place details!");
+                Swal.fire("Error deleting place details!");
             }
         });
+    }
+});
+// Show image preview after selecting
+$("#images").on("change", function () {
+    const file = this.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            // Display the image preview
+            $("#imagePreview").attr("src", e.target.result).show();
+        };
+        reader.readAsDataURL(file);
     }
 });

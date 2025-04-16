@@ -105,7 +105,7 @@ $(document).ready(function () {
         var role = $('#role').val();
 
         if (password !== confirmPassword) {
-            alert('Passwords do not match!');
+            Swal.fire('Passwords do not match!');
             return;
         }
 
@@ -124,7 +124,7 @@ $(document).ready(function () {
             data: JSON.stringify(formData),
             success: function (response) {
                 console.log(response);
-                alert('User registered successfully!');
+                Swal.fire('User registered successfully!');
                 $('#username').val('');
                 $('#email').val('');
                 $('#password').val('');
@@ -136,7 +136,7 @@ $(document).ready(function () {
             },
             error: function (xhr, status, error) {
                 console.log("Error:", error);
-                alert("Error: " + xhr.responseText);
+                Swal.fire("Error: " + xhr.responseText);
 
                 $('#username').val('');
                 $('#email').val('');
@@ -159,7 +159,7 @@ $(document).ready(function () {
         var role=$('#role').val();
 
         if (!email || !password) {
-            alert("Please enter both email and password.");
+            Swal.fire("Please enter both email and password.");
             return;
         }
 
@@ -182,13 +182,13 @@ $(document).ready(function () {
 
                 if (response.code === 201) {
                     if (role === 'USER') {
-                        alert('Welcome User!');
+                        Swal.fire('Welcome User!');
                         window.location.href = "../js/../index.html"
                     } else if (role === 'ADMIN') {
-                        alert('Welcome Admin!');
+                        Swal.fire('Welcome Admin!');
                         window.location.href = "../js/../dashboard.html"
                     } else {
-                        alert('Invalid Credentials!');
+                        Swal.fire('Invalid Credentials!');
                     }
                 }
 
@@ -197,14 +197,8 @@ $(document).ready(function () {
             error: function (xhr, status, error) {
                 console.error("AJAX Error:", status, error);
                 console.error("Response:", xhr.responseText);
-                alert("Login failed. Please check your credentials and try again.");
+                Swal.fire("Login failed. Please check your credentials and try again.");
             }
         });
     });
 });
-//continue with google
-
-    // window.dataLayer = window.dataLayer || [];
-    // function gtag(){dataLayer.push(arguments);}
-    // gtag('js', new Date());
-    // gtag('config', 'UA-XXXXXXXXX-X');

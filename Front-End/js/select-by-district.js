@@ -29,7 +29,7 @@ function initializeMap() {
                 markers.push(userMarker);
             },
             () => {
-                alert("Unable to get your location. Make sure location services are enabled.");
+                Swal.fire("Unable to get your location. Make sure location services are enabled.");
             }
         );
     }
@@ -138,12 +138,12 @@ $(document).ready(function () {
 
     function getDirections() {
         if (!userLocation) {
-            alert("Could not get your current location.");
+            Swal.fire("Could not get your current location.");
             return;
         }
 
         if (selectedPlaces.length < 1) {
-            alert("Please select at least one location.");
+            Swal.fire("Please select at least one location.");
             return;
         }
 
@@ -164,7 +164,7 @@ $(document).ready(function () {
             if (status === google.maps.DirectionsStatus.OK) {
                 directionsRenderer.setDirections(result);
             } else {
-                alert("Failed to get directions. Please try again.");
+                Swal.fire("Failed to get directions. Please try again.");
             }
         });
     }

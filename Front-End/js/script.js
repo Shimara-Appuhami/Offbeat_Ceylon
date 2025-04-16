@@ -185,10 +185,10 @@ document.getElementById('contactForm').addEventListener('submit', function(event
     var message = document.getElementById('message').value;
 
     if (!name || !email || !message) {
-        alert('Please fill out all fields.');
+        Swal.fire('Please fill out all fields.');
         event.preventDefault();
     } else {
-        alert('Thank you for reaching out! We will get back to you soon.');
+        Swal.fire('Thank you for reaching out! We will get back to you soon.');
     }
 });
 
