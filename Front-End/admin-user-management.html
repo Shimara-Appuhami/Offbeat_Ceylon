@@ -274,14 +274,10 @@
         });
 
         $(document).on('click', '.delete-btn', function () {
-            const userEmail = $(this).data('email');
-            // if (!userEmail) {
-            //     alert('Error: Invalid email');
-            //     return;
-            // }
+            const uid=this.id;
             if (confirm('Are you sure you want to delete this user?')) {
                 $.ajax({
-                    url: `http://localhost:8081/api/v1/user/delete/${userEmail}`,
+                    url: `http://localhost:8081/api/v1/user/delete/${uid}`,
                     type: 'DELETE',
                     success: function (response) {
                         Swal.fire(response.message);

@@ -64,10 +64,10 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
-    public boolean deleteUser(String email) {
-        User user = userRepository.findByEmail(email);
+    public boolean deleteUser(String uid) {
+        User user = userRepository.findByEmail(String.valueOf(uid));
         if (user!= null) {
-            userRepository.deleteByEmail(user);
+            userRepository.deleteByUid(user);
             return true;
         } else {
             return false;

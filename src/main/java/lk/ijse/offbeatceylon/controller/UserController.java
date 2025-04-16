@@ -74,11 +74,11 @@ public class UserController {
         }
     }
     //delete
-    @DeleteMapping(value = "/delete/{email}")
-    public ResponseEntity<ResponseDTO> deleteUser(@PathVariable String email) {
+    @DeleteMapping("/delete/{uid}")
+    public ResponseEntity<ResponseDTO> deleteUser(@PathVariable String uid) {
         //delete by uuid
         try {
-            boolean deleted = userService.deleteUser(email);
+            boolean deleted = userService.deleteUser(uid);
             if (deleted) {
                 return ResponseEntity.status(HttpStatus.OK)
                         .body(new ResponseDTO(VarList.OK, "User Deleted Successfully", null));
