@@ -1,5 +1,6 @@
 package lk.ijse.offbeatceylon.controller;
 
+import jakarta.validation.Valid;
 import lk.ijse.offbeatceylon.dto.ResponseDTO;
 import lk.ijse.offbeatceylon.entity.AddPlaces;
 import lk.ijse.offbeatceylon.entity.User;
@@ -31,7 +32,7 @@ public class AddPlaceController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<ResponseDTO> savePlace(
+    public ResponseEntity<ResponseDTO> savePlace(@Valid
             @RequestParam("email") String email,
             @RequestParam("placeName") String placeName,
             @RequestParam("aboutPlace") String aboutPlace,
@@ -41,7 +42,7 @@ public class AddPlaceController {
             @RequestParam("longitude") double longitude,
             @RequestParam("category")String category,
             @RequestParam("videoUrl")String videoUrl,
-            @RequestParam(value = "images", required = false) MultipartFile placeImages) throws IOException {
+            @RequestParam(value = "images", required = false) MultipartFile placeImages ) throws IOException {
 
 //        if (placeName.isEmpty() || aboutPlace.isEmpty() || district.isEmpty() || status.isEmpty()||category.isEmpty()) {
 //            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("All fields are required.");
@@ -128,7 +129,7 @@ public class AddPlaceController {
         }
     }
     @PutMapping("/update/{placeId}")
-    public ResponseEntity<String> updatePlace(
+    public ResponseEntity<String> updatePlace(@Valid
             @RequestParam("email") String email,
             @PathVariable int placeId,
             @RequestParam String placeName,

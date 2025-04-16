@@ -1,6 +1,9 @@
 package lk.ijse.offbeatceylon.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -13,7 +16,11 @@ public class AddPlaces {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int placeId;
     @Column(unique = true)
+    @NotBlank(message = "Place Name is required")
+    @Pattern(regexp = "^[A-Za-z]+$", message ="place name must only letters and spaces")
+    @Size(min = 1, max =200)
     private String placeName;
+    @Size(min = 50, max = 150, message = "About Place must be between minimum 50 words or maximum 150 words")
     private String aboutPlace;
     private String district;
     private String images;

@@ -1,5 +1,6 @@
 package lk.ijse.offbeatceylon.controller;
 
+import jakarta.validation.Valid;
 import lk.ijse.offbeatceylon.dto.ResponseDTO;
 import lk.ijse.offbeatceylon.entity.Category;
 import lk.ijse.offbeatceylon.service.AddCategoryService;
@@ -35,7 +36,7 @@ public class AddCategoryController {
     }
 
         @PostMapping("/save")
-        public ResponseEntity<ResponseDTO> saveCategory(
+        public ResponseEntity<ResponseDTO> saveCategory(@Valid
                 @RequestPart("categoryName") String categoryName,
                 @RequestPart("description") String description,
                 @RequestPart(value = "categoryImage", required = false) MultipartFile categoryImage) throws IOException {
@@ -111,29 +112,24 @@ public class AddCategoryController {
         }
     }
 
-//    @PutMapping("/update/{categoryId}")
-//    public ResponseEntity<String> updateCategory(
-//            @PathVariable int categoryId,
-//            @RequestParam("categoryName") String categoryName,
-//            @RequestParam("description") String description,
-//            @RequestParam(value = "categoryImage", required = false) MultipartFile categoryImage) throws IOException {
-//
-//        Category category = categoryService.getCategoryById(categoryId);
-//        if (category == null) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Category not found.");
-//        }
-//
-//        category.setCategoryName(categoryName);
-//        category.setDescription(description);
-//        if (categoryImage != null) {
-//            String fileName = StringUtils.cleanPath(categoryImage.getOriginalFilename());
-//            String imagePath = saveImage(fileName, categoryImage);
-//            category.setCategoryImage(imagePath);
-//        }
-//
-//        categoryService.saveCategory(category,categoryImage);
-//        return ResponseEntity.ok("Category updated successfully.");
-//    }
+    @PutMapping("/update/{categoryId}")
+    public ResponseEntity<String> updateCategory(@Valid
+            @PathVariable int categoryId,
+            @RequestParam("categoryName") String categoryName,
+            @RequestParam("description") String description,
+            @RequestParam(value = "categoryImage", required = false) MultipartFile categoryImage) throws IOException {
+
+        Category category = categoryService.getCategoryById(categoryId);
+        if (category == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Category not found.");
+        }
+
+        category.setCategoryName(categoryName);
+        category.setDescription(description);
+
+        categoryService.saveCategory(category,categoryImage);
+        return ResponseEntity.ok("Category updated successfully.");
+    }
 
     @DeleteMapping("/delete/{categoryId}")
     public ResponseEntity<String> deleteCategory(@PathVariable int categoryId) {
