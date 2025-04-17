@@ -54,9 +54,13 @@ Backend (Spring Boot – IntelliJ IDEA)
 
 5 step -:Configure Database
          Edit src/main/resources/application.properties:
+         
          spring.datasource.url=jdbc:mysql://localhost:3306/travel_db
+         
          spring.datasource.username=root
+         
          spring.datasource.password=yourpassword
+         
          Import SQL file
          Use MySQL Workbench or CLI to import travel_db.sql.
 
