@@ -71,7 +71,8 @@ Backend (Spring Boot – IntelliJ IDEA)
 7 step -:Frontend (HTML/CSS/JS)
          Open frontend folder in any editor.
          
-YouTube Link -: https://youtu.be/fOH4XxO1gFk?si=j92ZozSeoURrzjEs
+YouTube Link -: https://youtu.be/484sxUgD6EE
+https://youtu.be/fOH4XxO1gFk?si=j92ZozSeoURrzjEs
 
 
 
