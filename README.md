@@ -46,7 +46,7 @@ The code provided below showcases how the application can integrate and manage t
 Backend (Spring Boot – IntelliJ IDEA)
 1 step -: Clone the repo
 
-2 step -: git clone https://github.com/your-username/backend.git
+2 step -: git clone https://github.com/Shimara-Appuhami/Offbeat_Ceylon.git
 
 3 step -:Open in IntelliJ IDEA
 
