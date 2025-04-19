@@ -4,7 +4,6 @@ import jakarta.validation.Valid;
 import lk.ijse.offbeatceylon.dto.ResponseDTO;
 import lk.ijse.offbeatceylon.entity.AddPlaces;
 import lk.ijse.offbeatceylon.entity.User;
-import lk.ijse.offbeatceylon.repo.AddPlaceRepo;
 import lk.ijse.offbeatceylon.service.AddPlaceService;
 import lk.ijse.offbeatceylon.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -12,59 +11,35 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
-
 @RestController
-@RequestMapping("api/v1/addPlace")
+@RequestMapping("api/v1/pendingPlaces")
 @CrossOrigin("http://localhost:63342")
-public class AddPlaceController {
-
+public class PendingPlacesController {
     private final ResponseDTO responseDTO;
     private final AddPlaceService addPlaceService;
     private final UserService userService;
-    private final AddPlaceRepo addPlaceRepo;
 
-    public AddPlaceController(ResponseDTO responseDTO, AddPlaceService addPlaceService, UserService userService, AddPlaceRepo addPlaceRepo) {
+    public PendingPlacesController(ResponseDTO responseDTO, AddPlaceService addPlaceService, UserService userService) {
         this.responseDTO = responseDTO;
         this.addPlaceService = addPlaceService;
         this.userService = userService;
-        this.addPlaceRepo = addPlaceRepo;
     }
 
     @PostMapping("/save")
     public ResponseEntity<ResponseDTO> savePlace(@Valid
-            @RequestParam("email") String email,
-            @RequestParam("placeName") String placeName,
-            @RequestParam("aboutPlace") String aboutPlace,
-            @RequestParam("district") String district,
-            @RequestParam("status") String status,
-            @RequestParam("latitude") double latitude,
-            @RequestParam("longitude") double longitude,
-            @RequestParam("category")String category,
-            @RequestParam("videoUrl")String videoUrl,
-            @RequestParam(value = "images", required = false) MultipartFile placeImages ) throws IOException {
+                                                 @RequestParam("email") String email,
+                                                 @RequestParam("placeName") String placeName,
+                                                 @RequestParam("aboutPlace") String aboutPlace,
+                                                 @RequestParam("district") String district,
+                                                 @RequestParam("status") String status,
+                                                 @RequestParam("latitude") double latitude,
+                                                 @RequestParam("longitude") double longitude,
+                                                 @RequestParam("category")String category,
+                                                 @RequestParam("videoUrl")String videoUrl,
+                                                 @RequestParam(value = "images", required = false) MultipartFile placeImages ) throws IOException {
 
-//        if (placeName.isEmpty() || aboutPlace.isEmpty() || district.isEmpty() || status.isEmpty()||category.isEmpty()) {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("All fields are required.");
-//        }
-//
-//        if (addPlaceService.existsByPlaceName(placeName)) {
-//            return ResponseEntity.status(HttpStatus.CONFLICT).body("Place with this name already exists.");
-//        }
-
-//        List<String> imagePaths = new ArrayList<>();
-//        if (images != null) {
-//            for (MultipartFile image : images) {
-//                String fileName = StringUtils.cleanPath(image.getOriginalFilename());
-//                String imagePath = saveImage(fileName, image);
-//                imagePaths.add(imagePath);
-//            }
-//        }
         User user=userService.getUserByEmail(email);
         if (user == null) {
             responseDTO.setMessage("User not found with this email.");
@@ -136,16 +111,16 @@ public class AddPlaceController {
     @PutMapping("/update/{placeId}")
     public ResponseEntity<String> updatePlace(@Valid
 //            @RequestParam("email") String email,
-            @PathVariable int placeId,
-            @RequestParam String placeName,
-            @RequestParam String category,
-            @RequestParam String aboutPlace,
-            @RequestParam String district,
-            @RequestParam String status,
-            @RequestParam double latitude,
-            @RequestParam double longitude,
-            @RequestParam String videoUrl,
-            @RequestParam(value = "image", required = false) MultipartFile image) {
+                                              @PathVariable int placeId,
+                                              @RequestParam String placeName,
+                                              @RequestParam String category,
+                                              @RequestParam String aboutPlace,
+                                              @RequestParam String district,
+                                              @RequestParam String status,
+                                              @RequestParam double latitude,
+                                              @RequestParam double longitude,
+                                              @RequestParam String videoUrl,
+                                              @RequestParam(value = "image", required = false) MultipartFile image) {
 
         try {
             AddPlaces updatedPlace = addPlaceService.updatePlace(
@@ -173,33 +148,4 @@ public class AddPlaceController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Place not found.");
         }
     }
-//get places count
-    @GetMapping("/getPlacesCount")
-    public ResponseEntity<Integer> getPlacesCount() {
-        int count = addPlaceService.getPlacesCount();
-        return ResponseEntity.ok(count);
-    }
-
-    @PutMapping("/updatePending/{placeId}")
-    public ResponseEntity<String> updatePlacePending(
-            @PathVariable int placeId,
-            @RequestBody Map<String, String> payload) {
-
-        String newStatus = payload.get("pending"); // Key must match JSON body
-
-        Optional<AddPlaces> optionalPlace = Optional.ofNullable(addPlaceRepo.findByPlaceId(placeId));
-
-        if (optionalPlace.isPresent()) {
-            AddPlaces place = optionalPlace.get();
-            place.setPending(newStatus); // Update the 'pending' field
-            addPlaceRepo.save(place);
-            return ResponseEntity.ok("Pending status updated to " + newStatus);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Place not found");
-        }
-    }
-
-
-
-
 }

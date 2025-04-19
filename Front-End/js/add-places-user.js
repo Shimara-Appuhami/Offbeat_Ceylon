@@ -261,46 +261,46 @@ $("#btn-update-place").on("click", function () {
         }
     });
 });
-
-//delete
-$("#btn-delete-place").on("click", function () {
-    if (!placeId || isNaN(placeId)) {
-        Swal.fire("Please search for a valid place before deleting!");
-        console.warn("Delete attempt failed: Invalid placeId.");
-        return;
-    }
-
-    if (confirm("Are you sure you want to delete this place?")) {
-        $.ajax({
-            url: `http://localhost:8081/api/v1/addPlace/delete/${placeId}`,
-            type: "DELETE",
-            headers: {
-                "Authorization": "Bearer " + localStorage.getItem('token')
-            },
-            success: function (response) {
-                Swal.fire("Place deleted successfully!");
-                console.log("Delete Response:", response);
-
-                placeId = null;
-                $("#placeName").val("");
-                $("#category").val("");
-                $("#aboutPlace").val("");
-                $("#district").val("");
-                $("input[name='status']").prop("checked", false);
-                $("#coordinates").text("");
-                $("#videoUrl").val("");
-                $("#images").hide();
-                if (marker) {
-                    marker.setMap(null);
-                }
-            },
-            error: function (xhr, status, error) {
-                console.error("Error deleting place:", er/ror);
-                Swal.fire("Error deleting place details!");
-            }
-        });
-    }
-});
+//
+// //delete
+// $("#btn-delete-place").on("click", function () {
+//     if (!placeId || isNaN(placeId)) {
+//         Swal.fire("Please search for a valid place before deleting!");
+//         console.warn("Delete attempt failed: Invalid placeId.");
+//         return;
+//     }
+//
+//     if (confirm("Are you sure you want to delete this place?")) {
+//         $.ajax({
+//             url: `http://localhost:8081/api/v1/addPlace/delete/${placeId}`,
+//             type: "DELETE",
+//             headers: {
+//                 "Authorization": "Bearer " + localStorage.getItem('token')
+//             },
+//             success: function (response) {
+//                 Swal.fire("Place deleted successfully!");
+//                 console.log("Delete Response:", response);
+//
+//                 placeId = null;
+//                 $("#placeName").val("");
+//                 $("#category").val("");
+//                 $("#aboutPlace").val("");
+//                 $("#district").val("");
+//                 $("input[name='status']").prop("checked", false);
+//                 $("#coordinates").text("");
+//                 $("#videoUrl").val("");
+//                 $("#images").hide();
+//                 if (marker) {
+//                     marker.setMap(null);
+//                 }
+//             },
+//             error: function (xhr, status, error) {
+//                 console.error("Error deleting place:", er/ror);
+//                 Swal.fire("Error deleting place details!");
+//             }
+//         });
+//     }
+// });
 // Show image preview after selecting
 $("#images").on("change", function () {
     const file = this.files[0];

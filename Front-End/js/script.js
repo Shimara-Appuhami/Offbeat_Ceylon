@@ -80,7 +80,6 @@ $(document).ready(function () {
             $('#district-by-places-cards').html('<p>Please select a district.</p>');
             return;
         }
-
         $.ajax({
             url: `http://localhost:8081/api/v1/addPlace/getAllByDistrict/${district}`,
             type: 'GET',
@@ -99,17 +98,18 @@ $(document).ready(function () {
                 }
 
                 response.forEach((place, index) => {
-                    const placeName = place.placeName || "Unknown Location";
-                    const placeDescription = place.aboutPlace || "No description available.";
-                    const imageFilename = place.images ? place.images.split("\\").pop() : "default.jpg";
-                    const imageUrl = `http://localhost:8081/api/v1/uploads/${imageFilename}`;
-                    const lat = parseFloat(place.latitude) || 7.8731;
-                    const lng = parseFloat(place.longitude) || 80.7718;
-                    const videoUrl = place.videoUrl ? extractYouTubeID(place.videoUrl) : null;
-                    const status = place.status;
-                    const mapId = `map-${index}`;
+                    if (place.pending === "APPROVED") {
+                        const placeName = place.placeName || "Unknown Location";
+                        const placeDescription = place.aboutPlace || "No description available.";
+                        const imageFilename = place.images ? place.images.split("\\").pop() : "default.jpg";
+                        const imageUrl = `http://localhost:8081/api/v1/uploads/${imageFilename}`;
+                        const lat = parseFloat(place.latitude) || 7.8731;
+                        const lng = parseFloat(place.longitude) || 80.7718;
+                        const videoUrl = place.videoUrl ? extractYouTubeID(place.videoUrl) : null;
+                        const status = place.status;
+                        const mapId = `map-${index}`;
 
-                    const cardHtml = `
+                        const cardHtml = `
                         <div class="cardd">
                             <div class="image-containerr">
                                 <img src="${imageUrl}" alt="${placeName}" />
@@ -135,11 +135,12 @@ $(document).ready(function () {
                         </div>
                     `;
 
-                    container.append(cardHtml);
+                        container.append(cardHtml);
 
-                    setTimeout(() => {
-                        initMap(lat, lng, mapId);
-                    }, 500);
+                        setTimeout(() => {
+                            initMap(lat, lng, mapId);
+                        }, 500);
+                    }
                 });
             },
             error: function () {

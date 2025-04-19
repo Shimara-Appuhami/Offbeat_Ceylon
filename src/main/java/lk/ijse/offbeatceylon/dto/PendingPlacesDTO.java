@@ -1,24 +1,24 @@
-package lk.ijse.offbeatceylon.entity;
+package lk.ijse.offbeatceylon.dto;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import lk.ijse.offbeatceylon.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "addPlace")
-public class AddPlaces {
+@Table(name = "pendingPlaces")
+public class PendingPlacesDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int placeId;
     @Column(unique = true)
     @NotBlank(message = "Place Name is required")
-    @Pattern(regexp = "^[A-Za-z]+$", message ="place name must only letters and spaces")
-    @Size(min = 1, max =200)
+    @Pattern(regexp = "^[A-Za-z]+$", message = "place name must only letters and spaces")
+    @Size(min = 1, max = 200)
     private String placeName;
     @Size(min = 50, max = 150, message = "About Place must be between minimum 50 words or maximum 150 words")
     private String aboutPlace;
@@ -32,15 +32,7 @@ public class AddPlaces {
     @ManyToOne
     @JoinColumn(name = "email", referencedColumnName = "email")
     private User email;
-    private String pending = "PENDING"; // can be PENDING, APPROVED, REJECTED
 
-    public String getPending() {
-        return pending;
-    }
-
-    public void setPending(String pending) {
-        this.pending = pending;
-    }
 
     public String getVideoUrl() {
         return videoUrl;
@@ -129,4 +121,5 @@ public class AddPlaces {
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
+
 }

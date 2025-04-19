@@ -16,5 +16,7 @@ public interface AddPlaceRepo extends JpaRepository<AddPlaces,Integer> {
 
     List<AddPlaces> findAllByDistrict(String district);
 
+
+
 //    User findByEmail(String email);
 }

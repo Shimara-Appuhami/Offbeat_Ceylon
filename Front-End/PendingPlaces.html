@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Places by District</title>
+    <style>
+        div{
+            width: 300px;
+            height: auto;
+        }
+        .cardd {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-containerr img {
+            width: 100%;
+            height: auto;
+            border-radius: 6px;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 200px;
+            margin-top: 10px;
+        }
+
+        .video-containerr iframe {
+            width: 100%;
+            height: 250px;
+            margin-top: 10px;
+        }
+
+        .direction-button {
+            display: inline-block;
+            padding: 8px 12px;
+            margin-top: 10px;
+            background-color: #2196F3;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Optional district selector -->
+<!--
+<select id="districtSelect">
+    <option value="select">Select District</option>
+    <option value="Colombo">Colombo</option>
+    <option value="Kandy">Kandy</option>
+    <option value="Galle">Galle</option>
+    <option value="all">All</option>
+</select>
+-->
+
+<div id="district-by-places-cards"></div>
+
+<script src="js/jquery-3.7.1.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        function getAllPlaces(district) {
+            if (!district || district === "select") {
+                $('#district-by-places-cards').html('<p>Please select a district.</p>');
+                return;
+            }
+
+            $.ajax({
+                url: `http://localhost:8081/api/v1/addPlace/getAll`,
+                type: 'GET',
+                dataType: 'json',
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                },
+                success: function (response) {
+                    const container = $('#district-by-places-cards');
+                    container.empty();
+
+                    if (!response || response.length === 0) {
+                        container.append('<p>No places available in this district.</p>');
+                        return;
+                    }
+
+                    response.forEach((place, index) => {
+                        const placeName = place.placeName || "Unknown Location";
+                        const placeDescription = place.aboutPlace || "No description available.";
+                        const imageFilename = place.images ? place.images.split("\\").pop() : "default.jpg";
+                        const imageUrl = `http://localhost:8081/api/v1/uploads/${imageFilename}`;
+                        const lat = parseFloat(place.latitude) || 7.8731;
+                        const lng = parseFloat(place.longitude) || 80.7718;
+                        const videoUrl = place.videoUrl ? extractYouTubeID(place.videoUrl) : null;
+                        const status = place.status;
+                        const mapId = `map-${index}`;
+                        const placeId=place.placeId;
+
+                        const cardHtml = `
+                            <div class="cardd">
+                                <div class="image-containerr">
+                                    <img src="${imageUrl}" alt="${placeName}" />
+                                </div>
+                                <div class="contentt">
+                                    <h3 class="placeName">${placeName}</h3>
+                                    <p>${placeDescription}</p>
+                                    <p><strong>Status:</strong> ${status}</p>
+                                    ${videoUrl ? `
+                                    <div class="video-containerr">
+                                        <iframe src="https://www.youtube.com/embed/${videoUrl}" frameborder="0" allowfullscreen></iframe>
+                                    </div>` : ''}
+                                    <div class="map-sectionn">
+                                        <div id="${mapId}" class="map-container"></div>
+                                    </div>
+                                    <a class="direction-button" href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}" target="_blank">
+                                        Get Directions
+                                    </a>
+                                        <button class="accept-button" data-place-id="${place.placeId}">Accept</button>
+                                        <button class="reject-button" data-place-id="${place.placeId}">Reject</button>
+
+                                </div>
+                            </div>
+                        `;
+
+                        container.append(cardHtml);
+
+                        setTimeout(() => {
+                            initMap(lat, lng, mapId);
+                        }, 500);
+                    });
+                },
+                error: function () {
+                    $('#district-by-places-cards').append('<p>Failed to load places. Please try again later.</p>');
+                }
+            });
+        }
+
+        function initMap(lat, lng, mapId) {
+            const mapDiv = document.getElementById(mapId);
+            if (!mapDiv) return;
+
+            const position = { lat, lng };
+            const map = new google.maps.Map(mapDiv, {
+                zoom: 10,
+                center: position
+            });
+
+            new google.maps.Marker({
+                position: position,
+                map: map
+            });
+        }
+
+        function extractYouTubeID(url) {
+            const regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+            const match = url.match(regExp);
+            return (match && match[2].length === 11) ? match[2] : null;
+        }
+
+        // Optional: For dropdown change
+        $('#districtSelect').on('change', function () {
+            const selectedDistrict = $(this).val();
+            getAllPlaces(selectedDistrict);
+        });
+
+        // 🚀 Automatically load all places on page load
+        getAllPlaces("all");
+    });
+
+    $(document).on('click', '.accept-button', function () {
+        const placeId = $(this).data('place-id');
+        const card = $(this).closest('.cardd');
+
+        $.ajax({
+            url: `http://localhost:8081/api/v1/addPlace/updatePending/${placeId}`,
+            type: 'PUT',
+            contentType: 'application/json',
+            data: JSON.stringify({ pending: "APPROVED" }),
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
+            success: function (response) {
+                alert("Accepted: " + response);
+                card.remove(); // Hide card after accepting
+            },
+            error: function () {
+                alert('Failed to accept place.');
+            }
+        });
+    });
+
+    $(document).on('click', '.reject-button', function () {
+        const placeId = $(this).data('place-id');
+        const card = $(this).closest('.cardd');
+
+        $.ajax({
+            url: `http://localhost:8081/api/v1/addPlace/delete/${placeId}`,
+            type: 'DELETE',
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
+            success: function (response) {
+                alert("Rejected and deleted: " + response);
+                card.remove(); // Remove card from UI
+            },
+            error: function () {
+                alert('Failed to reject/delete place.');
+            }
+        });
+    });
+
+
+</script>
+
+<!-- Google Maps API (replace YOUR_API_KEY) -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFpFDLrN4DPjDEXp7kKfGuooEL5tSheCk" async defer></script>
+
+
+</body>
+</html>

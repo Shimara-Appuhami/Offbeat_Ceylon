@@ -1,6 +1,7 @@
 package lk.ijse.offbeatceylon.dto;
 
 
+import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -20,6 +21,17 @@ public class AddPlaceDTO {
     private String category;
     private String email;
     private String videoUrl;
+    @Column(nullable = false)
+    private String pending = "PENDING"; // can be PENDING, APPROVED, REJECTED
+
+
+    public String getPending() {
+        return pending;
+    }
+
+    public void setPending(String pending) {
+        this.pending = pending;
+    }
 
     public String getVideoUrl() {
         return videoUrl;
