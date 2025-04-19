@@ -88,7 +88,7 @@
 
                     response.forEach((place, index) => {
                         // ✅ Skip non-pending places
-                        if (place.status !== "PENDING") return;
+                        if (place.pending !== "PENDING") return;
 
                         const placeName = place.placeName || "Unknown Location";
                         const placeDescription = place.aboutPlace || "No description available.";

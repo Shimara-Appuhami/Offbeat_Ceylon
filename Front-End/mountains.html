@@ -269,12 +269,15 @@
                     const container = $('#place-cards-container');
                     container.empty();
 
-                    if (!response || response.length === 0) {
-                        container.append('<p>No places available.</p>');
+                    // Filter only APPROVED places
+                    const approvedPlaces = response.filter(place => place.status === "APPROVED");
+
+                    if (!approvedPlaces || approvedPlaces.length === 0) {
+                        container.append('<p>No approved places available.</p>');
                         return;
                     }
 
-                    response.forEach((place, index) => {
+                    approvedPlaces.forEach((place, index) => {
                         const placeName = place.placeName || "Unknown Location";
                         const placeDescription = place.aboutPlace || "No description available.";
                         const imageFilename = place.images ? place.images.split("\\").pop() : "default.jpg";
