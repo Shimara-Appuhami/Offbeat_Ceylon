@@ -1,11 +1,11 @@
 # Offbeat_Ceylon
  
-#Description
+# Project Description
 Offbeat Cylon is an innovative travel application designed to help users discover unique and off-the-beaten-path destinations in Sri Lanka. It allows users to search for various travel spots, view detailed information, and explore travel options by district. Users can also add new travel locations along with YouTube videos showcasing these places. Additionally, Offbeat Cylon offers trip planning features where users can select and organize destinations to create their ideal itinerary, making it easier to explore Sri Lanka's hidden gems.
 
 The code provided below showcases how the application can integrate and manage travel destinations. It enables users to search and filter travel spots by district, as well as view detailed destination information and YouTube video links. The functionality supports adding new places to the system, enhancing the user experience by providing a comprehensive guide to Sri Lanka's most offbeat travel locations.
 
-
+# Screenshots
 ![signin](https://github.com/user-attachments/assets/6d28c97e-4d46-425f-bcb4-4b2de9428504)
 ![Screenshot 2025-04-16 225023](https://github.com/user-attachments/assets/972f2fab-7729-4a96-8f17-03e6fa771277)
 ![Screenshot 2025-04-16 225045](https://github.com/user-attachments/assets/d2d14d46-0cde-4813-8f75-f4e61c65af12)
@@ -41,7 +41,37 @@ The code provided below showcases how the application can integrate and manage t
 ![Screenshot 2025-04-16 230340](https://github.com/user-attachments/assets/a7ed1833-f976-4311-ba3e-c722f9932b8e)
 ![Screenshot 2025-04-16 230354](https://github.com/user-attachments/assets/b57cc2de-2394-480b-a832-9f043d108ec8)
 
+# Setup Instructions
 
+Backend (Spring Boot – IntelliJ IDEA)
+1 step -: Clone the repo
+
+2 step -: git clone https://github.com/Shimara-Appuhami/Offbeat_Ceylon.git
+
+3 step -:Open in IntelliJ IDEA
+
+4 step -:Go to File → Open → select the project folder.
+
+5 step -:Configure Database
+         Edit src/main/resources/application.properties:
+         
+         spring.datasource.url=jdbc:mysql://localhost:3306/travel_db
+         
+         spring.datasource.username=root
+         
+         spring.datasource.password=yourpassword
+         
+         Import SQL file
+         Use MySQL Workbench or CLI to import travel_db.sql.
+
+6 step -: Run the app
+          Right-click on Application.java → Run
+          ➤ App runs at: http://localhost:8081
+          
+7 step -:Frontend (HTML/CSS/JS)
+         Open frontend folder in any editor.
+         
+YouTube Link -: https://youtu.be/484sxUgD6EE
 
 
 
