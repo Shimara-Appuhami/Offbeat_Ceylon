@@ -130,7 +130,7 @@ public class AddPlaceController {
     }
     @PutMapping("/update/{placeId}")
     public ResponseEntity<String> updatePlace(@Valid
-            @RequestParam("email") String email,
+//            @RequestParam("email") String email,
             @PathVariable int placeId,
             @RequestParam String placeName,
             @RequestParam String category,
@@ -144,7 +144,7 @@ public class AddPlaceController {
 
         try {
             AddPlaces updatedPlace = addPlaceService.updatePlace(
-                    email,placeId, placeName, category, aboutPlace, district, status, latitude, longitude, image,videoUrl);
+                    placeId, placeName, category, aboutPlace, district, status, latitude, longitude, image,videoUrl);
 
             if (updatedPlace != null) {
                 return ResponseEntity.ok("Place updated successfully.");

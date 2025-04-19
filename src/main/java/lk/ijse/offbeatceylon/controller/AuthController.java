@@ -70,10 +70,12 @@ public class AuthController {
         AuthDTO authDTO = new AuthDTO();
         authDTO.setEmail(loadedUser.getEmail());
         authDTO.setToken(token);
+        authDTO.setRole(loadedUser.getRole());
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new ResponseDTO(VarList.Created, "Success", authDTO));
     }
+
     @PostMapping("/forgot-password")
     public ResponseEntity<Map<String, Object>> forgotPassword(@RequestBody User userRequest) {
         Optional<User> user = Optional.ofNullable(userRepository.findByEmail(userRequest.getEmail()));
@@ -108,7 +110,6 @@ public class AuthController {
         String email = request.get("email");
         String password = request.get("password");
 
-        // Call your service method to reset the password here
         boolean isResetSuccessful = userService.resetPassword(email, password);
 
         if (isResetSuccessful) {
@@ -122,10 +123,8 @@ public class AuthController {
         String email = request.get("email");
 
         try {
-            // Attempt to resend OTP
             otpService.resendOtp(email);
 
-            // Send the new OTP email
             emailService.sendOtpEmail(email);
 
             return ResponseEntity.ok(Map.of("success", true, "message", "OTP resent successfully."));

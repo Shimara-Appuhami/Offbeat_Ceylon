@@ -182,7 +182,6 @@ $("#placeName").on("keypress", function (event) {
                         $("#aboutPlace").val(response.aboutPlace);
                         $("#district").val(response.district);
                         $("input[name='status'][value='" + response.status + "']").prop("checked", true);
-                        $("#videoUrl").val(response.videoUrl);
 
                         if (response.latitude && response.longitude) {
                             selectedLat = response.latitude;
@@ -202,11 +201,12 @@ $("#placeName").on("keypress", function (event) {
 
                             $("#coordinates").text(`Latitude: ${selectedLat}, Longitude: ${selectedLng}`);
                         }
-                        if (response.images) {
-                            $("#images").attr("src", response.images).show();
+
+                        if (response.imageUrl) {
+                            $("#images").attr("src", response.imageUrl).show();
+                        } else {
+                            $("#images").hide();
                         }
-
-
                     } else {
                         Swal.fire("Place not found or placeId is missing!");
                     }
@@ -222,7 +222,7 @@ $("#placeName").on("keypress", function (event) {
 
 $("#btn-update-place").on("click", function () {
     if (placeId === null) {
-        swal.fire("Please search for a place first!");
+        alert("Please search for a place first!");
         console.warn("Update attempt failed: placeId is null.");
         return;
     }
@@ -237,10 +237,10 @@ $("#btn-update-place").on("click", function () {
     formData.append("longitude", selectedLng);
     formData.append("videoUrl",$("#videoUrl").val());
 
-    // const imageInput = $("#image")[0];
-    // if (imageInput && imageInput.files.length > 0) {
-    //     formData.append("image", imageInput.files[0]);
-    // }
+    const imageInput = $("#imageUpload")[0];
+    if (imageInput && imageInput.files.length > 0) {
+        formData.append("image", imageInput.files[0]);
+    }
 
     $.ajax({
         url: `http://localhost:8081/api/v1/addPlace/update/${placeId}`,
@@ -295,7 +295,7 @@ $("#btn-delete-place").on("click", function () {
                 }
             },
             error: function (xhr, status, error) {
-                console.error("Error deleting place:", error);
+                console.error("Error deleting place:", er/ror);
                 Swal.fire("Error deleting place details!");
             }
         });

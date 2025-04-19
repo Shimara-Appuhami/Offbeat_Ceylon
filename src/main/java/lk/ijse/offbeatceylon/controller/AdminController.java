@@ -24,10 +24,6 @@ public class AdminController {
     public String checks(){
         return "passed~!2";
     }
-    @GetMapping("/test3")
-    @PreAuthorize("hasAuthority('USER')")
-    public String checkss(){
-        return "passed~!2";
-    }
+
 
 }

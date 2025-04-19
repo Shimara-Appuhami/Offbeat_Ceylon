@@ -149,18 +149,18 @@ public class AddPlaceServiceImpl implements AddPlaceService {
     }
 
     @Override
-    public AddPlaces updatePlace(String email, int placeId, String placeName, String category, String aboutPlace, String district,
+    public AddPlaces updatePlace( int placeId, String placeName, String category, String aboutPlace, String district,
                                  String status, double latitude, double longitude, MultipartFile image,String videoUrl) {
         AddPlaces existingPlace = addPlaceRepo.findByPlaceId(placeId);
         if (existingPlace == null) {
             return null;
         }
 
-        User user = userRepository.findByEmail(email);
+        AddPlaces user = addPlaceRepo.findByPlaceId(placeId);
         if (user == null) {
-            throw new RuntimeException("User not found with email: " + email); // Handle the case where user is not found
+            throw new RuntimeException("User not found with email: " + placeId); // Handle the case where user is not found
         }
-        existingPlace.setEmail(user);
+//        existingPlace.setEmail(user);
         existingPlace.setPlaceName(placeName);
         existingPlace.setCategory(category);
         existingPlace.setAboutPlace(aboutPlace);
@@ -170,15 +170,15 @@ public class AddPlaceServiceImpl implements AddPlaceService {
         existingPlace.setLongitude(longitude);
         existingPlace.setVideoUrl(videoUrl);
 
-        if (image != null && !image.isEmpty()) {
-            try {
-                String fileName = StringUtils.cleanPath(image.getOriginalFilename());
-                String imagePath = saveImage(fileName, image);
-                existingPlace.setImages(imagePath);
-            } catch (IOException e) {
-                throw new RuntimeException("Error saving image: " + e.getMessage(), e);
-            }
-        }
+//        if (image != null && !image.isEmpty()) {
+//            try {
+//                String fileName = StringUtils.cleanPath(image.getOriginalFilename());
+//                String imagePath = saveImage(fileName, image);
+//                existingPlace.setImages(imagePath);
+//            } catch (IOException e) {
+//                throw new RuntimeException("Error saving image: " + e.getMessage(), e);
+//            }
+//        }
         return addPlaceRepo.save(existingPlace);
     }
 
