@@ -87,6 +87,9 @@
                     }
 
                     response.forEach((place, index) => {
+                        // ✅ Skip non-pending places
+                        if (place.status !== "PENDING") return;
+
                         const placeName = place.placeName || "Unknown Location";
                         const placeDescription = place.aboutPlace || "No description available.";
                         const imageFilename = place.images ? place.images.split("\\").pop() : "default.jpg";
@@ -96,33 +99,32 @@
                         const videoUrl = place.videoUrl ? extractYouTubeID(place.videoUrl) : null;
                         const status = place.status;
                         const mapId = `map-${index}`;
-                        const placeId=place.placeId;
+                        const placeId = place.placeId;
 
                         const cardHtml = `
-                            <div class="cardd">
-                                <div class="image-containerr">
-                                    <img src="${imageUrl}" alt="${placeName}" />
-                                </div>
-                                <div class="contentt">
-                                    <h3 class="placeName">${placeName}</h3>
-                                    <p>${placeDescription}</p>
-                                    <p><strong>Status:</strong> ${status}</p>
-                                    ${videoUrl ? `
-                                    <div class="video-containerr">
-                                        <iframe src="https://www.youtube.com/embed/${videoUrl}" frameborder="0" allowfullscreen></iframe>
-                                    </div>` : ''}
-                                    <div class="map-sectionn">
-                                        <div id="${mapId}" class="map-container"></div>
-                                    </div>
-                                    <a class="direction-button" href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}" target="_blank">
-                                        Get Directions
-                                    </a>
-                                        <button class="accept-button" data-place-id="${place.placeId}">Accept</button>
-                                        <button class="reject-button" data-place-id="${place.placeId}">Reject</button>
-
-                                </div>
-                            </div>
-                        `;
+            <div class="cardd">
+                <div class="image-containerr">
+                    <img src="${imageUrl}" alt="${placeName}" />
+                </div>
+                <div class="contentt">
+                    <h3 class="placeName">${placeName}</h3>
+                    <p>${placeDescription}</p>
+                    <p><strong>Status:</strong> ${status}</p>
+                    ${videoUrl ? `
+                    <div class="video-containerr">
+                        <iframe src="https://www.youtube.com/embed/${videoUrl}" frameborder="0" allowfullscreen></iframe>
+                    </div>` : ''}
+                    <div class="map-sectionn">
+                        <div id="${mapId}" class="map-container"></div>
+                    </div>
+                    <a class="direction-button" href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}" target="_blank">
+                        Get Directions
+                    </a>
+                    <button class="accept-button" data-place-id="${place.placeId}">Accept</button>
+                    <button class="reject-button" data-place-id="${place.placeId}">Reject</button>
+                </div>
+            </div>
+        `;
 
                         container.append(cardHtml);
 
@@ -131,6 +133,7 @@
                         }, 500);
                     });
                 },
+
                 error: function () {
                     $('#district-by-places-cards').append('<p>Failed to load places. Please try again later.</p>');
                 }
