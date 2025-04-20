@@ -80,13 +80,13 @@ $(document).ready(function () {
                                 <img src="${imageUrl}" alt="${placeName}" />
                             </div>
                             <div class="content">
-                                <h3>${placeName}</h3>
+                                <h3 class="placeName">${placeName}</h3>
                                 <p>${placeDescription}</p>
                                 <div class="checkbox-container">
                                     <label>Select this place</label>
                                     <label>
                                         <input type="checkbox" class="place-checkbox" data-lat="${lat}" data-lng="${lng}" data-name="${placeName}" ${isChecked ? "checked" : ""}>
-                                        <img src="../js/../assets/icon/icons8-select-48.png">
+<!--                                        <img src="../js/../assets/icon/icons8-select-48.png">-->
                                     </label>
                                 </div>
                                 <h3 style="color: #0048c6">Click Again to UnSelect<br/></h3>
@@ -103,10 +103,16 @@ $(document).ready(function () {
                     const name = $(this).data('name');
 
                     if (this.checked) {
+                        swal.fire("You Added " + name);
                         selectedPlaces.push({ lat, lng, name });
                     } else {
                         selectedPlaces = selectedPlaces.filter(place => place.lat !== lat || place.lng !== lng);
                     }
+
+                    updateSelectedPlacesList(); // <-- call after updating array
+                    updateMap();
+                    $('#getDirections').toggle(selectedPlaces.length > 0);
+
 
                     updateMap();
                     $('#getDirections').toggle(selectedPlaces.length > 0);
@@ -117,6 +123,22 @@ $(document).ready(function () {
             }
         });
     }
+
+
+    //show selected places
+    function updateSelectedPlacesList() {
+        const list = $('#selected-places-ul');
+        list.empty();
+
+        if (selectedPlaces.length === 0) {
+            list.append('<li>No places selected.</li>');
+        } else {
+            selectedPlaces.forEach(place => {
+                list.append(`<li>${place.name}</li>`);
+            });
+        }
+    }
+
 
 
     function clearMarkers() {
@@ -174,4 +196,22 @@ $(document).ready(function () {
     });
 
     $('#getDirections').click(getDirections);
+});
+
+function filterPlacesByName(query) {
+    query = query.toLowerCase();
+    $(".card").each(function () {
+        const placeName = $(this).find(".placeName").text().toLowerCase();
+        if (placeName.includes(query)) {
+            $(this).show();
+        } else {
+            $(this).hide();
+        }
+    });
+}
+
+
+$("#searchInput").on("input", function () {
+    const searchValue = $(this).val();
+    filterPlacesByName(searchValue);
 });

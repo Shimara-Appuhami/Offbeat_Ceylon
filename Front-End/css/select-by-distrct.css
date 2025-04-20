@@ -1,126 +1,160 @@
 /* General Reset */
-body {
-    font-family: 'Poppins', sans-serif;
+* {
     margin: 0;
     padding: 0;
-    /*background: linear-gradient(135deg, #6a11cb, #2575fc);*/
-    background-image: url("https://media.istockphoto.com/id/1266572591/photo/curvy-road-in-summer-pine-forest-top-down-drone-photography-outdoor-wilderness.jpg?s=2048x2048&w=is&k=20&c=2eCppVpPe2vSXBoAkSMEYP04464uvxZLgT27lhWcqjA=");
-    text-align: center;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    /*background-image: url("https://media.istockphoto.com/id/1266572591/photo/curvy-road-in-summer-pine-forest-top-down-drone-photography-outdoor-wilderness.jpg?s=2048x2048&w=is&k=20&c=2eCppVpPe2vSXBoAkSMEYP04464uvxZLgT27lhWcqjA=");*/
     background-repeat: no-repeat;
     background-size: cover;
+    background-position: center;
+    text-align: center;
     color: #333;
+    padding-bottom: 100px;
+    background: rgba(255, 255, 255, 0.75);
 }
-/*nav*/
 
-
+/* Navigation */
 .wrapper {
-    position: fixed;
-    border-radius: 50px;
+    position: sticky;
     top: 0;
-    left: 0;
-    height: 70px;
     width: 100%;
     background: #32a582;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 30px;
-    z-index: 1;
+    padding: 15px 30px;
+    border-radius: 0 0 20px 20px;
+    z-index: 999;
 }
-input[type="checkbox"] {
-    display: none;
-}
+
 .wrapper ul {
     list-style: none;
     display: flex;
     gap: 25px;
 }
 
-/* Menu items */
 .wrapper ul li a {
+    color: white;
     text-decoration: none;
-    font-size: 18px;
+    padding: 8px 16px;
+    border-radius: 20px;
     font-weight: 500;
-    padding: 10px 20px;
-    color: #fff;
-    border-radius: 50px;
-    /*background: #06a99D;*/
-    position: relative;
-    transition: all 0.3s ease;
+    transition: 0.3s ease;
 }
 
-/* Dropdown Styling */
+.wrapper ul li a:hover {
+    background-color: #fff;
+    color: #32a582;
+}
+
+/* Header */
+header {
+    text-align: center;
+    margin: 40px 0 20px;
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: #2b2b2b;
+}
+
+/* Dropdown */
 #districtSelect {
-    padding: 12px;
+    display: block;
+    margin: 20px auto;
+    padding: 12px 15px;
     font-size: 16px;
     border-radius: 50px;
     border: 2px solid #2db897;
-    outline: none;
-    width: 280px;
-    margin: 50px 0;
     background: #fff;
+    width: 280px;
     cursor: pointer;
     transition: 0.3s;
 }
 
 #districtSelect:hover {
     border-color: #24caa3;
-    background: #ffffff;
 }
 
-/* Button Styling */
+/* Get Directions Button */
 #getDirections {
+    display: block;
+    margin: 20px auto;
     padding: 12px 24px;
     font-size: 16px;
-    color: white;
     background: #e81132;
-
+    color: white;
     border: none;
     border-radius: 100px;
-    cursor: pointer;
-    transition: 0.3s;
     font-weight: bold;
     text-transform: uppercase;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
 #getDirections:hover {
     background: #23bc98;
+}
 
+/* Selected Places List */
+#selected-places-list {
+    max-width: 600px;
+    margin: 30px auto 10px;
+    padding: 15px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+#selected-places-list h4 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+#selected-places-ul {
+    list-style: none;
+    padding-left: 15px;
 }
 
 /* Map Section */
 .map-section {
-    width: 70%;
-    height: 500px;
-    margin: 20px auto;
-    border-radius: 1px;
-    box-shadow: 0px 5px 15px rgb(5, 5, 5);
-    /*border: 10px solid #bab6b6;*/
+    height: 400px;
+    margin: 50px auto 0;
+    width: 90%;
+    max-width: 1200px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 5px 15px rgba(5, 5, 5, 0.3);
 }
 
-/* Place Cards Container */
+/* Place Cards Container - 2 per row */
 #place-cards-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin: 30px auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 by 2 */
     gap: 20px;
-    max-width: 90%;
+    padding: 30px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
+/* Individual Card */
 .card {
-    background: linear-gradient(135deg, #ffffff, #cdcdcd); border-radius: 0; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); transition: all 0.3s ease-in-out; padding: 15px; margin: 15px; width: 300px;    padding: 20px;
+    background: linear-gradient(135deg, #ffffff, #cdcdcd);
+    border: 6px solid #1b9365;
     border-radius: 12px;
     box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.25);
+    padding: 20px;
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 15px;
-    width: 600px;
     transition: transform 0.3s ease;
-    border: 6px solid #1b9365;
-    position: relative;
     overflow: hidden;
+    width: 100%;
 }
 
 .card:hover {
@@ -128,6 +162,7 @@ input[type="checkbox"] {
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
 }
 
+/* Card Image */
 .image-container img {
     width: 180px;
     height: 120px;
@@ -135,6 +170,7 @@ input[type="checkbox"] {
     object-fit: cover;
 }
 
+/* Card Content */
 .content {
     display: flex;
     flex-direction: column;
@@ -145,7 +181,7 @@ input[type="checkbox"] {
 
 .content h3 {
     font-size: 20px;
-    color: #1B9365FF;
+    color: #1B9365;
     margin-bottom: 8px;
     font-weight: 600;
     text-transform: uppercase;
@@ -155,38 +191,24 @@ input[type="checkbox"] {
     font-size: 14px;
     color: #555;
     margin-bottom: 10px;
-    text-align: left;
     padding: 0 10px;
 }
 
-.checkbox-container {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 10px;
-}
-
-.checkbox-container input[type="checkbox"] {
-    transform: scale(1.2);
-    cursor: pointer;
-}
-
-.checkbox-container label {
-    font-size: 14px;
-    color: #333;
-}
-
+/* Responsive Styles */
 @media (max-width: 768px) {
-    .map-section {
-        height: 400px;
+    header {
+        font-size: 1.8rem;
     }
 
-    #districtSelect, #getDirections {
-        width: 85%;
+    #districtSelect {
+        width: 90%;
+    }
+
+    #place-cards-container {
+        grid-template-columns: 1fr; /* stack 1 column on small screens */
     }
 
     .card {
-        width: 90%;
         flex-direction: column;
         align-items: center;
         text-align: center;
@@ -196,4 +218,12 @@ input[type="checkbox"] {
         width: 100%;
         height: auto;
     }
+
+    .wrapper ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+.place-checkbox{
+    width: 100px;
 }
