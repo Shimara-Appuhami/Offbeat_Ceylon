@@ -270,7 +270,7 @@
                     container.empty();
 
                     // Filter only APPROVED places
-                    const approvedPlaces = response.filter(place => place.status === "APPROVED");
+                    const approvedPlaces = response.filter(place => place.pending === "APPROVED");
 
                     if (!approvedPlaces || approvedPlaces.length === 0) {
                         container.append('<p>No approved places available.</p>');
@@ -333,6 +333,7 @@
                 zoom: 10,
                 center: position,
             });
+
             new google.maps.Marker({ position, map });
         }
 
@@ -359,6 +360,7 @@
         const searchValue = $(this).val();
         filterPlacesByName(searchValue);
     });
+
 </script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
