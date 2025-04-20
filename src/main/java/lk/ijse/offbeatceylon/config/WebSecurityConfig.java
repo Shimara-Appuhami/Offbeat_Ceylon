@@ -87,7 +87,6 @@ public class WebSecurityConfig {
 
                                 "/swagger-ui.html").permitAll()
                         .requestMatchers("/uploads/", "/api/v1/uploads/", "/uploads/images/").permitAll()
-//                        .requestMatchers("/uploads/"),"/api/v1/uploads/","/uploads/placeImages/").permitAll()
 
                         .anyRequest().authenticated()
                 )

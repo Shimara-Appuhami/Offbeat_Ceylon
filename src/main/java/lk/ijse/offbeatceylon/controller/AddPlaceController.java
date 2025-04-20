@@ -190,13 +190,12 @@ public class AddPlaceController {
             @PathVariable int placeId,
             @RequestBody Map<String, String> payload) {
 
-        String newStatus = payload.get("pending"); // Key must match JSON body
-
+        String newStatus = payload.get("pending");
         Optional<AddPlaces> optionalPlace = Optional.ofNullable(addPlaceRepo.findByPlaceId(placeId));
 
         if (optionalPlace.isPresent()) {
             AddPlaces place = optionalPlace.get();
-            place.setPending(newStatus); // Update the 'pending' field
+            place.setPending(newStatus);
             addPlaceRepo.save(place);
             return ResponseEntity.ok("Pending status updated to " + newStatus);
         } else {
