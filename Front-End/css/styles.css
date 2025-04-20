@@ -196,7 +196,7 @@ input[type="checkbox"] {
     --text-lighter: rgba(255,255,255,0.9);
     --spacing-s: 8px;
     --spacing-m: 16px;
-    --spacing-l: 24px;
+    --spacing-l: 30px;
     --spacing-xl: 32px;
     --spacing-xxl: 64px;
     --width-container: 1200px;
@@ -224,13 +224,15 @@ input[type="checkbox"] {
 }
 
 .card-grid{
-    margin-top: 100px;
+    margin-top: -10px;
     display: grid;
     grid-template-columns: repeat(1, 1fr);
     grid-column-gap: var(--spacing-l);
     grid-row-gap: var(--spacing-l);
     max-width: var(--width-container);
     width: 50%;
+    margin-left: -130px;
+
 }
 
 @media(min-width: 540px){
