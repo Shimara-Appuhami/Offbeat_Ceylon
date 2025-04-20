@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Styled Location Cards</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFpFDLrN4DPjDEXp7kKfGuooEL5tSheCk" async defer></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            height: 100%;
+        }
+
+        .hero {
+            background: url('https://escales.ponant.com/wp-content/uploads/2020/12/plage.jpg') center/cover no-repeat;
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .overlay {
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3));
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-content {
+            color: #fff;
+            text-align: center;
+            padding: 0 20px;
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .hero-btn {
+            padding: 12px 30px;
+            font-size: 16px;
+            border: 2px solid #fff;
+            background: transparent;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 25px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .hero-btn :hover {
+            background: #fff;
+            color: #000;
+        }
+
+        #place-cards-container {
+            margin-top: 50px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+        }
+        .card {
+            width: 1000px;
+            height: 450px;
+            display: flex;
+            box-shadow: 0 30px 40px -15px rgba(0,0,0,0.35);
+            background-color: rgb(255, 255, 255);
+            border-radius: 0;
+            transition: 0.3s ease-in-out;
+        }
+        .card:hover {
+            transform: scale(1.02);
+        }
+        .image-container {
+            width: 40%;
+        }
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .content {
+            width: 60%;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .placeName {
+            font-weight: 900;
+            font-size: 30px;
+            color: #787c7e;
+            text-transform: uppercase;
+            margin: 1vmin 0 2vmin;
+
+        }
+        .placeDescription {
+            font-size: 2.1vmin;
+            line-height: 1.7;
+            font-weight: 300;
+            margin-bottom: 2.5vmin;
+        }
+        .status {
+            font-size: 2vmin;
+            color: #dc3036;
+            font-weight: 600;
+        }
+        .map-section {
+            height: 340px;
+            width: 250px;
+            margin-top: -187px;
+            margin-left: 311px;
+        }
+        .map {
+            height: 100%;
+            width: 100%;
+        }
+        .video-container {
+            margin-top: 31px;
+            width: 300px;
+            height: 500px;
+        }
+        iframe {
+            width: 100%;
+            height: 180px;
+            border-radius: 6px;
+            border: none;
+        }
+        .direction-button {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #2c9ec8;
+            color: #fff;
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-decoration: none;
+            width: 150px;
+            transition: background 0.3s ease;
+            text-align: center;
+            margin-left: 343px;
+        }
+
+        .direction-button:hover {
+            background-color: #0c9c72;
+        }
+        #back-btn{
+            background: transparent;
+            border: none;
+            margin-left: -1350px;
+            margin-top: 10px;
+
+        }
+        header h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #ffffff;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .description {
+            padding: 20px;
+            background-color: #fafafa;
+            border-radius: 8px;
+        }
+
+        .description  {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 20px;
+            text-align: center;
+            line-height: 1.8;
+        }
+
+        /* Add a nice border to separate paragraphs */
+        .description :last-of-type {
+            margin-bottom: 0;
+        }
+
+        .description ::first-letter {
+            font-size: 2.5rem;
+            color: #2c6b5c;
+            font-weight: bold;
+            float: left;
+            margin-right: 10px;
+        }
+        h2{
+            text-align: center;
+            font-size: 40px;
+            color: black;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .description  {
+                font-size: 1rem;
+            }
+        }
+        .placeDescription{
+            color: #3a3838;
+        }
+    </style>
+</head>
+<body>
+<header class="hero">
+    <div class="overlay">
+        <div class="hero-content">
+            <h1>Beaches</h1>
+            <p>
+                With a stunning coastline that wraps around the entire island, Sri Lanka is renowned for its pristine beaches, offering golden sands, turquoise waters, and breathtaking sunsets.
+            </p>
+            <a href="#description"><button class="hero-btn">Explore</button></a>
+        </div>
+    </div>
+</header>
+
+<h2 id="description">Beaches</h2>
+<p class="description">Beaches in Sri Lanka are among the most picturesque in the world, each offering a unique combination of natural beauty, cultural richness, and opportunities for adventure. Whether you're looking for relaxation, surfing, or vibrant nightlife, the island’s coastline has something for everyone.<br/><br/>
+
+    Located along the southern, eastern, and western coasts, Sri Lanka's beaches feature palm-fringed shores, coral reefs, and calm waters in some areas, while others boast thrilling waves ideal for water sports. Places like Mirissa, Unawatuna, Arugam Bay, and Bentota have gained international fame for their charm and character.<br/>
+
+    The tropical climate ensures year-round beach weather, although the best time to visit the southern and western coasts is from December to April, while the east coast is ideal between May and September. Many beach areas also offer boat tours, dolphin and whale watching, snorkeling, and seafood dining experiences.
+
+    Beyond their scenic allure, these coastal areas are also deeply intertwined with local fishing communities and traditions. Watching fishermen bring in the day’s catch or exploring historical sites near the beach adds to the cultural depth of the experience.
+
+    Overall, Sri Lanka’s beaches are not only places of relaxation but also windows into the island’s lifestyle and natural splendor, making them essential stops for any traveler exploring this tropical paradise.</p>
+
+<br/>
+<a href="index.html"><button id="back-btn"><img src="assets/icon/back.png"></button></a>
+
+<!--search bar-->
+<div style="text-align: center; margin-top: 30px;">
+    <input type="text" id="searchInput" placeholder="Search beaches by name..." style="padding: 10px; width: 300px; border-radius: 20px; border: 1px solid #ccc; font-size: 16px;">
+</div>
+
+<div id="place-cards-container"></div>
+
+
+<script>
+    $(document).ready(function () {
+        const category = "Beaches";
+
+        function getAllPlaces() {
+            $.ajax({
+                url: `http://localhost:8081/api/v1/addPlace/getAllByCategory/${category}`,
+                type: 'GET',
+                dataType: 'json',
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                },
+                success: function (response) {
+                    const container = $('#place-cards-container');
+                    container.empty();
+
+                    // Filter only APPROVED places
+                    const approvedPlaces = response.filter(place => place.pending === "APPROVED");
+
+                    if (!approvedPlaces || approvedPlaces.length === 0) {
+                        container.append('<p>No approved places available.</p>');
+                        return;
+                    }
+
+                    approvedPlaces.forEach((place, index) => {
+                        const placeName = place.placeName || "Unknown Location";
+                        const placeDescription = place.aboutPlace || "No description available.";
+                        const imageFilename = place.images ? place.images.split("\\").pop() : "default.jpg";
+                        const imageUrl = `http://localhost:8081/api/v1/uploads/${imageFilename}`;
+                        const district=place.district;
+                        const lat = parseFloat(place.latitude) || 7.8731;
+                        const lng = parseFloat(place.longitude) || 80.7718;
+                        const videoUrl = place.videoUrl ? extractYouTubeID(place.videoUrl) : null;
+                        const status = place.status || "No status available";
+                        const mapId = `map-${index}`;
+
+                        const cardHtml = `
+    <div class="card">
+        <div class="image-container">
+            <img src="${imageUrl}" alt="${placeName}" />
+        </div>
+        <div class="content">
+            <h3 class="placeName">${placeName}</h3>
+            <p class="placeDescription">${placeDescription}<br/>District : ${district}</p>
+            <p class="status">${status} in this place</p>
+
+
+            ${videoUrl ? `
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/${videoUrl}" allowfullscreen></iframe>
+            </div>` : ''}
+            <div class="map-section">
+                <div class="map" id="${mapId}"></div>
+            </div>
+
+            <a class="direction-button" href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}" target="_blank">
+                Get Directions
+            </a>
+        </div>
+    </div>
+`;
+
+                        container.append(cardHtml);
+                        initMap(mapId, lat, lng);
+                    });
+                },
+                error: function () {
+                    $('#place-cards-container').append('<p>Failed to load places. Please try again later.</p>');
+                }
+            });
+        }
+
+
+
+        function initMap(mapId, lat, lng) {
+            const position = { lat, lng };
+            const map = new google.maps.Map(document.getElementById(mapId), {
+                zoom: 10,
+                center: position,
+            });
+
+            new google.maps.Marker({ position, map });
+        }
+
+        function extractYouTubeID(url) {
+            const regex = /(?:youtube\.com\/.*[?&]v=|youtu\.be\/)([^"&?\/\s]{11})/;
+            const match = url.match(regex);
+            return match ? match[1] : null;
+        }
+
+        getAllPlaces();
+    });
+    function filterPlacesByName(query) {
+        query = query.toLowerCase();
+        $(".card").each(function () {
+            const placeName = $(this).find(".placeName").text().toLowerCase();
+            if (placeName.includes(query)) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+    }
+    $("#searchInput").on("input", function () {
+        const searchValue = $(this).val();
+        filterPlacesByName(searchValue);
+    });
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</body>
+</html>
