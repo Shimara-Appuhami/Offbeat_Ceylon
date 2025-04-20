@@ -82,6 +82,8 @@ public class WebSecurityConfig {
                                 "/api/v1/addPlace/getAllByCategory/${categoryName}",
                                 "/api/v1/addPlace/getAllByDistrict/**",
                                 "/api/v1/addPlace/updatePending/**",
+                                "/api/v1/addPlace/getPlacesCount",
+                                "/api/v1/category/getTotalCategories",
 
                                 "/swagger-ui.html").permitAll()
                         .requestMatchers("/uploads/", "/api/v1/uploads/", "/uploads/images/").permitAll()

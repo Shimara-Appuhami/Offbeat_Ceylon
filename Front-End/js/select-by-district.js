@@ -60,21 +60,22 @@ $(document).ready(function () {
                 }
 
                 response.forEach((place) => {
-                    const placeName = place.placeName || "Unknown Location";
-                    const placeDescription = place.aboutPlace || "No description available.";
-                    const imageFilename = place.images ? place.images.split("\\").pop() : "default.jpg";
-                    const imageUrl = `http://localhost:8081/api/v1/uploads/${imageFilename}`;
-                    const lat = parseFloat(place.latitude) || 7.8731;
-                    const lng = parseFloat(place.longitude) || 80.7718;
+                        if (place.pending === "APPROVED") {
+                            const placeName = place.placeName || "Unknown Location";
+                            const placeDescription = place.aboutPlace || "No description available.";
+                            const imageFilename = place.images ? place.images.split("\\").pop() : "default.jpg";
+                            const imageUrl = `http://localhost:8081/api/v1/uploads/${imageFilename}`;
+                            const lat = parseFloat(place.latitude) || 7.8731;
+                            const lng = parseFloat(place.longitude) || 80.7718;
 
-                    const isChecked = selectedPlaces.some(p => p.lat === lat && p.lng === lng);
+                            const isChecked = selectedPlaces.some(p => p.lat === lat && p.lng === lng);
 
-                    let existingCard = $(`.card[data-lat='${lat}'][data-lng='${lng}']`);
+                            let existingCard = $(`.card[data-lat='${lat}'][data-lng='${lng}']`);
 
-                    if (existingCard.length > 0) {
-                        existingCard.show();
-                    } else {
-                        const cardHtml = `
+                            if (existingCard.length > 0) {
+                                existingCard.show();
+                            } else {
+                                const cardHtml = `
                         <div class="card" data-district="${district}" data-lat="${lat}" data-lng="${lng}" style="box-shadow: black">
                             <div class="image-container">
                                 <img src="${imageUrl}" alt="${placeName}" />
@@ -93,8 +94,9 @@ $(document).ready(function () {
                             </div>
                         </div>
                     `;
-                        container.append(cardHtml);
-                    }
+                                container.append(cardHtml);
+                            }
+                        }
                 });
 
                 $('.place-checkbox').change(function () {

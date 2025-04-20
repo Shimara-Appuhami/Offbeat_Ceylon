@@ -9,6 +9,7 @@ import lk.ijse.offbeatceylon.entity.User;
 import lk.ijse.offbeatceylon.service.UserService;
 import lk.ijse.offbeatceylon.util.JwtUtil;
 import lk.ijse.offbeatceylon.util.VarList;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,13 +22,15 @@ import java.util.UUID;
 @CrossOrigin("http://localhost:63342")
 
 public class UserController {
-    private final UserService userService;
-    private final JwtUtil jwtUtil;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private JwtUtil jwtUtil;
 
-    public UserController(UserService userService, JwtUtil jwtUtil) {
-        this.userService = userService;
-        this.jwtUtil = jwtUtil;
-    }
+//    public UserController(UserService userService, JwtUtil jwtUtil) {
+//        this.userService = userService;
+//        this.jwtUtil = jwtUtil;
+//    }
     @PostMapping(value = "/register")
     public ResponseEntity<ResponseDTO> registerUser(@RequestBody @Valid UserDTO userDTO) {
         try {

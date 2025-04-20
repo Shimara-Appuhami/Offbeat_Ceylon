@@ -73,3 +73,8 @@ document.addEventListener('DOMContentLoaded', function() {
     fetchTotalCategories();
 
 });
+// date
+const today = new Date();
+const options = { year: 'numeric', month: 'long', day: 'numeric' };
+document.getElementById('inline-date').textContent = today.toLocaleDateString(undefined, options);
+

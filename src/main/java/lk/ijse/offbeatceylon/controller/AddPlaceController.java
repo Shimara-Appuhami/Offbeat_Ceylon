@@ -7,6 +7,7 @@ import lk.ijse.offbeatceylon.entity.User;
 import lk.ijse.offbeatceylon.repo.AddPlaceRepo;
 import lk.ijse.offbeatceylon.service.AddPlaceService;
 import lk.ijse.offbeatceylon.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,17 +25,21 @@ import java.util.Optional;
 @CrossOrigin("http://localhost:63342")
 public class AddPlaceController {
 
-    private final ResponseDTO responseDTO;
-    private final AddPlaceService addPlaceService;
-    private final UserService userService;
-    private final AddPlaceRepo addPlaceRepo;
+    @Autowired
+    private  ResponseDTO responseDTO;
+    @Autowired
+    private  AddPlaceService addPlaceService;
+    @Autowired
+    private  UserService userService;
+    @Autowired
+    private  AddPlaceRepo addPlaceRepo;
 
-    public AddPlaceController(ResponseDTO responseDTO, AddPlaceService addPlaceService, UserService userService, AddPlaceRepo addPlaceRepo) {
-        this.responseDTO = responseDTO;
-        this.addPlaceService = addPlaceService;
-        this.userService = userService;
-        this.addPlaceRepo = addPlaceRepo;
-    }
+//    public AddPlaceController(ResponseDTO responseDTO, AddPlaceService addPlaceService, UserService userService, AddPlaceRepo addPlaceRepo) {
+//        this.responseDTO = responseDTO;
+//        this.addPlaceService = addPlaceService;
+//        this.userService = userService;
+//        this.addPlaceRepo = addPlaceRepo;
+//    }
 
     @PostMapping("/save")
     public ResponseEntity<ResponseDTO> savePlace(@Valid

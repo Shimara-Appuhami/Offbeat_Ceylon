@@ -27,13 +27,15 @@ import java.util.Optional;
 public class AddCategoryController {
     //save the category
 
-        private final AddCategoryService categoryService;
-        private final ResponseDTO responseDTO;
+    @Autowired
+    private AddCategoryService categoryService;
+    @Autowired
+    private ResponseDTO responseDTO;
 
-    public AddCategoryController(AddCategoryService categoryService, ResponseDTO responseDTO) {
-        this.categoryService = categoryService;
-        this.responseDTO = responseDTO;
-    }
+//    public AddCategoryController(AddCategoryService categoryService, ResponseDTO responseDTO) {
+//        this.categoryService = categoryService;
+//        this.responseDTO = responseDTO;
+//    }
 
         @PostMapping("/save")
         public ResponseEntity<ResponseDTO> saveCategory(@Valid

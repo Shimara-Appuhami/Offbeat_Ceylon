@@ -9,6 +9,7 @@ import lk.ijse.offbeatceylon.service.OtpService;
 import lk.ijse.offbeatceylon.service.impl.UserServiceImpl;
 import lk.ijse.offbeatceylon.util.JwtUtil;
 import lk.ijse.offbeatceylon.util.VarList;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,26 +25,33 @@ import java.util.Optional;
 
 public class AuthController {
 
-    private final JwtUtil jwtUtil;
-    private final AuthenticationManager authenticationManager;
-    private final UserServiceImpl userService;
-    private final ResponseDTO responseDTO;
+    @Autowired
+    private JwtUtil jwtUtil;
+    @Autowired
+    private AuthenticationManager authenticationManager;
+    @Autowired
+    private UserServiceImpl userService;
+    @Autowired
+    private ResponseDTO responseDTO;
+    @Autowired
     private UserRepository userRepository;
-    private final EmailService emailService;
-    private final OtpService otpService;
+    @Autowired
+    private EmailService emailService;
+    @Autowired
+    private OtpService otpService;
 
 
 
-    public AuthController(JwtUtil jwtUtil, AuthenticationManager authenticationManager, UserServiceImpl userService, ResponseDTO responseDTO,UserRepository userRepository,EmailService emailService,OtpService otpService) {
-        this.jwtUtil = jwtUtil;
-        this.authenticationManager = authenticationManager;
-        this.userService = userService;
-        this.responseDTO = responseDTO;
-        this.emailService = emailService;
-        this.userRepository=userRepository;
-        this.otpService=otpService;
-
-    }
+//    public AuthController(JwtUtil jwtUtil, AuthenticationManager authenticationManager, UserServiceImpl userService, ResponseDTO responseDTO,UserRepository userRepository,EmailService emailService,OtpService otpService) {
+//        this.jwtUtil = jwtUtil;
+//        this.authenticationManager = authenticationManager;
+//        this.userService = userService;
+//        this.responseDTO = responseDTO;
+//        this.emailService = emailService;
+//        this.userRepository=userRepository;
+//        this.otpService=otpService;
+//
+//    }
 
     @PostMapping("/authenticate")
     public ResponseEntity<ResponseDTO> authenticate(@RequestBody @Valid UserDTO userDTO) {
