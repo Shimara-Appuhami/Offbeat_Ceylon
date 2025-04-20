@@ -32,7 +32,7 @@ public class AddPlaces {
     @ManyToOne
     @JoinColumn(name = "email", referencedColumnName = "email")
     private User email;
-    private String pending = "PENDING"; // can be PENDING, APPROVED, REJECTED
+    private String pending = "PENDING";
 
     public String getPending() {
         return pending;

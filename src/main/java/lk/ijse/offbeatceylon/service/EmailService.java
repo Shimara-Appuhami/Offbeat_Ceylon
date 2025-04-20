@@ -8,5 +8,4 @@ public interface EmailService {
 
     public void sendOtpEmail(String to);
 
-    public void sendSuccessEmail(String to, String bookId);
 }
